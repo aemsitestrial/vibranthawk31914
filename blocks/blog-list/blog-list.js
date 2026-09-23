@@ -1,5 +1,24 @@
 import { createOptimizedPicture } from '../../scripts/aem.js';
 
+// Placeholder posts used until real content is authored in the block.
+const DUMMY_POSTS = [
+  {
+    path: '#',
+    title: 'Getting Started with AEM Edge Delivery Services',
+    image: 'https://placehold.co/440x360/e2e8f0/1e293b?text=Blog+Post+1',
+  },
+  {
+    path: '#',
+    title: 'Best Practices for Building Reusable Blocks',
+    image: 'https://placehold.co/440x360/e2e8f0/1e293b?text=Blog+Post+2',
+  },
+  {
+    path: '#',
+    title: 'Optimizing Performance for Modern Web Experiences',
+    image: 'https://placehold.co/440x360/e2e8f0/1e293b?text=Blog+Post+3',
+  },
+];
+
 function renderPosts(container, posts) {
   posts.forEach((post) => {
     if (!post || (!post.path && !post.href)) {
@@ -29,32 +48,13 @@ function renderPosts(container, posts) {
 export default async function decorate(block) {
   const container = document.createElement('ul');
 
-  try {
-    const indexResponse = await fetch('/../sitemap.json');
-    if (indexResponse.ok) {
-      const index = await indexResponse.json();
-      const posts = Array.isArray(index?.data)
-        ? index.data.filter((post) => post?.category === 'blog')
-        : [];
-      if (posts.length) {
-        renderPosts(container, posts);
-        block.append(container);
-        return;
-      }
-    }
-  } catch (error) {
-    // Fall back to any authored content already present in the block.
-  }
-
   const authoredLinks = [...block.querySelectorAll('a[href]')].map((link) => ({
     path: link.getAttribute('href'),
     title: link.textContent.trim() || 'Article',
     image: link.querySelector('img')?.getAttribute('src') || '',
   }));
 
-  if (authoredLinks.length) {
-    renderPosts(container, authoredLinks);
-  }
+  renderPosts(container, authoredLinks.length ? authoredLinks : DUMMY_POSTS);
 
   block.append(container);
 }
