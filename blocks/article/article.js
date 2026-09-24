@@ -7,13 +7,13 @@ const escapeHtml = (value = '') => String(value)
   .replace(/"/g, '&quot;')
   .replace(/'/g, '&#39;');
 
-const DISPLAY_FIELDS = new Set([
+const DISPLAY_FIELDS = [
   'title',
   'author',
   'publicationdate',
   'content',
   'featuredimage',
-]);
+];
 
 function getFallbackArticle(block) {
   const title = block.querySelector('h1, h2, h3, h4, h5')
@@ -55,32 +55,52 @@ function getSafeClass(value, fallback) {
 }
 
 function getPathField(value) {
-  return Object.entries(value || {}).find(([key]) => key === '_path')?.[1] || '';
+  // eslint-disable-next-line dot-notation
+  return value?.['_path'] || '';
+}
+
+function normalizeArticlePath(value = '') {
+  const trimmedValue = String(value || '').trim();
+
+  if (!trimmedValue) {
+    return '';
+  }
+
+  try {
+    const normalizedPath = /^https?:\/\//i.test(trimmedValue)
+      ? new URL(trimmedValue, window.location.origin).pathname
+      : trimmedValue;
+
+    return normalizedPath.replace(/\.html$/, '');
+  } catch (error) {
+    return trimmedValue.replace(/\.html$/, '');
+  }
 }
 
 function getSelectedFields(block) {
-  const fieldsContainer = block.querySelector(
-    ':scope > div:nth-child(4)',
-  );
+  const fieldsContainer = block.querySelector(':scope > div:nth-child(4)');
 
   if (!fieldsContainer) {
     return [...DISPLAY_FIELDS];
   }
 
+  const checkedValues = [...fieldsContainer.querySelectorAll('input[type="checkbox"]')]
+    .map((input) => (input.checked ? input.value : ''))
+    .filter(Boolean)
+    .map((field) => field.trim().toLowerCase());
+
   const textValue = fieldsContainer.textContent?.trim() || '';
+  const textValues = textValue
+    ? textValue
+      .split(/[\s,;\n]+/)
+      .map((field) => field.trim().toLowerCase())
+      .filter(Boolean)
+    : [];
 
-  if (!textValue) {
-    return [...DISPLAY_FIELDS];
-  }
+  const selectedValues = checkedValues.length ? checkedValues : textValues;
+  const fields = selectedValues.filter((field) => DISPLAY_FIELDS.includes(field));
 
-  const fields = textValue
-    .split(/[,\n]+/)
-    .map((field) => field.trim().toLowerCase())
-    .filter((field) => DISPLAY_FIELDS.has(field));
-
-  return fields.length
-    ? [...new Set(fields)]
-    : [...DISPLAY_FIELDS];
+  return fields.length ? [...new Set(fields)] : [...DISPLAY_FIELDS];
 }
 
 export default async function decorate(block) {
@@ -91,15 +111,17 @@ export default async function decorate(block) {
 
   const sourceLink = block.querySelector('a[href]');
 
+  const authoredArticlePath = normalizeArticlePath(getFieldValue(block, 1));
+
   const rawArticlePath = sourceLink
     ? new URL(sourceLink.href, window.location.origin).pathname
-    : '';
+    : authoredArticlePath;
 
-  const articlepath = (
+  const articlepath = normalizeArticlePath(
     rawArticlePath
     || block.dataset?.path
-    || ''
-  ).replace(/\.html$/, '');
+    || '',
+  );
 
   const variationname = getSafeClass(
     getFieldValue(block, 2),
@@ -164,15 +186,12 @@ export default async function decorate(block) {
     // fallback already prepared
   }
 
-  const title = cfReq.title || '';
-
-  const author = cfReq.author || '';
-
+  const title = cfReq.title || 'Title';
+  const author = cfReq.author || 'Author';
   const publicationDate = cfReq.date
     || cfReq.publicationDate
-    || '';
-
-  const content = cfReq.content?.plaintext || '';
+    || 'Date';
+  const content = cfReq.content?.plaintext || 'content';
 
   const featuredImage = getPathField(cfReq.featuredImage)
     || cfReq.featuredImage?.path
@@ -180,7 +199,7 @@ export default async function decorate(block) {
     || getPathField(cfReq.image)
     || cfReq.image?.path
     || cfReq.image
-    || '';
+    || 'image';
 
   const renderedContent = variationname === 'summary'
     ? getSummary(content)

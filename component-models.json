@@ -222,10 +222,10 @@
         ]
       },
       {
-        "component": "multi-select",
+        "component": "checkbox-group",
         "name": "displayfields",
         "label": "Display Fields",
-        "values": [
+        "value": [
           "title",
           "author",
           "publicationdate",
