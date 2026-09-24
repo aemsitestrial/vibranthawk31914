@@ -8,9 +8,12 @@ const escapeHtml = (value = '') => String(value)
   .replace(/'/g, '&#39;');
 
 function getFallbackArticle(block) {
-  const title = block.querySelector('h1, h2, h3, h4, h5')?.textContent?.trim() || 'Article';
+  const title = block.querySelector('h1, h2, h3, h4, h5')
+    ?.textContent?.trim()
+    || 'Article';
 
-  const description = block.querySelector('p')?.textContent?.trim()
+  const description = block.querySelector('p')
+    ?.textContent?.trim()
     || 'Article content is available in the authored document.';
 
   return {
@@ -29,7 +32,19 @@ function getSummary(text = '', limit = 150) {
   return `${text.substring(0, limit)}...`;
 }
 
-/* eslint-disable no-underscore-dangle */
+function getFieldValue(block, index) {
+  return block.querySelector(`:scope > div:nth-child(${index}) > div`)
+    ?.textContent?.trim() || '';
+}
+
+function getSafeClass(value, fallback) {
+  return /^[a-z]+$/.test(value) ? value : fallback;
+}
+
+function getPathField(value) {
+  return Object.entries(value || {}).find(([key]) => key === '_path')?.[1];
+}
+
 export default async function decorate(block) {
   const aempublishurl = getAEMPublish();
   const aemauthorurl = getAEMAuthor();
@@ -42,27 +57,52 @@ export default async function decorate(block) {
     ? new URL(sourceLink.href, window.location.origin).pathname
     : '';
 
-  const articlepath = (rawArticlePath || block.dataset?.path || '')
-    .replace(/\.html$/, '');
+  const articlepath = (
+    rawArticlePath
+    || block.dataset?.path
+    || ''
+  ).replace(/\.html$/, '');
 
-  const variationname = block
-    .querySelector(':scope div:nth-child(2) > div')
-    ?.textContent
-    ?.trim()
-    || 'main';
+  const variationname = getSafeClass(getFieldValue(block, 2), 'main');
+  const alignment = getSafeClass(getFieldValue(block, 3), 'left');
 
-  const selectedFields = block
-    .querySelector(':scope div:nth-child(3) > div')
-    ?.textContent
-    ?.split(',')
-    ?.map((field) => field.trim().toLowerCase())
-    || ['title', 'author', 'publicationdate', 'content'];
+  const fieldsContainer = block.querySelector(
+    ':scope > div:nth-child(4)',
+  );
+
+  let selectedFields = [
+    'title',
+    'author',
+    'publicationdate',
+    'content',
+  ];
+
+  if (fieldsContainer) {
+    const fieldItems = [
+      ...fieldsContainer.querySelectorAll('div'),
+    ]
+      .map((field) => field.textContent.trim().toLowerCase())
+      .filter(Boolean);
+
+    if (fieldItems.length > 0) {
+      selectedFields = fieldItems;
+    } else {
+      const textValue = fieldsContainer.textContent
+        ?.split(',')
+        ?.map((field) => field.trim().toLowerCase())
+        ?.filter(Boolean);
+
+      if (textValue?.length) {
+        selectedFields = textValue;
+      }
+    }
+  }
 
   if (!articlepath || (!aempublishurl && !aemauthorurl)) {
     const fallback = getFallbackArticle(block);
 
     block.innerHTML = `
-      <div class="article-content ${variationname}">
+      <div class="article-content ${variationname} ${alignment}">
         <div class="article-wrapper">
           <h4 class="title">${escapeHtml(fallback.title)}</h4>
           <p class="content">${escapeHtml(fallback.content.plaintext)}</p>
@@ -73,11 +113,9 @@ export default async function decorate(block) {
     return;
   }
 
-  const baseUrl = (
-    window.location.origin.includes('author')
-      ? aemauthorurl
-      : aempublishurl
-  );
+  const baseUrl = window.location.origin.includes('author')
+    ? aemauthorurl
+    : aempublishurl;
 
   const url = `${baseUrl}${persistedquery};path=${articlepath};variation=${variationname};ts=${Date.now()}`;
 
@@ -98,21 +136,23 @@ export default async function decorate(block) {
       }
     }
   } catch (error) {
-    // Use fallback content
+    // fallback content already available
   }
 
-  const title = cfReq.title || '';
+  const title = cfReq.title || 'Title';
 
-  const author = cfReq.author || '';
+  const author = cfReq.author || 'Author';
 
-  const publicationDate = cfReq.publicationDate || '';
+  const publicationDate = cfReq.date
+    || cfReq.publicationDate
+    || 'Date';
 
-  const content = cfReq.content?.plaintext || '';
+  const content = cfReq.content?.plaintext || 'Content';
 
-  const featuredImage = cfReq.featuredImage?._path
+  const featuredImage = getPathField(cfReq.featuredImage)
     || cfReq.featuredImage?.path
     || cfReq.featuredImage
-    || cfReq.image?._path
+    || getPathField(cfReq.image)
     || cfReq.image?.path
     || cfReq.image
     || '';
@@ -127,7 +167,7 @@ export default async function decorate(block) {
 
   block.innerHTML = `
     <div
-      class="article-content ${variationname}"
+      class="article-content ${variationname} ${alignment}"
       data-aue-resource="${itemId}"
       data-aue-label="article content fragment"
       data-aue-type="reference"
@@ -138,11 +178,9 @@ export default async function decorate(block) {
         ${
   showField('featuredimage') && featuredImage
     ? `
-        <div class="featured-image">
-          ${escapeHtml(featuredImage)}"
-            loading="lazy"
-          >
-        </div>
+          <div class="featured-image">
+            <img src="${escapeHtml(featuredImage)}" alt="${escapeHtml(title)}" loading="lazy">
+          </div>
         `
     : ''
 }
@@ -163,7 +201,7 @@ export default async function decorate(block) {
 }
 
         ${
-  (showField('author') || showField('publicationdate'))
+  showField('author') || showField('publicationdate')
     ? `
           <div class="article-meta">
 
@@ -186,8 +224,8 @@ export default async function decorate(block) {
   showField('publicationdate')
     ? `
               <span
-                data-aue-prop="publicationDate"
-                data-aue-label="publication date"
+                data-aue-prop="date"
+                data-aue-label="date"
                 data-aue-type="text"
                 class="publication-date"
               >

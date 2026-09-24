@@ -157,6 +157,45 @@
   font-size: 1.15rem;
 }
 
+.article .article-content.left {
+  text-align: left;
+}
+
+.article .article-content.center {
+  text-align: center;
+}
+
+.article .article-content.right {
+  text-align: right;
+}
+
+.article .article-content.left .featured-image {
+  margin-left: 0;
+  margin-right: auto;
+}
+
+.article .article-content.center .featured-image {
+  margin-left: auto;
+  margin-right: auto;
+}
+
+.article .article-content.right .featured-image {
+  margin-left: auto;
+  margin-right: 0;
+}
+
+.article .article-content.left .article-meta {
+  justify-content: flex-start;
+}
+
+.article .article-content.center .article-meta {
+  justify-content: center;
+}
+
+.article .article-content.right .article-meta {
+  justify-content: flex-end;
+}
+
 /* ==========================================
    TABLET
    ========================================== */
