@@ -7,6 +7,14 @@ const escapeHtml = (value = '') => String(value)
   .replace(/"/g, '&quot;')
   .replace(/'/g, '&#39;');
 
+const DISPLAY_FIELDS = new Set([
+  'title',
+  'author',
+  'publicationdate',
+  'content',
+  'featuredimage',
+]);
+
 function getFallbackArticle(block) {
   const title = block.querySelector('h1, h2, h3, h4, h5')
     ?.textContent?.trim()
@@ -45,6 +53,32 @@ function getPathField(value) {
   return Object.entries(value || {}).find(([key]) => key === '_path')?.[1];
 }
 
+function getSelectedFields(block) {
+  const fieldsContainer = block.querySelector(':scope > div:nth-child(4)');
+  const fieldValues = [
+    fieldsContainer?.firstElementChild?.textContent || '',
+    ...(fieldsContainer
+      ? [...fieldsContainer.querySelectorAll('div')].map((field) => field.textContent)
+      : []),
+  ];
+  const fieldsValue = fieldValues.filter(Boolean).join(',');
+
+  if (!fieldsValue) {
+    return [...DISPLAY_FIELDS];
+  }
+
+  const fields = fieldsValue
+    .split(/[,|\n]/)
+    .map((field) => field.trim().toLowerCase().replace(/\s+/g, ''))
+    .filter((field) => DISPLAY_FIELDS.has(field));
+
+  if (!fields.length && DISPLAY_FIELDS.has(fieldsValue.toLowerCase().replace(/\s+/g, ''))) {
+    return [fieldsValue.toLowerCase().replace(/\s+/g, '')];
+  }
+
+  return [...new Set(fields)];
+}
+
 export default async function decorate(block) {
   const aempublishurl = getAEMPublish();
   const aemauthorurl = getAEMAuthor();
@@ -65,38 +99,8 @@ export default async function decorate(block) {
 
   const variationname = getSafeClass(getFieldValue(block, 2), 'main');
   const alignment = getSafeClass(getFieldValue(block, 3), 'left');
-
-  const fieldsContainer = block.querySelector(
-    ':scope > div:nth-child(4)',
-  );
-
-  let selectedFields = [
-    'title',
-    'author',
-    'publicationdate',
-    'content',
-  ];
-
-  if (fieldsContainer) {
-    const fieldItems = [
-      ...fieldsContainer.querySelectorAll('div'),
-    ]
-      .map((field) => field.textContent.trim().toLowerCase())
-      .filter(Boolean);
-
-    if (fieldItems.length > 0) {
-      selectedFields = fieldItems;
-    } else {
-      const textValue = fieldsContainer.textContent
-        ?.split(',')
-        ?.map((field) => field.trim().toLowerCase())
-        ?.filter(Boolean);
-
-      if (textValue?.length) {
-        selectedFields = textValue;
-      }
-    }
-  }
+  const selectedFields = getSelectedFields(block);
+  const showField = (field) => selectedFields.includes(field);
 
   if (!articlepath || (!aempublishurl && !aemauthorurl)) {
     const fallback = getFallbackArticle(block);
@@ -104,8 +108,12 @@ export default async function decorate(block) {
     block.innerHTML = `
       <div class="article-content ${variationname} ${alignment}">
         <div class="article-wrapper">
-          <h4 class="title">${escapeHtml(fallback.title)}</h4>
-          <p class="content">${escapeHtml(fallback.content.plaintext)}</p>
+          ${showField('title')
+    ? `<h4 class="title">${escapeHtml(fallback.title)}</h4>`
+    : ''}
+          ${showField('content')
+    ? `<p class="content">${escapeHtml(fallback.content.plaintext)}</p>`
+    : ''}
         </div>
       </div>
     `;
@@ -156,8 +164,6 @@ export default async function decorate(block) {
     || cfReq.image?.path
     || cfReq.image
     || '';
-
-  const showField = (field) => selectedFields.includes(field);
 
   const renderedContent = variationname === 'summary'
     ? getSummary(content)
