@@ -26,6 +26,8 @@ function getFallbackArticle(block) {
 
   return {
     title,
+    author: '',
+    date: '',
     content: {
       plaintext: description,
     },
@@ -42,13 +44,18 @@ function getSummary(text = '', limit = 150) {
 
 function getFieldValue(block, index) {
   return block.querySelector(`:scope > div:nth-child(${index}) > div`)
-    ?.textContent?.trim() || '';
+    ?.textContent?.trim()
+    || '';
 }
 
 function getSafeClass(value, fallback) {
   return /^[a-z]+$/i.test(value || '')
     ? value.toLowerCase()
     : fallback;
+}
+
+function getPathField(value) {
+  return Object.entries(value || {}).find(([key]) => key === '_path')?.[1] || '';
 }
 
 function getSelectedFields(block) {
@@ -60,13 +67,19 @@ function getSelectedFields(block) {
     return [...DISPLAY_FIELDS];
   }
 
-  const values = fieldsContainer.textContent
-    ?.split(',')
-    ?.map((field) => field.trim().toLowerCase())
-    ?.filter((field) => DISPLAY_FIELDS.has(field));
+  const textValue = fieldsContainer.textContent?.trim() || '';
 
-  return values?.length
-    ? values
+  if (!textValue) {
+    return [...DISPLAY_FIELDS];
+  }
+
+  const fields = textValue
+    .split(/[,\n]+/)
+    .map((field) => field.trim().toLowerCase())
+    .filter((field) => DISPLAY_FIELDS.has(field));
+
+  return fields.length
+    ? [...new Set(fields)]
     : [...DISPLAY_FIELDS];
 }
 
@@ -74,8 +87,7 @@ export default async function decorate(block) {
   const aempublishurl = getAEMPublish();
   const aemauthorurl = getAEMAuthor();
 
-  const persistedquery =
-    '/graphql/execute.json/aem-boilerplate-frescopa/ArticleByPath';
+  const persistedquery = '/graphql/execute.json/aem-boilerplate-frescopa/ArticleByPath';
 
   const sourceLink = block.querySelector('a[href]');
 
@@ -110,15 +122,16 @@ export default async function decorate(block) {
       <div class="article-content ${variationname} ${alignment}">
         <div class="article-wrapper">
           ${
-            showField('title')
-              ? `<h4 class="title">${escapeHtml(fallback.title)}</h4>`
-              : ''
-          }
+  showField('title')
+    ? `<h4 class="title">${escapeHtml(fallback.title)}</h4>`
+    : ''
+}
+
           ${
-            showField('content')
-              ? `<p class="content">${escapeHtml(fallback.content.plaintext)}</p>`
-              : ''
-          }
+  showField('content')
+    ? `<p class="content">${escapeHtml(fallback.content.plaintext)}</p>`
+    : ''
+}
         </div>
       </div>
     `;
@@ -130,8 +143,7 @@ export default async function decorate(block) {
     ? aemauthorurl
     : aempublishurl;
 
-  const url =
-    `${baseUrl}${persistedquery};path=${articlepath};variation=${variationname};ts=${Date.now()}`;
+  const url = `${baseUrl}${persistedquery};path=${articlepath};variation=${variationname};ts=${Date.now()}`;
 
   let cfReq = getFallbackArticle(block);
 
@@ -142,7 +154,6 @@ export default async function decorate(block) {
 
     if (response.ok) {
       const contentfragment = await response.json();
-
       const item = contentfragment?.data?.articleByPath?.item;
 
       if (item) {
@@ -150,7 +161,7 @@ export default async function decorate(block) {
       }
     }
   } catch (error) {
-    // fallback content is already available
+    // fallback already prepared
   }
 
   const title = cfReq.title || '';
@@ -163,10 +174,10 @@ export default async function decorate(block) {
 
   const content = cfReq.content?.plaintext || '';
 
-  const featuredImage = cfReq.featuredImage?._path
+  const featuredImage = getPathField(cfReq.featuredImage)
     || cfReq.featuredImage?.path
     || cfReq.featuredImage
-    || cfReq.image?._path
+    || getPathField(cfReq.image)
     || cfReq.image?.path
     || cfReq.image
     || '';
@@ -175,8 +186,7 @@ export default async function decorate(block) {
     ? getSummary(content)
     : content;
 
-  const itemId =
-    `urn:aemconnection:${articlepath}/jcr:content/data/${variationname}`;
+  const itemId = `urn:aemconnection:${articlepath}/jcr:content/data/${variationname}`;
 
   block.innerHTML = `
     <div
@@ -188,88 +198,88 @@ export default async function decorate(block) {
     >
       <div class="article-wrapper">
 
-        ${
-          showField('featuredimage') && featuredImage
-            ? `
+        ${showField('featuredimage') && featuredImage
+    ? `
               <div class="featured-image">
                 <img
-           turedImage)}"
+                  src="${escapeHtml(featuredImage)}"
+                  alt="${escapeHtml(title)}"
                   loading="lazy"
                 >
               </div>
             `
-            : ''
-        }
+    : ''
+}
 
         ${
-          showField('title')
-            ? `
+  showField('title')
+    ? `
               <h4
+                class="title"
                 data-aue-prop="title"
                 data-aue-label="title"
                 data-aue-type="text"
-                class="title"
               >
                 ${escapeHtml(title)}
               </h4>
             `
-            : ''
-        }
+    : ''
+}
 
         ${
-          showField('author') || showField('publicationdate')
-            ? `
+  showField('author') || showField('publicationdate')
+    ? `
               <div class="article-meta">
 
                 ${
-                  showField('author')
-                    ? `
+  showField('author')
+    ? `
                       <span
+                        class="author"
                         data-aue-prop="author"
                         data-aue-label="author"
                         data-aue-type="text"
-                        class="author"
                       >
                         ${escapeHtml(author)}
                       </span>
                     `
-                    : ''
-                }
+    : ''
+}
 
                 ${
-                  showField('publicationdate')
-                    ? `
+  showField('publicationdate')
+    ? `
                       <span
+                        class="publication-date"
                         data-aue-prop="date"
                         data-aue-label="date"
                         data-aue-type="text"
-                        class="publication-date"
                       >
                         ${escapeHtml(publicationDate)}
                       </span>
                     `
-                    : ''
-                }
+    : ''
+}
 
               </div>
             `
-            : ''
-        }
+    : ''
+}
 
         ${
-          showField('content')
-            ? `
+  showField('content')
+    ? `
               <p
+                class="content"
                 data-aue-prop="content"
                 data-aue-label="content"
                 data-aue-type="richtext"
-                class="content"
               >
                 ${escapeHtml(renderedContent)}
               </p>
             `
-            : ''
-        }
+    : ''
+}
 
       </div>
     </div>
