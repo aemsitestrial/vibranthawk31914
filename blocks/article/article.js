@@ -46,44 +46,36 @@ function getFieldValue(block, index) {
 }
 
 function getSafeClass(value, fallback) {
-  return /^[a-z]+$/.test(value) ? value : fallback;
-}
-
-function getPathField(value) {
-  return Object.entries(value || {}).find(([key]) => key === '_path')?.[1];
+  return /^[a-z]+$/i.test(value || '')
+    ? value.toLowerCase()
+    : fallback;
 }
 
 function getSelectedFields(block) {
-  const fieldsContainer = block.querySelector(':scope > div:nth-child(4)');
-  const fieldValues = [
-    fieldsContainer?.firstElementChild?.textContent || '',
-    ...(fieldsContainer
-      ? [...fieldsContainer.querySelectorAll('div')].map((field) => field.textContent)
-      : []),
-  ];
-  const fieldsValue = fieldValues.filter(Boolean).join(',');
+  const fieldsContainer = block.querySelector(
+    ':scope > div:nth-child(4)',
+  );
 
-  if (!fieldsValue) {
+  if (!fieldsContainer) {
     return [...DISPLAY_FIELDS];
   }
 
-  const fields = fieldsValue
-    .split(/[,|\n]/)
-    .map((field) => field.trim().toLowerCase().replace(/\s+/g, ''))
-    .filter((field) => DISPLAY_FIELDS.has(field));
+  const values = fieldsContainer.textContent
+    ?.split(',')
+    ?.map((field) => field.trim().toLowerCase())
+    ?.filter((field) => DISPLAY_FIELDS.has(field));
 
-  if (!fields.length && DISPLAY_FIELDS.has(fieldsValue.toLowerCase().replace(/\s+/g, ''))) {
-    return [fieldsValue.toLowerCase().replace(/\s+/g, '')];
-  }
-
-  return [...new Set(fields)];
+  return values?.length
+    ? values
+    : [...DISPLAY_FIELDS];
 }
 
 export default async function decorate(block) {
   const aempublishurl = getAEMPublish();
   const aemauthorurl = getAEMAuthor();
 
-  const persistedquery = '/graphql/execute.json/aem-boilerplate-frescopa/ArticleByPath';
+  const persistedquery =
+    '/graphql/execute.json/aem-boilerplate-frescopa/ArticleByPath';
 
   const sourceLink = block.querySelector('a[href]');
 
@@ -97,9 +89,18 @@ export default async function decorate(block) {
     || ''
   ).replace(/\.html$/, '');
 
-  const variationname = getSafeClass(getFieldValue(block, 2), 'main');
-  const alignment = getSafeClass(getFieldValue(block, 3), 'left');
+  const variationname = getSafeClass(
+    getFieldValue(block, 2),
+    'main',
+  );
+
+  const alignment = getSafeClass(
+    getFieldValue(block, 3),
+    'left',
+  );
+
   const selectedFields = getSelectedFields(block);
+
   const showField = (field) => selectedFields.includes(field);
 
   if (!articlepath || (!aempublishurl && !aemauthorurl)) {
@@ -108,12 +109,16 @@ export default async function decorate(block) {
     block.innerHTML = `
       <div class="article-content ${variationname} ${alignment}">
         <div class="article-wrapper">
-          ${showField('title')
-    ? `<h4 class="title">${escapeHtml(fallback.title)}</h4>`
-    : ''}
-          ${showField('content')
-    ? `<p class="content">${escapeHtml(fallback.content.plaintext)}</p>`
-    : ''}
+          ${
+            showField('title')
+              ? `<h4 class="title">${escapeHtml(fallback.title)}</h4>`
+              : ''
+          }
+          ${
+            showField('content')
+              ? `<p class="content">${escapeHtml(fallback.content.plaintext)}</p>`
+              : ''
+          }
         </div>
       </div>
     `;
@@ -125,7 +130,8 @@ export default async function decorate(block) {
     ? aemauthorurl
     : aempublishurl;
 
-  const url = `${baseUrl}${persistedquery};path=${articlepath};variation=${variationname};ts=${Date.now()}`;
+  const url =
+    `${baseUrl}${persistedquery};path=${articlepath};variation=${variationname};ts=${Date.now()}`;
 
   let cfReq = getFallbackArticle(block);
 
@@ -144,23 +150,23 @@ export default async function decorate(block) {
       }
     }
   } catch (error) {
-    // fallback content already available
+    // fallback content is already available
   }
 
-  const title = cfReq.title || 'Title';
+  const title = cfReq.title || '';
 
-  const author = cfReq.author || 'Author';
+  const author = cfReq.author || '';
 
   const publicationDate = cfReq.date
     || cfReq.publicationDate
-    || 'Date';
+    || '';
 
-  const content = cfReq.content?.plaintext || 'Content';
+  const content = cfReq.content?.plaintext || '';
 
-  const featuredImage = getPathField(cfReq.featuredImage)
+  const featuredImage = cfReq.featuredImage?._path
     || cfReq.featuredImage?.path
     || cfReq.featuredImage
-    || getPathField(cfReq.image)
+    || cfReq.image?._path
     || cfReq.image?.path
     || cfReq.image
     || '';
@@ -169,7 +175,8 @@ export default async function decorate(block) {
     ? getSummary(content)
     : content;
 
-  const itemId = `urn:aemconnection:${articlepath}/jcr:content/data/${variationname}`;
+  const itemId =
+    `urn:aemconnection:${articlepath}/jcr:content/data/${variationname}`;
 
   block.innerHTML = `
     <div
@@ -182,84 +189,87 @@ export default async function decorate(block) {
       <div class="article-wrapper">
 
         ${
-  showField('featuredimage') && featuredImage
-    ? `
-          <div class="featured-image">
-            <img src="${escapeHtml(featuredImage)}" alt="${escapeHtml(title)}" loading="lazy">
-          </div>
-        `
-    : ''
-}
-
-        ${
-  showField('title')
-    ? `
-          <h4
-            data-aue-prop="title"
-            data-aue-label="title"
-            data-aue-type="text"
-            class="title"
-          >
-            ${escapeHtml(title)}
-          </h4>
-        `
-    : ''
-}
-
-        ${
-  showField('author') || showField('publicationdate')
-    ? `
-          <div class="article-meta">
-
-            ${
-  showField('author')
-    ? `
-              <span
-                data-aue-prop="author"
-                data-aue-label="author"
-                data-aue-type="text"
-                class="author"
-              >
-                ${escapeHtml(author)}
-              </span>
+          showField('featuredimage') && featuredImage
+            ? `
+              <div class="featured-image">
+                <img
+           turedImage)}"
+                  loading="lazy"
+                >
+              </div>
             `
-    : ''
-}
-
-            ${
-  showField('publicationdate')
-    ? `
-              <span
-                data-aue-prop="date"
-                data-aue-label="date"
-                data-aue-type="text"
-                class="publication-date"
-              >
-                ${escapeHtml(publicationDate)}
-              </span>
-            `
-    : ''
-}
-
-          </div>
-        `
-    : ''
-}
+            : ''
+        }
 
         ${
-  showField('content')
-    ? `
-          <p
-            data-aue-prop="content"
-            data-aue-label="content"
-            data-aue-type="richtext"
-            class="content"
-          >
-            ${escapeHtml(renderedContent)}
-          </p>
-        `
-    : ''
-}
+          showField('title')
+            ? `
+              <h4
+                data-aue-prop="title"
+                data-aue-label="title"
+                data-aue-type="text"
+                class="title"
+              >
+                ${escapeHtml(title)}
+              </h4>
+            `
+            : ''
+        }
+
+        ${
+          showField('author') || showField('publicationdate')
+            ? `
+              <div class="article-meta">
+
+                ${
+                  showField('author')
+                    ? `
+                      <span
+                        data-aue-prop="author"
+                        data-aue-label="author"
+                        data-aue-type="text"
+                        class="author"
+                      >
+                        ${escapeHtml(author)}
+                      </span>
+                    `
+                    : ''
+                }
+
+                ${
+                  showField('publicationdate')
+                    ? `
+                      <span
+                        data-aue-prop="date"
+                        data-aue-label="date"
+                        data-aue-type="text"
+                        class="publication-date"
+                      >
+                        ${escapeHtml(publicationDate)}
+                      </span>
+                    `
+                    : ''
+                }
+
+              </div>
+            `
+            : ''
+        }
+
+        ${
+          showField('content')
+            ? `
+              <p
+                data-aue-prop="content"
+                data-aue-label="content"
+                data-aue-type="richtext"
+                class="content"
+              >
+                ${escapeHtml(renderedContent)}
+              </p>
+            `
+            : ''
+        }
 
       </div>
     </div>
