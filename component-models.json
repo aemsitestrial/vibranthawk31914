@@ -177,16 +177,59 @@
       {
         "component": "aem-content-fragment",
         "name": "articlepath",
-        "value": "",
-        "label": "Article Content Fragment path",
+        "label": "Article Content Fragment Path",
         "valueType": "string"
       },
       {
-        "component": "text-input",
+        "component": "select",
         "name": "variation",
-        "value": "",
         "label": "Variation",
-        "valueType": "string"
+        "value": "main",
+        "options": [
+          {
+            "name": "Main",
+            "value": "main"
+          },
+          {
+            "name": "Summary",
+            "value": "summary"
+          },
+          {
+            "name": "Featured",
+            "value": "featured"
+          }
+        ]
+      },
+      {
+        "component": "checkbox-group",
+        "name": "displayFields",
+        "label": "Display Fields",
+        "options": [
+          {
+            "name": "Title",
+            "value": "title"
+          },
+          {
+            "name": "Author",
+            "value": "author"
+          },
+          {
+            "name": "Publication Date",
+            "value": "publicationDate"
+          },
+          {
+            "name": "Content",
+            "value": "content"
+          },
+          {
+            "name": "Featured Image",
+            "value": "featuredImage"
+          },
+          {
+            "name": "Tags",
+            "value": "tags"
+          }
+        ]
       }
     ]
   },

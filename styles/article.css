@@ -1,52 +1,255 @@
-/**
-* Article styles
-*/
+/* ==========================================
+   ARTICLE BLOCK - BASE
+   ========================================== */
 
-/* Article header */
-main > .section.article h1 {
-    font: normal normal normal 56px/60px Baskerville, serif;
-    text-align: center;
+.article-content {
+  padding: 50px;
+  margin-bottom: 40px;
+  border-radius: 12px;
+  background: var(--tcs-color-brand);
 }
 
-main > .section.article h6 {
-    text-align: center;
-    font-family: var(--type-display-1-font);
-    font-weight: 400;
-    max-width: 940px;
-    margin: 0 auto;
+.article-content .article-wrapper {
+  max-width: 1200px;
+  margin: 0 auto;
 }
 
-main > .section.article h6 + div {
-    text-align: center;
-    color: #3d3233;
+.article-content .title {
+  margin: 0 0 20px;
+  color: #050505;
+  line-height: 1.2;
+  font-size: 2rem;
 }
 
-/* limit the width of content sections in the article  */
-
-@media (width >= 900px) {
-    main > .section.article > div.default-content-wrapper > div {
-        max-width: 840px;
-        margin: 0 auto;
-    }
+.article-content .content {
+  margin: 0;
+  color: #050505;
+  line-height: 1.7;
+  overflow-wrap: break-word;
 }
 
-/* reset the font size for lists in the article  */
-main > .section.article li {
-    font-size: inherit;
+.article-content .article-meta {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 12px;
+  margin-bottom: 16px;
+  color: #333;
+  font-size: 0.95rem;
 }
 
-/* make columns in the article more spacious and good looking  */
-main > .section.article .columns > div {
-    gap: 64px;
+.article-content .author,
+.article-content .publication-date {
+  font-weight: 500;
 }
 
-main > .section.article .columns img {
-    border-radius: 10px;
+.article-content .author::after {
+  content: "|";
+  margin-left: 12px;
+  opacity: 0.5;
 }
 
-@media (width >= 900px) {
-    main > .section.article .columns img {
-        max-width: 520px;
-        border-radius: 10px;
-    }
+.article-content .publication-date {
+  opacity: 0.8;
+}
+
+/* ==========================================
+   FEATURED IMAGE
+   ========================================== */
+
+.article-content .featured-image {
+  overflow: hidden;
+  margin-bottom: 24px;
+  border-radius: 12px;
+}
+
+.article-content .featured-image img {
+  display: block;
+  width: 100%;
+  height: auto;
+  border-radius: 12px;
+  object-fit: cover;
+}
+
+/* ==========================================
+   MAIN VARIATION
+   ========================================== */
+
+.article-content.main {
+  text-align: left;
+}
+
+.article-content.main .title {
+  font-size: 2.25rem;
+}
+
+.article-content.main .content {
+  font-size: 1.05rem;
+}
+
+/* ==========================================
+   SUMMARY VARIATION
+   ========================================== */
+
+.article-content.summary {
+  padding: 32px;
+  text-align: left;
+  transition:
+    transform 0.3s ease,
+    box-shadow 0.3s ease;
+}
+
+.article-content.summary:hover {
+  transform: translateY(-4px);
+  box-shadow: 0 12px 24px rgb(0 0 0 / 15%);
+}
+
+.article-content.summary .title {
+  margin-bottom: 12px;
+  font-size: 1.6rem;
+}
+
+.article-content.summary .content {
+  color: #444;
+  font-size: 0.95rem;
+}
+
+/* ==========================================
+   FEATURED VARIATION
+   ========================================== */
+
+.article-content.featured {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  min-height: 450px;
+  padding: 80px 60px;
+  text-align: center;
+}
+
+.article-content.featured .article-wrapper {
+  max-width: 900px;
+}
+
+.article-content.featured .featured-image {
+  max-width: 800px;
+  margin: 0 auto 32px;
+}
+
+.article-content.featured .featured-image img {
+  width: 100%;
+  max-height: 450px;
+  object-fit: cover;
+}
+
+.article-content.featured .title {
+  margin-bottom: 24px;
+  font-size: 3rem;
+}
+
+.article-content.featured .article-meta {
+  justify-content: center;
+  margin-bottom: 24px;
+}
+
+.article-content.featured .content {
+  max-width: 800px;
+  margin: 0 auto;
+  font-size: 1.15rem;
+}
+
+/* ==========================================
+   TABLET
+   ========================================== */
+
+@media (width <= 1024px) {
+  .article-content {
+    padding: 40px;
+  }
+
+  .article-content.main .title {
+    font-size: 2rem;
+  }
+
+  .article-content.featured {
+    padding: 60px 40px;
+  }
+
+  .article-content.featured .title {
+    font-size: 2.4rem;
+  }
+
+  .article-content.featured .featured-image img {
+    max-height: 360px;
+  }
+}
+
+/* ==========================================
+   MOBILE
+   ========================================== */
+
+@media (width <= 768px) {
+  .article-content {
+    padding: 24px;
+  }
+
+  .article-content.main .title,
+  .article-content.summary .title {
+    font-size: 1.5rem;
+  }
+
+  .article-content.featured {
+    min-height: auto;
+    padding: 40px 24px;
+  }
+
+  .article-content.featured .title {
+    font-size: 2rem;
+  }
+
+  .article-content.main .content,
+  .article-content.summary .content,
+  .article-content.featured .content {
+    font-size: 1rem;
+  }
+
+  .article-content .article-meta {
+    flex-direction: column;
+    gap: 8px;
+  }
+
+  .article-content .author::after {
+    content: '';
+  }
+
+  .article-content.featured .featured-image img {
+    max-height: 250px;
+  }
+}
+
+/* ==========================================
+   SMALL MOBILE
+   ========================================== */
+
+@media (width <= 480px) {
+  .article-content {
+    padding: 20px;
+    border-radius: 8px;
+  }
+
+  .article-content.main .title,
+  .article-content.summary .title {
+    font-size: 1.3rem;
+  }
+
+  .article-content.featured .title {
+    font-size: 1.75rem;
+  }
+
+  .article-content .content {
+    font-size: 0.95rem;
+  }
+
+  .article-content .featured-image {
+    margin-bottom: 16px;
+  }
 }
