@@ -1,35 +1,81 @@
 .blog-list {
     margin-top: 40px;
+}
 
-    ul {
-        display: flex;
-        flex-flow: row wrap;
-        gap: 20px;
-        padding: 0;
-        margin: 0;
-        text-decoration: none;
+.blog-list h2 {
+    margin: 0 0 24px;
+}
+
+.blog-list .blog-list-grid {
+    display: grid;
+    grid-template-columns: 1fr;
+    gap: 24px;
+    list-style: none;
+    margin: 0;
+    padding: 0;
+}
+
+.blog-list .blog-list-card {
+    overflow: hidden;
+    border-radius: 8px;
+    box-shadow: 0 2px 8px rgb(0 0 0 / 15%);
+    transition: box-shadow 0.2s ease, transform 0.2s ease;
+}
+
+.blog-list .blog-list-card:hover {
+    box-shadow: 0 8px 20px rgb(0 0 0 / 20%);
+    transform: translateY(-4px);
+}
+
+.blog-list .blog-list-card-link {
+    color: inherit;
+    display: block;
+    height: 100%;
+    text-decoration: none;
+}
+
+.blog-list .blog-list-card-image,
+.blog-list .blog-list-card-image img {
+    display: block;
+    height: auto;
+    width: 100%;
+}
+
+.blog-list .blog-list-card-image img {
+    aspect-ratio: 4 / 3;
+    object-fit: cover;
+}
+
+.blog-list .blog-list-card-body {
+    padding: 20px;
+}
+
+.blog-list .blog-list-card-body h3 {
+    margin: 0 0 12px;
+}
+
+.blog-list .blog-list-card-body p {
+    margin: 0 0 16px;
+}
+
+.blog-list .blog-list-read-more {
+    font-weight: 700;
+    text-decoration: underline;
+}
+
+.blog-list .blog-list-message {
+    grid-column: 1 / -1;
+    list-style: none;
+}
+
+@media (width >= 600px) {
+    .blog-list .blog-list-grid {
+        grid-template-columns: repeat(2, minmax(0, 1fr));
     }
+}
 
-    li {
-        list-style: none;
-        border-radius: 12px;
-        box-shadow: 0 10px 20px rgb(0 0 0 / 12%);
-        position: relative;
-        max-width: 440px;
-
-        h5 {
-            padding: 10px 20px;
-            margin: 0;
-        }
-    }
-
-    ul > li img {
-        min-width: 440px;
-        max-height: 360px;
-        height: auto;
-        aspect-ratio: 4 / 3;
-        object-fit: cover;
-        border-radius: 10px 10px 0 0;
-        overflow: hidden;
+@media (width >= 900px) {
+    .blog-list .blog-list-grid {
+        grid-template-columns: repeat(3, minmax(0, 1fr));
     }
 }

@@ -265,6 +265,13 @@
         "name": "heading",
         "label": "Heading",
         "value": ""
+      },
+      {
+        "component": "number",
+        "valueType": "number",
+        "name": "maxItems",
+        "label": "Max Items",
+        "value": 6
       }
     ]
   },
