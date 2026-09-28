@@ -1,20 +1,65 @@
 import { createOptimizedPicture } from '../../scripts/aem.js';
 
-function getField(block, name, fallback = '') {
-  const normalizedName = name.toLowerCase();
-  const prop = [...block.querySelectorAll('[data-aue-prop]')].find(
-    (element) => element.dataset.aueProp?.toLowerCase() === normalizedName,
-  );
-  if (prop) return prop.textContent.trim();
-  const dataField = Object.entries(block.dataset).find(
-    ([key]) => key.toLowerCase() === normalizedName,
-  );
-  if (dataField) return dataField[1];
+function normalizeFieldName(value) {
+  return String(value || '').toLowerCase().replace(/[^a-z0-9]/g, '');
+}
 
-  const row = [...block.children].find(
-    (child) => child.dataset?.field?.toLowerCase() === normalizedName,
-  );
-  return row?.textContent?.trim() || fallback;
+function getElementValue(element) {
+  const valueElement = element.querySelector(':scope > div:last-child, :scope > p:last-child');
+  return (valueElement || element).textContent.trim();
+}
+
+function discoverFields(block) {
+  const fields = new Map();
+  const addField = (name, value, source, priority) => {
+    const normalizedName = normalizeFieldName(name);
+    const normalizedValue = String(value || '').trim();
+    const existing = fields.get(normalizedName);
+    if (normalizedName && normalizedValue && (!existing || priority > existing.priority)) {
+      fields.set(normalizedName, { value: normalizedValue, source, priority });
+    }
+  };
+
+  Object.entries(block.dataset).forEach(([name, value]) => addField(name, value, 'block.dataset', 1));
+
+  block.querySelectorAll('[data-aue-prop]').forEach((element) => {
+    addField(element.dataset.aueProp, getElementValue(element), 'data-aue-prop', 4);
+  });
+
+  block.querySelectorAll('[data-field]').forEach((element) => {
+    addField(element.dataset.field, getElementValue(element), 'data-field', 3);
+  });
+
+  [...block.children].forEach((row, index) => {
+    const cells = [...row.children];
+    if (cells.length >= 2) {
+      addField(cells[0].textContent, cells[1].textContent, `row ${index + 1}`, 2);
+    }
+  });
+
+  return fields;
+}
+
+function logDiscoveredFields(block, fields) {
+  // Temporary diagnostics for Universal Editor and document-authoring markup.
+  // eslint-disable-next-line no-console
+  console.debug('Blog List source HTML', block.innerHTML);
+  // eslint-disable-next-line no-console
+  console.debug('Blog List dataset', { ...block.dataset });
+  // eslint-disable-next-line no-console
+  console.debug('Blog List discovered fields', Object.fromEntries(fields));
+  // eslint-disable-next-line no-console
+  console.debug('Blog List child rows', [...block.children].map((row, index) => ({
+    row: index + 1,
+    html: row.outerHTML,
+    text: row.textContent.trim(),
+    cells: [...row.children].map((cell) => cell.textContent.trim()),
+  })));
+}
+
+function getField(block, name, fallback = '', fields = discoverFields(block)) {
+  const field = fields.get(normalizeFieldName(name));
+  return field?.value || fallback;
 }
 
 function getItems(data) {
@@ -135,23 +180,34 @@ function renderCompactPosts(container, posts) {
   });
 }
 
-function getVariant(block) {
-  const variant = getField(block, 'variant', 'featured').toLowerCase();
+function getVariant(block, fields) {
+  const variant = getField(block, 'variant', 'featured', fields).toLowerCase();
   return ['featured', 'grid', 'horizontal', 'compact'].includes(variant) ? variant : 'featured';
 }
 
-function getMaxItems(block) {
-  const maxItems = Number.parseInt(getField(block, 'maxItems', '6'), 10);
+function getMaxItems(block, fields) {
+  const maxItems = Number.parseInt(getField(block, 'maxItems', '6', fields), 10);
   return Number.isFinite(maxItems) && maxItems > 0 ? maxItems : 6;
 }
 
 export default async function decorate(block) {
-  const heading = getField(block, 'heading');
-  const maxItems = getMaxItems(block);
-  const variant = getVariant(block);
+  const fields = discoverFields(block);
+  logDiscoveredFields(block, fields);
+  const heading = getField(block, 'heading', '', fields);
+  const rawMaxItems = getField(block, 'maxItems', '', fields);
+  const rawVariant = getField(block, 'variant', '', fields);
+  const maxItems = getMaxItems(block, fields);
+  const variant = getVariant(block, fields);
   const container = document.createElement('div');
   block.classList.remove('blog-list-featured', 'blog-list-grid', 'blog-list-horizontal', 'blog-list-compact');
   block.classList.add(`blog-list-${variant}`);
+
+  // eslint-disable-next-line no-console
+  console.debug('Blog List authored values', {
+    heading,
+    maxItems: rawMaxItems,
+    variant: rawVariant,
+  });
 
   block.replaceChildren();
 
