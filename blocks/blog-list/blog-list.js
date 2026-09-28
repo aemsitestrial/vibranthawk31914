@@ -1,11 +1,19 @@
 import { createOptimizedPicture } from '../../scripts/aem.js';
 
 function getField(block, name, fallback = '') {
-  const prop = block.querySelector(`[data-aue-prop="${name}"]`);
+  const normalizedName = name.toLowerCase();
+  const prop = [...block.querySelectorAll('[data-aue-prop]')].find(
+    (element) => element.dataset.aueProp?.toLowerCase() === normalizedName,
+  );
   if (prop) return prop.textContent.trim();
-  if (block.dataset[name] !== undefined) return block.dataset[name];
+  const dataField = Object.entries(block.dataset).find(
+    ([key]) => key.toLowerCase() === normalizedName,
+  );
+  if (dataField) return dataField[1];
 
-  const row = [...block.children].find((child) => child.dataset?.field === name);
+  const row = [...block.children].find(
+    (child) => child.dataset?.field?.toLowerCase() === normalizedName,
+  );
   return row?.textContent?.trim() || fallback;
 }
 
@@ -87,9 +95,14 @@ function getVariant(block) {
   return ['featured', 'grid', 'horizontal'].includes(variant) ? variant : 'featured';
 }
 
+function getMaxItems(block) {
+  const maxItems = Number.parseInt(getField(block, 'maxItems', '6'), 10);
+  return Number.isFinite(maxItems) && maxItems > 0 ? maxItems : 6;
+}
+
 export default async function decorate(block) {
   const heading = getField(block, 'heading');
-  const maxItems = Number.parseInt(getField(block, 'maxItems'), 10);
+  const maxItems = getMaxItems(block);
   const variant = getVariant(block);
   const container = document.createElement('ul');
   block.classList.add(`blog-list-${variant}`);
@@ -106,7 +119,7 @@ export default async function decorate(block) {
     let posts = (await loadPosts())
       .filter(isBlogPost)
       .sort((first, second) => Date.parse(second.publishDate) - Date.parse(first.publishDate));
-    if (Number.isFinite(maxItems) && maxItems > 0) posts = posts.slice(0, maxItems);
+    posts = posts.slice(0, maxItems);
 
     if (posts.length && variant === 'featured') renderFeaturedPosts(container, posts);
     else if (posts.length) {
