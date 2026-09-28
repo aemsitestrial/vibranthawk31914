@@ -267,13 +267,6 @@
         "value": ""
       },
       {
-        "component": "number",
-        "valueType": "number",
-        "name": "maxItems",
-        "label": "Max Items",
-        "value": 6
-      },
-      {
         "component": "select",
         "valueType": "string",
         "name": "variant",

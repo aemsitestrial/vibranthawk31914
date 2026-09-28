@@ -180,23 +180,55 @@ function renderCompactPosts(container, posts) {
   });
 }
 
-function getVariant(block, fields) {
-  const variant = getField(block, 'variant', 'featured', fields).toLowerCase();
-  return ['featured', 'grid', 'horizontal', 'compact'].includes(variant) ? variant : 'featured';
+function getAuthoredElementValue(element) {
+  if (element instanceof HTMLInputElement
+    || element instanceof HTMLSelectElement
+    || element instanceof HTMLTextAreaElement) {
+    return element.value.trim();
+  }
+
+  const control = element.querySelector('select, input, textarea');
+  if (control instanceof HTMLInputElement
+    || control instanceof HTMLSelectElement
+    || control instanceof HTMLTextAreaElement) {
+    return control.value.trim();
+  }
+
+  return element.dataset.aueValue?.trim()
+    || element.dataset.value?.trim()
+    || getElementValue(element);
 }
 
-function getMaxItems(block, fields) {
-  const maxItems = Number.parseInt(getField(block, 'maxItems', '6', fields), 10);
-  return Number.isFinite(maxItems) && maxItems > 0 ? maxItems : 6;
+function getVariantValue(block, fields) {
+  const variantProperty = [...block.querySelectorAll('[data-aue-prop]')].find(
+    (element) => normalizeFieldName(element.dataset.aueProp) === 'variant',
+  );
+  if (variantProperty) return getAuthoredElementValue(variantProperty);
+
+  const variantField = [...block.querySelectorAll('[data-field]')].find(
+    (element) => normalizeFieldName(element.dataset.field) === 'variant',
+  );
+  if (variantField) return getAuthoredElementValue(variantField);
+
+  const variantRow = [...block.children].find((row) => {
+    const [label] = row.children;
+    return normalizeFieldName(label?.textContent) === 'variant';
+  });
+  if (variantRow?.children[1]) return getAuthoredElementValue(variantRow.children[1]);
+
+  return getField(block, 'variant', 'featured', fields);
+}
+
+function getVariant(block, fields) {
+  const variant = getVariantValue(block, fields).toLowerCase();
+  return ['featured', 'grid', 'horizontal', 'compact'].includes(variant) ? variant : 'featured';
 }
 
 export default async function decorate(block) {
   const fields = discoverFields(block);
   logDiscoveredFields(block, fields);
   const heading = getField(block, 'heading', '', fields);
-  const rawMaxItems = getField(block, 'maxItems', '', fields);
-  const rawVariant = getField(block, 'variant', '', fields);
-  const maxItems = getMaxItems(block, fields);
+  const rawVariant = getVariantValue(block, fields);
   const variant = getVariant(block, fields);
   const container = document.createElement('div');
   block.classList.remove('blog-list-featured', 'blog-list-grid', 'blog-list-horizontal', 'blog-list-compact');
@@ -205,7 +237,6 @@ export default async function decorate(block) {
   // eslint-disable-next-line no-console
   console.debug('Blog List authored values', {
     heading,
-    maxItems: rawMaxItems,
     variant: rawVariant,
   });
 
@@ -218,19 +249,15 @@ export default async function decorate(block) {
   }
 
   try {
-    let posts = (await loadPosts())
+    const posts = (await loadPosts())
       .filter(isBlogPost)
       .sort((first, second) => getPublishDate(second) - getPublishDate(first));
     // eslint-disable-next-line no-console
     console.debug('Blog List configuration', {
       heading,
-      maxItems,
       variant,
-      totalPostsBeforeSlicing: posts.length,
+      totalPosts: posts.length,
     });
-    posts = posts.slice(0, maxItems);
-    // eslint-disable-next-line no-console
-    console.debug('Blog List rendered posts', { totalPostsAfterSlicing: posts.length });
 
     if (posts.length && variant === 'featured') renderFeaturedPosts(container, posts);
     else if (posts.length && variant === 'compact') {
