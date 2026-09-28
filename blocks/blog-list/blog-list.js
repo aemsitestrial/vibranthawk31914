@@ -76,7 +76,7 @@ async function loadPosts() {
 }
 
 function isBlogPost(post) {
-  return typeof post?.path === 'string';
+  return typeof post?.path === 'string' && post.path.startsWith('/blogs/');
 }
 
 function getPublishDate(post) {
@@ -199,6 +199,10 @@ function getAuthoredElementValue(element) {
     || getElementValue(element);
 }
 
+function isVariant(value) {
+  return ['featured', 'grid', 'horizontal', 'compact'].includes(value.toLowerCase());
+}
+
 function getVariantValue(block, fields) {
   const variantProperty = [...block.querySelectorAll('[data-aue-prop]')].find(
     (element) => normalizeFieldName(element.dataset.aueProp) === 'variant',
@@ -216,12 +220,18 @@ function getVariantValue(block, fields) {
   });
   if (variantRow?.children[1]) return getAuthoredElementValue(variantRow.children[1]);
 
+  const valueOnlyVariant = [...block.children]
+    .map((row) => getAuthoredElementValue(row))
+    .reverse()
+    .find((value) => isVariant(value));
+  if (valueOnlyVariant) return valueOnlyVariant;
+
   return getField(block, 'variant', 'featured', fields);
 }
 
 function getVariant(block, fields) {
   const variant = getVariantValue(block, fields).toLowerCase();
-  return ['featured', 'grid', 'horizontal', 'compact'].includes(variant) ? variant : 'featured';
+  return isVariant(variant) ? variant : 'featured';
 }
 
 export default async function decorate(block) {
