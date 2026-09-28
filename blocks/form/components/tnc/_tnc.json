@@ -48,7 +48,7 @@
                 "sling:resourceType": "core/fd/components/form/checkbox/v1/checkbox",
                 "fieldType": "checkbox",
                 "required": true,
-                "enabled": true,
+                "enabled": false,
                 "visible": true,
                 "type": "string",
                 "enum": [

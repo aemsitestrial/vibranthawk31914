@@ -31,12 +31,17 @@ async function loadPosts() {
 }
 
 function isBlogPost(post) {
-  return typeof post?.path === 'string' && post.path.startsWith('/blogs/');
+  return typeof post?.path === 'string';
 }
 
-function createPostCard(post, className, imageWidth) {
-  const li = document.createElement('li');
-  li.className = className;
+function getPublishDate(post) {
+  const timestamp = Date.parse(post?.publishDate);
+  return Number.isNaN(timestamp) ? 0 : timestamp;
+}
+
+function createPostCard(post, className, imageWidth, elementName = 'li') {
+  const card = document.createElement(elementName);
+  card.className = className;
 
   const link = document.createElement('a');
   link.href = post.path;
@@ -65,8 +70,8 @@ function createPostCard(post, className, imageWidth) {
   readMore.textContent = 'Read More';
   body.append(readMore);
   link.append(body);
-  li.append(link);
-  return li;
+  card.append(link);
+  return card;
 }
 
 function renderPosts(container, posts, className = 'blog-list-card', imageWidth = '750') {
@@ -77,9 +82,14 @@ function renderPosts(container, posts, className = 'blog-list-card', imageWidth 
 
 function renderFeaturedPosts(container, posts) {
   const [featuredPost, ...remainingPosts] = posts;
-  const featured = document.createElement('ul');
+  const featured = document.createElement('div');
   featured.className = 'blog-list-featured-hero';
-  renderPosts(featured, [featuredPost], 'blog-list-card blog-list-featured-card', '1200');
+  featured.append(createPostCard(
+    featuredPost,
+    'blog-list-card blog-list-featured-card',
+    '1200',
+    'div',
+  ));
   container.append(featured);
 
   if (remainingPosts.length) {
@@ -90,9 +100,44 @@ function renderFeaturedPosts(container, posts) {
   }
 }
 
+function renderCompactPosts(container, posts) {
+  posts.forEach((post) => {
+    const item = document.createElement('li');
+    item.className = 'blog-list-compact-item';
+
+    if (post.image) {
+      const picture = createOptimizedPicture(post.image, post.title || '', false, [{ width: '160' }]);
+      picture.className = 'blog-list-compact-image';
+      item.append(picture);
+    }
+
+    const content = document.createElement('div');
+    const link = document.createElement('a');
+    link.href = post.path;
+    link.className = 'blog-list-compact-title';
+    link.textContent = post.title || 'Untitled';
+    content.append(link);
+
+    if (post.description) {
+      const description = document.createElement('p');
+      description.className = 'blog-list-compact-description';
+      description.textContent = post.description;
+      content.append(description);
+    }
+
+    const readMore = document.createElement('a');
+    readMore.href = post.path;
+    readMore.className = 'blog-list-read-more';
+    readMore.textContent = 'Read More ->';
+    content.append(readMore);
+    item.append(content);
+    container.append(item);
+  });
+}
+
 function getVariant(block) {
   const variant = getField(block, 'variant', 'featured').toLowerCase();
-  return ['featured', 'grid', 'horizontal'].includes(variant) ? variant : 'featured';
+  return ['featured', 'grid', 'horizontal', 'compact'].includes(variant) ? variant : 'featured';
 }
 
 function getMaxItems(block) {
@@ -104,7 +149,8 @@ export default async function decorate(block) {
   const heading = getField(block, 'heading');
   const maxItems = getMaxItems(block);
   const variant = getVariant(block);
-  const container = document.createElement('ul');
+  const container = document.createElement('div');
+  block.classList.remove('blog-list-featured', 'blog-list-grid', 'blog-list-horizontal', 'blog-list-compact');
   block.classList.add(`blog-list-${variant}`);
 
   block.replaceChildren();
@@ -118,18 +164,34 @@ export default async function decorate(block) {
   try {
     let posts = (await loadPosts())
       .filter(isBlogPost)
-      .sort((first, second) => Date.parse(second.publishDate) - Date.parse(first.publishDate));
+      .sort((first, second) => getPublishDate(second) - getPublishDate(first));
+    // eslint-disable-next-line no-console
+    console.debug('Blog List configuration', {
+      heading,
+      maxItems,
+      variant,
+      totalPostsBeforeSlicing: posts.length,
+    });
     posts = posts.slice(0, maxItems);
+    // eslint-disable-next-line no-console
+    console.debug('Blog List rendered posts', { totalPostsAfterSlicing: posts.length });
 
     if (posts.length && variant === 'featured') renderFeaturedPosts(container, posts);
-    else if (posts.length) {
-      container.className = variant === 'horizontal' ? 'blog-list-horizontal-list' : 'blog-list-grid';
-      renderPosts(container, posts, variant === 'horizontal' ? 'blog-list-card blog-list-horizontal-card' : undefined);
-    } else container.innerHTML = '<li class="blog-list-message">No blog posts are available.</li>';
+    else if (posts.length && variant === 'compact') {
+      const list = document.createElement('ul');
+      list.className = 'blog-list-compact-list';
+      renderCompactPosts(list, posts);
+      container.append(list);
+    } else if (posts.length) {
+      const list = document.createElement('ul');
+      list.className = variant === 'horizontal' ? 'blog-list-horizontal-list' : 'blog-list-grid';
+      renderPosts(list, posts, variant === 'horizontal' ? 'blog-list-card blog-list-horizontal-card' : undefined);
+      container.append(list);
+    } else container.innerHTML = '<div class="blog-list-message">No blog posts are available.</div>';
   } catch (error) {
     // eslint-disable-next-line no-console
     console.error('Unable to load blog posts.', error);
-    container.innerHTML = '<li class="blog-list-message">Blog posts are currently unavailable.</li>';
+    container.innerHTML = '<div class="blog-list-message">Blog posts are currently unavailable.</div>';
   }
 
   block.append(container);

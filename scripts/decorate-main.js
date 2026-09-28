@@ -5,15 +5,6 @@ import {
   decorateSections,
 } from './aem.js';
 
-function buildAutoBlocks() {
-  try {
-    // TODO: add auto block, if needed
-  } catch (error) {
-    // eslint-disable-next-line no-console
-    console.error('Auto Blocking failed', error);
-  }
-}
-
 function a11yLinks(main) {
   const links = main.querySelectorAll('a');
   links.forEach((link) => {
@@ -29,7 +20,6 @@ function a11yLinks(main) {
 export default function decorateMain(main) {
   decorateButtons(main);
   decorateIcons(main);
-  buildAutoBlocks(main);
   decorateSections(main);
   decorateBlocks(main);
   a11yLinks(main);

@@ -46,10 +46,10 @@ class TermsAndConditions {
       const io = new IntersectionObserver(
         ([{ isIntersecting }]) => {
           if (isIntersecting) {
-            /*
-             * TODO: Enable the checkboxes that are disabled by default via the model.
-             *  Currently they are enabled by default
-             * */
+            this.fieldDiv.querySelectorAll('input[type="checkbox"]:disabled').forEach((checkbox) => {
+              checkbox.disabled = false;
+              checkbox.removeAttribute('disabled');
+            });
             io.unobserve(intersection);
           }
         },

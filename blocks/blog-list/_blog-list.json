@@ -52,6 +52,10 @@
             {
               "name": "Horizontal",
               "value": "horizontal"
+            },
+            {
+              "name": "Compact",
+              "value": "compact"
             }
           ]
         }

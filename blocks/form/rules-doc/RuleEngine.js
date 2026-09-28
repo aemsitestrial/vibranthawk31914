@@ -159,13 +159,12 @@ export default class RuleEngine {
         stack.push(...this.dependencyTree[el].deps.value);
       }
       // eslint-disable-next-line no-loop-func
-      ['visible'].forEach((prop) => {
+      ['visible', 'label'].forEach((prop) => {
         this.dependencyTree[el]?.deps[prop]?.forEach((field) => {
           arr[field] = index;
           index += 1;
         });
       });
-      // @todo add label deps as well.
     } while (stack.length > 0);
     return Object.entries(arr).sort((a, b) => a[1] - b[1]).map((_) => _[0]).slice(1);
   }
@@ -194,6 +193,13 @@ export default class RuleEngine {
       wrapper = element.closest('.field-wrapper');
     }
     wrapper.dataset.visible = value;
+  }
+
+  labelUpdate(fieldId, value) {
+    const element = this.formTag.querySelector(`#${fieldId}`);
+    const wrapper = isFieldset(element) ? element : element.closest('.field-wrapper');
+    const label = wrapper?.querySelector('.field-label');
+    if (label) label.textContent = value;
   }
 
   setData(field) {
