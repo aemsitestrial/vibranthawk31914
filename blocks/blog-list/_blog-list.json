@@ -28,6 +28,13 @@
           "value": ""
         },
         {
+          "component": "text",
+          "valueType": "string",
+          "name": "readMoreLabel",
+          "label": "Read More Label",
+          "value": ""
+        },
+        {
           "component": "select",
           "valueType": "string",
           "name": "variant",

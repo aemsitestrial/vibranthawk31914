@@ -79,29 +79,36 @@ function isBlogPost(post) {
   return typeof post?.path === 'string' && post.path.startsWith('/blogs/');
 }
 
-function getPublishDate(post) {
-  const timestamp = Date.parse(post?.publishDate);
-  return Number.isNaN(timestamp) ? 0 : timestamp;
+function getPostDate(post) {
+  const publishDate = Date.parse(post?.publishDate);
+  if (!Number.isNaN(publishDate)) return publishDate;
+
+  const lastModified = Number(post?.lastModified);
+  return Number.isFinite(lastModified) ? lastModified * 1000 : 0;
 }
 
-function createPostCard(post, className, imageWidth, elementName = 'li') {
+function createPostCard(post, className, imageWidth, readMoreLabel, elementName = 'li') {
   const card = document.createElement(elementName);
   card.className = className;
 
-  const link = document.createElement('a');
-  link.href = post.path;
-  link.className = 'blog-list-card-link';
-
   if (post.image) {
+    const imageLink = document.createElement('a');
+    imageLink.href = post.path;
+    imageLink.className = 'blog-list-card-image-link';
     const picture = createOptimizedPicture(post.image, post.title || '', false, [{ width: imageWidth }]);
     picture.className = 'blog-list-card-image';
-    link.append(picture);
+    imageLink.append(picture);
+    card.append(imageLink);
   }
 
   const body = document.createElement('div');
   body.className = 'blog-list-card-body';
   const title = document.createElement('h3');
-  title.textContent = post.title || 'Untitled';
+  const titleLink = document.createElement('a');
+  titleLink.href = post.path;
+  titleLink.className = 'blog-list-card-title';
+  titleLink.textContent = post.title || 'Untitled';
+  title.append(titleLink);
   body.append(title);
 
   if (post.description) {
@@ -110,22 +117,25 @@ function createPostCard(post, className, imageWidth, elementName = 'li') {
     body.append(description);
   }
 
-  const readMore = document.createElement('span');
-  readMore.className = 'blog-list-read-more';
-  readMore.textContent = 'Read More';
-  body.append(readMore);
-  link.append(body);
-  card.append(link);
+  if (readMoreLabel) {
+    const readMore = document.createElement('a');
+    readMore.href = post.path;
+    readMore.className = 'blog-list-read-more';
+    readMore.textContent = readMoreLabel;
+    body.append(readMore);
+  }
+
+  card.append(body);
   return card;
 }
 
-function renderPosts(container, posts, className = 'blog-list-card', imageWidth = '750') {
+function renderPosts(container, posts, readMoreLabel, className = 'blog-list-card', imageWidth = '750') {
   posts.forEach((post) => {
-    container.append(createPostCard(post, className, imageWidth));
+    container.append(createPostCard(post, className, imageWidth, readMoreLabel));
   });
 }
 
-function renderFeaturedPosts(container, posts) {
+function renderFeaturedPosts(container, posts, readMoreLabel) {
   const [featuredPost, ...remainingPosts] = posts;
   const featured = document.createElement('div');
   featured.className = 'blog-list-featured-hero';
@@ -133,6 +143,7 @@ function renderFeaturedPosts(container, posts) {
     featuredPost,
     'blog-list-card blog-list-featured-card',
     '1200',
+    readMoreLabel,
     'div',
   ));
   container.append(featured);
@@ -140,12 +151,12 @@ function renderFeaturedPosts(container, posts) {
   if (remainingPosts.length) {
     const grid = document.createElement('ul');
     grid.className = 'blog-list-grid';
-    renderPosts(grid, remainingPosts);
+    renderPosts(grid, remainingPosts, readMoreLabel);
     container.append(grid);
   }
 }
 
-function renderCompactPosts(container, posts) {
+function renderCompactPosts(container, posts, readMoreLabel) {
   posts.forEach((post) => {
     const item = document.createElement('li');
     item.className = 'blog-list-compact-item';
@@ -170,11 +181,13 @@ function renderCompactPosts(container, posts) {
       content.append(description);
     }
 
-    const readMore = document.createElement('a');
-    readMore.href = post.path;
-    readMore.className = 'blog-list-read-more';
-    readMore.textContent = 'Read More ->';
-    content.append(readMore);
+    if (readMoreLabel) {
+      const readMore = document.createElement('a');
+      readMore.href = post.path;
+      readMore.className = 'blog-list-read-more';
+      readMore.textContent = readMoreLabel;
+      content.append(readMore);
+    }
     item.append(content);
     container.append(item);
   });
@@ -234,10 +247,21 @@ function getVariant(block, fields) {
   return isVariant(variant) ? variant : 'featured';
 }
 
+function getReadMoreLabel(block, fields) {
+  const label = getField(block, 'readMoreLabel', '', fields);
+  if (label) return label;
+
+  const valueOnlyRows = [...block.children].map((row) => getAuthoredElementValue(row));
+  const variantIndex = valueOnlyRows.findLastIndex((value) => isVariant(value));
+  const value = valueOnlyRows[variantIndex - 1]?.trim() || '';
+  return /^\d+$/.test(value) ? '' : value;
+}
+
 export default async function decorate(block) {
   const fields = discoverFields(block);
   logDiscoveredFields(block, fields);
   const heading = getField(block, 'heading', '', fields);
+  const readMoreLabel = getReadMoreLabel(block, fields);
   const rawVariant = getVariantValue(block, fields);
   const variant = getVariant(block, fields);
   const container = document.createElement('div');
@@ -247,6 +271,7 @@ export default async function decorate(block) {
   // eslint-disable-next-line no-console
   console.debug('Blog List authored values', {
     heading,
+    readMoreLabel,
     variant: rawVariant,
   });
 
@@ -261,7 +286,7 @@ export default async function decorate(block) {
   try {
     const posts = (await loadPosts())
       .filter(isBlogPost)
-      .sort((first, second) => getPublishDate(second) - getPublishDate(first));
+      .sort((first, second) => getPostDate(second) - getPostDate(first));
     // eslint-disable-next-line no-console
     console.debug('Blog List configuration', {
       heading,
@@ -269,16 +294,21 @@ export default async function decorate(block) {
       totalPosts: posts.length,
     });
 
-    if (posts.length && variant === 'featured') renderFeaturedPosts(container, posts);
+    if (posts.length && variant === 'featured') renderFeaturedPosts(container, posts, readMoreLabel);
     else if (posts.length && variant === 'compact') {
       const list = document.createElement('ul');
       list.className = 'blog-list-compact-list';
-      renderCompactPosts(list, posts);
+      renderCompactPosts(list, posts, readMoreLabel);
       container.append(list);
     } else if (posts.length) {
       const list = document.createElement('ul');
       list.className = variant === 'horizontal' ? 'blog-list-horizontal-list' : 'blog-list-grid';
-      renderPosts(list, posts, variant === 'horizontal' ? 'blog-list-card blog-list-horizontal-card' : undefined);
+      renderPosts(
+        list,
+        posts,
+        readMoreLabel,
+        variant === 'horizontal' ? 'blog-list-card blog-list-horizontal-card' : undefined,
+      );
       container.append(list);
     } else container.innerHTML = '<div class="blog-list-message">No blog posts are available.</div>';
   } catch (error) {
