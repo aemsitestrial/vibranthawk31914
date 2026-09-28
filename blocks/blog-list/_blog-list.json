@@ -33,6 +33,27 @@
           "name": "maxItems",
           "label": "Max Items",
           "value": 6
+        },
+        {
+          "component": "select",
+          "valueType": "string",
+          "name": "variant",
+          "label": "Variant",
+          "value": "featured",
+          "options": [
+            {
+              "name": "Featured",
+              "value": "featured"
+            },
+            {
+              "name": "Grid",
+              "value": "grid"
+            },
+            {
+              "name": "Horizontal",
+              "value": "horizontal"
+            }
+          ]
         }
       ]
     }
