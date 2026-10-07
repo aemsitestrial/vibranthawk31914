@@ -64,7 +64,8 @@
         "text",
         "title",
 	"teaser",
-        "video"
+        "video",
+        "title-with-column"
       ]
     }
   ]
