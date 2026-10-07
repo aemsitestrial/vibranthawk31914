@@ -127,6 +127,25 @@
     ]
   },
   {
+    "id": "title-with-column",
+    "components": [
+      "left-column",
+      "right-column"
+    ]
+  },
+  {
+    "id": "left-column",
+    "components": [
+      "title"
+    ]
+  },
+  {
+    "id": "right-column",
+    "components": [
+      "text"
+    ]
+  },
+  {
     "id": "video",
     "components": []
   }

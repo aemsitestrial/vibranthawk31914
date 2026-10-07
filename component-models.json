@@ -6294,16 +6294,17 @@
     "fields": [
       {
         "component": "text",
-        "name": "title",
-        "label": "Left Side Title",
-        "valueType": "string"
+        "valueType": "number",
+        "name": "columns",
+        "value": "2",
+        "label": "Columns"
       },
       {
-        "component": "richtext",
-        "name": "content",
-        "label": "Right Side Content",
-        "value": "",
-        "valueType": "string"
+        "component": "text",
+        "valueType": "number",
+        "name": "rows",
+        "value": "1",
+        "label": "Rows"
       }
     ]
   },
