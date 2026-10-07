@@ -31,8 +31,7 @@
           "name": "content",
           "label": "Right Side Content",
           "allowedComponents": [
-            "text",
-            "topic-list"
+            "text"
           ]
         }
       ]
