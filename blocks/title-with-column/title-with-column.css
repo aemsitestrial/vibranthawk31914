@@ -1,65 +1,58 @@
 .title-with-column {
-  padding: 80px 0;
-}
-
-.title-with-column > div {
   display: grid;
   grid-template-columns: minmax(280px, 40%) 1fr;
   gap: 64px;
+  padding: 80px 0;
   align-items: start;
 }
 
-/* Left Title Column */
-.title-with-column > div > div:first-child {
-  position: sticky;
-  top: 24px;
+.title-with-column .title-column {
+  width: 100%;
 }
 
-.title-with-column > div > div:first-child h1,
-.title-with-column > div > div:first-child h2,
-.title-with-column > div > div:first-child h3 {
+.title-with-column .title-column h1,
+.title-with-column .title-column h2,
+.title-with-column .title-column h3,
+.title-with-column .title-column .title {
   margin: 0;
   font-size: clamp(2rem, 4vw, 3.5rem);
   line-height: 1.15;
   font-weight: 400;
 }
 
-/* Right Content Column */
-.title-with-column > div > div:last-child {
+.title-with-column .content-column {
   width: 100%;
 }
 
-.title-with-column > div > div:last-child > * + * {
-  margin-top: 32px;
+.title-with-column .content-column > * {
+  width: 100%;
+  margin-bottom: 32px;
 }
 
-.title-with-column > div > div:last-child p {
+.title-with-column .content-column > *:last-child {
+  margin-bottom: 0;
+}
+
+.title-with-column .content-column p {
   max-width: 75ch;
   line-height: 1.7;
 }
 
-/* Topic List or future blocks */
-.title-with-column > div > div:last-child .block {
-  max-width: 100%;
-  width: 100%;
+.title-with-column .content-column ul,
+.title-with-column .content-column ol {
+  max-width: 75ch;
 }
 
-/* Mobile */
 @media (width <= 768px) {
   .title-with-column {
+    grid-template-columns: 1fr;
+    gap: 32px;
     padding: 48px 0;
   }
 
-  .title-with-column > div {
-    grid-template-columns: 1fr;
-    gap: 32px;
-  }
-
-  .title-with-column > div > div:first-child {
-    position: static;
-  }
-
-  .title-with-column > div > div:last-child p {
+  .title-with-column .content-column p,
+  .title-with-column .content-column ul,
+  .title-with-column .content-column ol {
     max-width: 100%;
   }
 }
