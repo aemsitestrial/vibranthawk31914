@@ -33,9 +33,6 @@
       "components": [
         {
           "...": "../blocks/*/_*.json#/definitions"
-        },
-        {
-          "...": "../blocks/text-with-column/_*.json#/definitions"
         }
       ]
     }

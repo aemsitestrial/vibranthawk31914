@@ -6290,6 +6290,25 @@
     ]
   },
   {
+    "id": "title-with-column",
+    "fields": [
+      {
+        "component": "text",
+        "name": "title",
+        "label": "Left Side Title",
+        "valueType": "string"
+      },
+      {
+        "component": "container",
+        "name": "content",
+        "label": "Right Side Content",
+        "allowedComponents": [
+          "text"
+        ]
+      }
+    ]
+  },
+  {
     "id": "video",
     "fields": [
       {
