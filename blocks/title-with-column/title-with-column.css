@@ -20,19 +20,14 @@
   width: 100%;
 }
 
-.title-with-column .content-column > * {
-  width: 100%;
-  margin-bottom: 24px;
-}
-
-.title-with-column .content-column > *:last-child {
-  margin-bottom: 0;
-}
-
 .title-with-column .content-column p {
-  margin: 0;
   max-width: 75ch;
+  margin: 0 0 24px;
   line-height: 1.7;
+}
+
+.title-with-column .content-column p:last-child {
+  margin-bottom: 0;
 }
 
 .title-with-column .content-column ul,

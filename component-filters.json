@@ -127,12 +127,6 @@
     ]
   },
   {
-    "id": "title-with-column",
-    "components": [
-      "text-item"
-    ]
-  },
-  {
     "id": "video",
     "components": []
   }

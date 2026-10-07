@@ -1,7 +1,7 @@
 export default function decorate(block) {
   const rows = [...block.children];
 
-  if (!rows.length) {
+  if (rows.length < 2) {
     return;
   }
 
@@ -16,8 +16,8 @@ export default function decorate(block) {
   const contentColumn = document.createElement('div');
   contentColumn.className = 'content-column';
 
-  rows.slice(1).forEach((row) => {
-    contentColumn.append(row);
+  [...rows[1].children].forEach((child) => {
+    contentColumn.append(child);
   });
 
   block.replaceChildren(titleColumn, contentColumn);

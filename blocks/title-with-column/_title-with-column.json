@@ -9,22 +9,7 @@
             "resourceType": "core/franklin/components/block/v1/block",
             "template": {
               "name": "Title with Column",
-              "filter": "title-with-column"
-            }
-          }
-        }
-      }
-    },
-    {
-      "title": "Text Item",
-      "id": "text-item",
-      "plugins": {
-        "xwalk": {
-          "page": {
-            "resourceType": "core/franklin/components/block/v1/block/item",
-            "template": {
-              "name": "Text Item",
-              "model": "text-item"
+              "model": "title-with-column"
             }
           }
         }
@@ -40,28 +25,16 @@
           "name": "title",
           "label": "Left Side Title",
           "valueType": "string"
-        }
-      ]
-    },
-    {
-      "id": "text-item",
-      "fields": [
+        },
         {
           "component": "richtext",
-          "name": "text",
-          "label": "Text",
+          "name": "content",
+          "label": "Right Side Content",
           "value": "",
           "valueType": "string"
         }
       ]
     }
   ],
-  "filters": [
-    {
-      "id": "title-with-column",
-      "components": [
-        "text-item"
-      ]
-    }
-  ]
+  "filters": []
 }

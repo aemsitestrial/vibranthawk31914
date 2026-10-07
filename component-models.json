@@ -6297,16 +6297,11 @@
         "name": "title",
         "label": "Left Side Title",
         "valueType": "string"
-      }
-    ]
-  },
-  {
-    "id": "text-item",
-    "fields": [
+      },
       {
         "component": "richtext",
-        "name": "text",
-        "label": "Text",
+        "name": "content",
+        "label": "Right Side Content",
         "value": "",
         "valueType": "string"
       }
