@@ -129,19 +129,13 @@
   {
     "id": "title-with-column",
     "components": [
-      "left-column",
-      "right-column"
+      "column"
     ]
   },
   {
-    "id": "left-column",
+    "id": "column",
     "components": [
-      "title"
-    ]
-  },
-  {
-    "id": "right-column",
-    "components": [
+      "title",
       "text"
     ]
   },

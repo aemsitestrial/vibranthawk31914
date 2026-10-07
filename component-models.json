@@ -6290,6 +6290,25 @@
     ]
   },
   {
+    "id": "title-with-column",
+    "fields": [
+      {
+        "component": "text",
+        "valueType": "number",
+        "name": "columns",
+        "value": "2",
+        "label": "Left Column (Add Title Block Here)"
+      },
+      {
+        "component": "text",
+        "valueType": "number",
+        "name": "rows",
+        "value": "1",
+        "label": "Right Column (Add Text Blocks Here)"
+      }
+    ]
+  },
+  {
     "id": "video",
     "fields": [
       {

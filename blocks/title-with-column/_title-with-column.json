@@ -6,64 +6,48 @@
       "plugins": {
         "xwalk": {
           "page": {
-            "resourceType": "core/franklin/components/block/v1/block",
+            "resourceType": "core/franklin/components/columns/v1/columns",
             "template": {
-              "name": "Title with Column",
-              "filter": "title-with-column"
-            }
-          }
-        }
-      }
-    },
-    {
-      "title": "Left Column",
-      "id": "left-column",
-      "plugins": {
-        "xwalk": {
-          "page": {
-            "resourceType": "core/franklin/components/block/v1/block/item",
-            "template": {
-              "name": "Left Column",
-              "filter": "left-column"
-            }
-          }
-        }
-      }
-    },
-    {
-      "title": "Right Column",
-      "id": "right-column",
-      "plugins": {
-        "xwalk": {
-          "page": {
-            "resourceType": "core/franklin/components/block/v1/block/item",
-            "template": {
-              "name": "Right Column",
-              "filter": "right-column"
+              "columns": "2",
+              "rows": "1"
             }
           }
         }
       }
     }
   ],
-  "models": [],
+  "models": [
+    {
+      "id": "title-with-column",
+      "fields": [
+        {
+          "component": "text",
+          "valueType": "number",
+          "name": "columns",
+          "value": "2",
+          "label": "Left Column (Add Title Block Here)"
+        },
+        {
+          "component": "text",
+          "valueType": "number",
+          "name": "rows",
+          "value": "1",
+          "label": "Right Column (Add Text Blocks Here)"
+        }
+      ]
+    }
+  ],
   "filters": [
     {
       "id": "title-with-column",
       "components": [
-        "left-column",
-        "right-column"
+        "column"
       ]
     },
     {
-      "id": "left-column",
+      "id": "column",
       "components": [
-        "title"
-      ]
-    },
-    {
-      "id": "right-column",
-      "components": [
+        "title",
         "text"
       ]
     }
