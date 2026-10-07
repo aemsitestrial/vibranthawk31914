@@ -1,29 +1,24 @@
 export default function decorate(block) {
   const rows = [...block.children];
 
-  if (rows.length < 2) {
+  if (!rows.length) {
     return;
   }
-
-  const titleText = rows[0].querySelector('div')?.textContent?.trim() || '';
 
   const titleColumn = document.createElement('div');
   titleColumn.className = 'title-column';
 
   const heading = document.createElement('h2');
-  heading.textContent = titleText;
+  heading.textContent = rows[0]?.textContent?.trim() || '';
 
   titleColumn.append(heading);
 
   const contentColumn = document.createElement('div');
   contentColumn.className = 'content-column';
 
-  const contentRow = rows[1];
-
-  [...contentRow.children].forEach((child) => {
-    contentColumn.append(child);
+  rows.slice(1).forEach((row) => {
+    contentColumn.append(row);
   });
 
   block.replaceChildren(titleColumn, contentColumn);
-  block.classList.add('title-with-column');
 }

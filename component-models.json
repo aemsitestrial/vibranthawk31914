@@ -6297,33 +6297,18 @@
         "name": "title",
         "label": "Left Side Title",
         "valueType": "string"
-      },
-      {
-        "component": "container",
-        "name": "content",
-        "label": "Right Side Content",
-        "allowedComponents": [
-          "text"
-        ]
       }
     ]
   },
   {
-    "id": "title-with-column",
+    "id": "text-item",
     "fields": [
       {
-        "component": "text",
-        "name": "title",
-        "label": "Left Side Title",
+        "component": "richtext",
+        "name": "text",
+        "label": "Text",
+        "value": "",
         "valueType": "string"
-      },
-      {
-        "component": "container",
-        "name": "content",
-        "label": "Right Side Content",
-        "allowedComponents": [
-          "text"
-        ]
       }
     ]
   },
