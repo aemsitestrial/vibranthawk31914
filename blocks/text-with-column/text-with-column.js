@@ -1,4 +1,4 @@
-export default async function decorate(block) {
+export default function decorate(block) {
   const rows = [...block.children];
 
   if (rows.length < 2) {
@@ -6,8 +6,6 @@ export default async function decorate(block) {
   }
 
   const titleText = rows[0].querySelector('div')?.textContent?.trim() || '';
-
-  const contentRow = rows[1];
 
   const titleColumn = document.createElement('div');
   titleColumn.className = 'title-column';
@@ -20,14 +18,12 @@ export default async function decorate(block) {
   const contentColumn = document.createElement('div');
   contentColumn.className = 'content-column';
 
-  [...contentRow.children].forEach((item) => {
-    contentColumn.append(item);
+  const contentRow = rows[1];
+
+  [...contentRow.children].forEach((child) => {
+    contentColumn.append(child);
   });
 
-  block.innerHTML = '';
-
-  block.append(titleColumn);
-  block.append(contentColumn);
-
+  block.replaceChildren(titleColumn, contentColumn);
   block.classList.add('title-with-column');
 }
