@@ -1,36 +1,46 @@
+/* Title with Column */
+
 .title-with-column {
   padding: 96px 0;
 }
 
 .title-with-column > div {
   display: grid;
-  grid-template-columns: minmax(280px, 38%) 1fr;
+  grid-template-columns: minmax(320px, 38%) 1fr;
   gap: 120px;
   align-items: start;
 }
 
-/* Left Column */
+/* LEFT COLUMN */
+
 .title-with-column > div > div:first-child {
   position: sticky;
   top: 48px;
   align-self: start;
 }
 
-.title-with-column > div > div:first-child h1,
-.title-with-column > div > div:first-child h2,
-.title-with-column > div > div:first-child h3 {
-  margin: 0;
-  font-size: clamp(3rem, 4vw, 4.25rem);
-  font-weight: 700;
-  line-height: 1.05;
-  letter-spacing: -0.04em;
-  max-width: 12ch;
+.title-with-column > div > div:first-child .title,
+.title-with-column > div > div:first-child .title-wrapper {
+  width: 100%;
 }
 
-/* Right Column */
+.title-with-column > div > div:first-child h1,
+.title-with-column > div > div:first-child h2,
+.title-with-column > div > div:first-child h3,
+.title-with-column > div > div:first-child h4 {
+  margin: 0 !important;
+  font-size: 4rem !important;
+  font-weight: 700 !important;
+  line-height: 1.05 !important;
+  letter-spacing: -0.04em !important;
+  max-width: 11ch;
+}
+
+/* RIGHT COLUMN */
+
 .title-with-column > div > div:last-child {
   width: 100%;
-  max-width: 760px;
+  max-width: 780px;
 }
 
 .title-with-column > div > div:last-child > * + * {
@@ -38,18 +48,46 @@
 }
 
 .title-with-column > div > div:last-child p {
+  margin: 0;
+  max-width: 75ch;
   font-size: 1.125rem;
   line-height: 1.7;
-  margin: 0;
+}
+
+.title-with-column > div > div:last-child ul,
+.title-with-column > div > div:last-child ol {
   max-width: 75ch;
 }
 
-/* Any future blocks */
 .title-with-column > div > div:last-child .block {
   width: 100%;
 }
 
-/* Mobile */
+/* TOPIC LIST SUPPORT */
+
+.title-with-column > div > div:last-child .topic-list,
+.title-with-column > div > div:last-child .topic-list-wrapper {
+  width: 100%;
+  max-width: none;
+}
+
+/* TABLET */
+
+@media (width <= 1024px) {
+  .title-with-column > div {
+    gap: 72px;
+  }
+
+  .title-with-column > div > div:first-child h1,
+  .title-with-column > div > div:first-child h2,
+  .title-with-column > div > div:first-child h3,
+  .title-with-column > div > div:first-child h4 {
+    font-size: 3.5rem !important;
+  }
+}
+
+/* MOBILE */
+
 @media (width <= 768px) {
   .title-with-column {
     padding: 56px 0;
@@ -66,8 +104,9 @@
 
   .title-with-column > div > div:first-child h1,
   .title-with-column > div > div:first-child h2,
-  .title-with-column > div > div:first-child h3 {
-    font-size: 2.5rem;
+  .title-with-column > div > div:first-child h3,
+  .title-with-column > div > div:first-child h4 {
+    font-size: 2.5rem !important;
     max-width: 100%;
   }
 
@@ -75,8 +114,9 @@
     max-width: 100%;
   }
 
-  .title-with-column > div > div:last-child p {
+  .title-with-column > div > div:last-child p,
+  .title-with-column > div > div:last-child ul,
+  .title-with-column > div > div:last-child ol {
     max-width: 100%;
-    font-size: 1rem;
   }
 }
