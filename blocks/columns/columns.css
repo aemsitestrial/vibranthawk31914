@@ -32,10 +32,12 @@
   }
 }
 
-/* Title With Column */
+/* ========================================
+   Title With Column
+   ======================================== */
 
 .columns[data-aue-component="title-with-column"] {
-  padding: 48px 0;
+  padding: 40px 0;
 }
 
 .columns[data-aue-component="title-with-column"] > div {
@@ -47,9 +49,9 @@
     gap: 120px;
   }
 
-  /* Left column */
+  /* Left Column */
   .columns[data-aue-component="title-with-column"] > div > div:first-child {
-    flex: 0 0 42%;
+    flex: 0 0 32%;
     align-self: flex-start;
   }
 
@@ -58,13 +60,14 @@
   .columns[data-aue-component="title-with-column"] > div > div:first-child h3,
   .columns[data-aue-component="title-with-column"] > div > div:first-child h4 {
     margin: 0;
-    font-size: 3.25rem;
+    font-size: 52px;
     font-weight: 400;
     line-height: 1.05;
-    letter-spacing: -0.03em;
+    letter-spacing: -0.02em;
+    max-width: 10ch;
   }
 
-  /* Right column */
+  /* Right Column */
   .columns[data-aue-component="title-with-column"] > div > div:last-child {
     flex: 1;
   }
@@ -72,7 +75,8 @@
   .columns[data-aue-component="title-with-column"] > div > div:last-child p {
     margin: 0;
     max-width: 65ch;
-    font-size: 1rem;
+    font-size: 16px;
+    font-weight: 400;
     line-height: 1.5;
   }
 
@@ -82,6 +86,10 @@
 }
 
 @media (width < 900px) {
+  .columns[data-aue-component="title-with-column"] {
+    padding: 32px 0;
+  }
+
   .columns[data-aue-component="title-with-column"] > div {
     gap: 32px;
   }
@@ -90,6 +98,7 @@
   .columns[data-aue-component="title-with-column"] > div > div:first-child h2,
   .columns[data-aue-component="title-with-column"] > div > div:first-child h3,
   .columns[data-aue-component="title-with-column"] > div > div:first-child h4 {
-    font-size: 2.5rem;
+    font-size: 40px;
+    font-weight: 400;
   }
 }
