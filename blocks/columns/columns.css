@@ -1,6 +1,44 @@
-/* ==========================
+.columns > div {
+  display: flex;
+  flex-direction: column;
+}
+
+.columns img {
+  width: 100%;
+}
+
+.columns > div > div {
+  order: 1;
+}
+
+.columns > div > .columns-img-col {
+  order: 0;
+}
+
+.columns > div > .columns-img-col img {
+  display: block;
+}
+
+@media (width >= 900px) {
+  .columns > div {
+    align-items: center;
+    flex-direction: row;
+    gap: 24px;
+  }
+
+  .columns > div > div {
+    flex: 1;
+    order: unset;
+  }
+}
+
+/* ========================================
    Title With Column Variant
-   ========================== */
+   ======================================== */
+
+.columns.title-with-column {
+  padding: 96px 0;
+}
 
 @media (width >= 900px) {
   .columns.title-with-column > div {
@@ -10,12 +48,7 @@
     align-items: start !important;
   }
 
-  .columns.title-with-column > div > div {
-    flex: unset !important;
-    width: auto;
-  }
-
-  /* Left column */
+  /* Left Column */
   .columns.title-with-column > div > div:first-child {
     position: sticky;
     top: 48px;
@@ -27,18 +60,14 @@
   .columns.title-with-column > div > div:first-child h3,
   .columns.title-with-column > div > div:first-child h4 {
     margin: 0;
-    font-size: clamp(3rem, 4vw, 4.5rem) !important;
-    font-weight: 700 !important;
-    line-height: 1.05 !important;
+    font-size: clamp(3rem, 4vw, 4.5rem);
+    font-weight: 700;
+    line-height: 1.05;
     letter-spacing: -0.04em;
     max-width: 12ch;
   }
 
-  /* Right column */
-  .columns.title-with-column > div > div:last-child {
-    max-width: 800px;
-  }
-
+  /* Right Column */
   .columns.title-with-column > div > div:last-child > * + * {
     margin-top: 32px;
   }
@@ -54,12 +83,18 @@
   .columns.title-with-column > div > div:last-child ol {
     max-width: 75ch;
   }
+
+  .columns.title-with-column > div > div:last-child .block {
+    width: 100%;
+  }
 }
 
 @media (width < 900px) {
+  .columns.title-with-column {
+    padding: 56px 0;
+  }
+
   .columns.title-with-column > div {
-    display: flex;
-    flex-direction: column;
     gap: 32px;
   }
 
@@ -71,7 +106,7 @@
   .columns.title-with-column > div > div:first-child h2,
   .columns.title-with-column > div > div:first-child h3,
   .columns.title-with-column > div > div:first-child h4 {
-    font-size: 2.5rem !important;
+    font-size: 2.5rem;
     max-width: 100%;
   }
 
