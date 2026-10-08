@@ -60,8 +60,10 @@
   {
     "id": "column",
     "components": [
-      "title",
-      "text"
+      "text",
+      "image",
+      "button",
+      "title"
     ]
   },
   {

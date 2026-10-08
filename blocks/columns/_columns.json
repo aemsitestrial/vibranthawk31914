@@ -33,22 +33,6 @@
           "name": "rows",
           "value": "",
           "label": "Rows"
-        },
-        {
-          "component": "select",
-          "name": "variant",
-          "label": "Variant",
-          "value": "",
-          "options": [
-            {
-              "name": "Default",
-              "value": ""
-            },
-            {
-              "name": "Title with Column",
-              "value": "title-with-column"
-            }
-          ]
         }
       ]
     }
@@ -63,8 +47,10 @@
     {
       "id": "column",
       "components": [
-        "title",
-        "text"
+        "text",
+        "image",
+        "button",
+        "title"
       ]
     }
   ]
