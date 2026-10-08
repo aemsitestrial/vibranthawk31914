@@ -48,7 +48,8 @@
       "id": "column",
       "components": [
         "title",
-        "text"
+        "text",
+        "title-with-column"
       ]
     }
   ]

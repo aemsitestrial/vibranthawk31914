@@ -50,6 +50,7 @@
         "cards",
         "carousel",
         "columns",
+        "cta",
 	"dm-video",
 	"dm-scene7-template",
         "embed",
@@ -65,7 +66,8 @@
         "title",
 	"teaser",
         "video",
-        "title-with-column"
+        "title-with-column",
+        "topic-list"
       ]
     }
   ]

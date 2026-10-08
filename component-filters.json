@@ -15,6 +15,7 @@
       "cards",
       "carousel",
       "columns",
+      "cta",
       "dm-video",
       "dm-scene7-template",
       "embed",
@@ -30,7 +31,8 @@
       "title",
       "teaser",
       "video",
-      "title-with-column"
+      "title-with-column",
+      "topic-list"
     ]
   },
   {
@@ -136,7 +138,14 @@
     "id": "column",
     "components": [
       "title",
-      "text"
+      "text",
+      "title-with-column"
+    ]
+  },
+  {
+    "id": "topic-list",
+    "components": [
+      "cta"
     ]
   },
   {
