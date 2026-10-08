@@ -139,7 +139,7 @@
     "components": [
       "title",
       "text",
-      "title-with-column"
+      "topic-list"
     ]
   },
   {
