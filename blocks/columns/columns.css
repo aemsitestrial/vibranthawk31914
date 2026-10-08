@@ -1,57 +1,83 @@
-.columns {
-  border: 5px solid red !important;
-}
-
-.columns > div {
-  display: flex;
-  flex-direction: column;
-}
-
-.columns img {
-  width: 100%;
-}
-
-.columns > div > div {
-  order: 1;
-}
-
-.columns > div > .columns-img-col {
-  order: 0;
-}
-
-.columns > div > .columns-img-col img {
-  display: block;
-}
-
-.columns.title-with-column > div {
-  display: grid;
-  grid-template-columns: minmax(320px, 38%) 1fr;
-  gap: 120px;
-  align-items: start;
-}
-
-.columns.title-with-column > div > div:first-child {
-  position: sticky;
-  top: 48px;
-}
-
-.columns.title-with-column h1,
-.columns.title-with-column h2,
-.columns.title-with-column h3 {
-  font-size: 4rem;
-  font-weight: 700;
-  line-height: 1.05;
-}
+/* ==========================
+   Title With Column Variant
+   ========================== */
 
 @media (width >= 900px) {
-  .columns > div {
-    align-items: center;
-    flex-direction: unset;
-    gap: 24px;
+  .columns.title-with-column > div {
+    display: grid !important;
+    grid-template-columns: minmax(320px, 36%) 1fr !important;
+    gap: 96px !important;
+    align-items: start !important;
   }
 
-  .columns > div > div {
-    flex: 1;
-    order: unset;
+  .columns.title-with-column > div > div {
+    flex: unset !important;
+    width: auto;
+  }
+
+  /* Left column */
+  .columns.title-with-column > div > div:first-child {
+    position: sticky;
+    top: 48px;
+    align-self: start;
+  }
+
+  .columns.title-with-column > div > div:first-child h1,
+  .columns.title-with-column > div > div:first-child h2,
+  .columns.title-with-column > div > div:first-child h3,
+  .columns.title-with-column > div > div:first-child h4 {
+    margin: 0;
+    font-size: clamp(3rem, 4vw, 4.5rem) !important;
+    font-weight: 700 !important;
+    line-height: 1.05 !important;
+    letter-spacing: -0.04em;
+    max-width: 12ch;
+  }
+
+  /* Right column */
+  .columns.title-with-column > div > div:last-child {
+    max-width: 800px;
+  }
+
+  .columns.title-with-column > div > div:last-child > * + * {
+    margin-top: 32px;
+  }
+
+  .columns.title-with-column > div > div:last-child p {
+    margin: 0;
+    max-width: 75ch;
+    font-size: 1.125rem;
+    line-height: 1.7;
+  }
+
+  .columns.title-with-column > div > div:last-child ul,
+  .columns.title-with-column > div > div:last-child ol {
+    max-width: 75ch;
+  }
+}
+
+@media (width < 900px) {
+  .columns.title-with-column > div {
+    display: flex;
+    flex-direction: column;
+    gap: 32px;
+  }
+
+  .columns.title-with-column > div > div:first-child {
+    position: static;
+  }
+
+  .columns.title-with-column > div > div:first-child h1,
+  .columns.title-with-column > div > div:first-child h2,
+  .columns.title-with-column > div > div:first-child h3,
+  .columns.title-with-column > div > div:first-child h4 {
+    font-size: 2.5rem !important;
+    max-width: 100%;
+  }
+
+  .columns.title-with-column > div > div:last-child p,
+  .columns.title-with-column > div > div:last-child ul,
+  .columns.title-with-column > div > div:last-child ol {
+    max-width: 100%;
   }
 }
