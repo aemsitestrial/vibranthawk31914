@@ -23,6 +23,26 @@
   display: block;
 }
 
+.columns.title-with-column > div {
+  display: grid;
+  grid-template-columns: minmax(320px, 38%) 1fr;
+  gap: 120px;
+  align-items: start;
+}
+
+.columns.title-with-column > div > div:first-child {
+  position: sticky;
+  top: 48px;
+}
+
+.columns.title-with-column h1,
+.columns.title-with-column h2,
+.columns.title-with-column h3 {
+  font-size: 4rem;
+  font-weight: 700;
+  line-height: 1.05;
+}
+
 @media (width >= 900px) {
   .columns > div {
     align-items: center;
