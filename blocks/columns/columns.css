@@ -36,12 +36,30 @@
    Title With Column
    ======================================== */
 
+.columns-2-cols h1[id],
+.columns-2-cols h2[id],
+.columns-2-cols h3[id],
+.columns-2-cols h4[id],
+.columns-2-cols h5[id],
+.columns-2-cols h6[id] {
+  font-size: 46px !important;
+  font-weight: 200 !important;
+  line-height: 1.05 !important;
+  letter-spacing: -0.03em !important;
+  margin: 0 !important;
+  font-family: inherit !important;
+}
+
 .columns[data-aue-component="title-with-column"] {
   padding: 40px 0;
 }
 
 .columns[data-aue-component="title-with-column"] > div {
-  align-items: flex-start;
+  align-items: flex-start !important;
+}
+
+.columns[data-aue-component="title-with-column"] > div > div:first-child {
+  align-self: flex-start !important;
 }
 
 @media (width >= 900px) {
@@ -50,39 +68,59 @@
   }
 
   /* Left Column */
-  .columns[data-aue-component="title-with-column"] > div > div:first-child {
+
+  /* .columns[data-aue-component="title-with-column"] > div > div:first-child {
     flex: 0 0 32%;
     align-self: flex-start;
+  } */
+   .columns-2-cols > div > div:first-child {
+    align-self: flex-start;
+    padding-top: 24px;
   }
 
   .columns[data-aue-component="title-with-column"] > div > div:first-child h1,
   .columns[data-aue-component="title-with-column"] > div > div:first-child h2,
   .columns[data-aue-component="title-with-column"] > div > div:first-child h3,
   .columns[data-aue-component="title-with-column"] > div > div:first-child h4 {
-    margin: 0;
-    font-size: 52px;
-    font-weight: 400;
-    line-height: 1.05;
-    letter-spacing: -0.02em;
+    margin: 0 !important;
+    font-family: Arial, Helvetica, sans-serif !important;
+    font-size: 52px !important;
+    font-weight: 400 !important;
+    line-height: 1.05 !important;
+    letter-spacing: -0.02em !important;
     max-width: 10ch;
   }
 
   /* Right Column */
+  
   .columns[data-aue-component="title-with-column"] > div > div:last-child {
     flex: 1;
   }
-
-  .columns[data-aue-component="title-with-column"] > div > div:last-child p {
+   
+  /* .columns[data-aue-component="title-with-column"] > div > div:last-child p {
     margin: 0;
     max-width: 65ch;
-    font-size: 16px;
+    font-size: 20px;
     font-weight: 400;
     line-height: 1.5;
-  }
+  }  */
 
-  .columns[data-aue-component="title-with-column"] > div > div:last-child > * + * {
+  .columns-2-cols > div > div:last-child p {
+    max-width: 65ch !important;
+    font-family: Arial, Helvetica, sans-serif !important;
+    font-size: 22px !important;
+    font-weight: 400 !important;
+    line-height: 1.5 !important;
+    margin: 30px !important;
+  } 
+ 
+  /* .columns[data-aue-component="title-with-column"] > div > div:last-child > * + * {
     margin-top: 48px;
-  }
+  } */
+
+  .columns-2-cols > div > div:last-child > * + * {
+  margin-top: 48px;
+}
 }
 
 @media (width < 900px) {
@@ -94,11 +132,13 @@
     gap: 32px;
   }
 
-  .columns[data-aue-component="title-with-column"] > div > div:first-child h1,
-  .columns[data-aue-component="title-with-column"] > div > div:first-child h2,
-  .columns[data-aue-component="title-with-column"] > div > div:first-child h3,
-  .columns[data-aue-component="title-with-column"] > div > div:first-child h4 {
-    font-size: 40px;
-    font-weight: 400;
+  .columns-2-cols h1[id],
+  .columns-2-cols h2[id],
+  .columns-2-cols h3[id],
+  .columns-2-cols h4[id],
+  .columns-2-cols h5[id],
+  .columns-2-cols h6[id] {
+    font-size: 40px !important;
   }
+
 }
