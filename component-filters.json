@@ -139,6 +139,7 @@
     "components": [
       "title",
       "text",
+      "cta",
       "topic-list"
     ]
   },
