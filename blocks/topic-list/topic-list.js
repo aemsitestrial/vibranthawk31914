@@ -1,13 +1,22 @@
 export default function decorate(block) {
-  const rows = [...block.children];
+  block.classList.add('topic-list');
 
-  block.textContent = '';
+  const items = [...block.children];
 
-  rows.forEach((row) => {
-    const cells = [...row.children];
+  if (!items.length) return;
 
-    const text = cells[0]?.textContent.trim();
-    const href = cells[1]?.querySelector('a')?.getAttribute('href');
+  const fragment = document.createDocumentFragment();
+
+  items.forEach((item) => {
+    const cells = [...item.children];
+
+    if (cells.length < 2) return;
+
+    const text = cells[0]?.textContent?.trim();
+
+    const linkEl = cells[1]?.querySelector('a');
+
+    const href = linkEl?.getAttribute('href');
 
     if (!text || !href) return;
 
@@ -24,11 +33,16 @@ export default function decorate(block) {
 
     const arrow = document.createElement('span');
     arrow.className = 'topic-list-arrow';
+    arrow.setAttribute('aria-hidden', 'true');
     arrow.textContent = '→';
 
     link.append(label, arrow);
     wrapper.append(link);
 
-    block.append(wrapper);
+    fragment.append(wrapper);
   });
+
+  if (fragment.childNodes.length) {
+    block.replaceChildren(fragment);
+  }
 }
