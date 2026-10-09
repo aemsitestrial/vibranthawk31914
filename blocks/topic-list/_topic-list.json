@@ -15,6 +15,21 @@
           }
         }
       }
+    },
+    {
+      "title": "CTA",
+      "id": "topic-list-cta",
+      "plugins": {
+        "xwalk": {
+          "page": {
+            "resourceType": "core/franklin/components/block/v1/block/item",
+            "template": {
+              "name": "cta",
+              "model": "cta"
+            }
+          }
+        }
+      }
     }
   ],
   "models": [
@@ -27,7 +42,7 @@
     {
       "id": "topic-list",
       "components": [
-        "cta"
+        "topic-list-cta"
       ]
     }
   ]
