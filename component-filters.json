@@ -65,7 +65,9 @@
       "text",
       "image",
       "button",
-      "title"
+      "title",
+      "quote",
+      "demo-card-column-item"
     ]
   },
   {
