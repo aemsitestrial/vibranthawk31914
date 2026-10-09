@@ -36,6 +36,12 @@
         },
         {
           "...": "../blocks/title-with-column/_*.json#/definitions"
+        },
+        {
+          "...": "../blocks/topic-list/_*.json#/definitions"
+        },
+        {
+          "...": "../blocks/cta/_*.json#/definitions"
         }
       ]
     }
