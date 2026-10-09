@@ -1,34 +1,34 @@
-import {
-  decorateBlock,
-  loadBlock,
-} from '../../scripts/aem.js';
+export default function decorate(block) {
+  const rows = [...block.children];
 
-function normalizeCtaBlock(nestedBlock) {
-  if (nestedBlock.dataset.blockName === 'cta') return;
+  block.textContent = '';
 
-  const classes = [...nestedBlock.classList].filter((className) => (
-    className !== 'topic-list-cta' && className !== 'cta'
-  ));
+  rows.forEach((row) => {
+    const cells = [...row.children];
 
-  nestedBlock.className = ['cta', ...classes].join(' ');
-  delete nestedBlock.dataset.blockName;
-  delete nestedBlock.dataset.blockStatus;
-}
+    const text = cells[0]?.textContent.trim();
+    const href = cells[1]?.querySelector('a')?.getAttribute('href');
 
-export default async function decorate(block) {
-  block.classList.add('topic-list');
+    if (!text || !href) return;
 
-  const nestedBlocks = block.querySelectorAll(
-    '[data-block-name="cta"], [data-block-name="topic-list-cta"], .cta, .topic-list-cta',
-  );
+    const wrapper = document.createElement('div');
+    wrapper.className = 'topic-list-item-wrapper';
 
-  nestedBlocks.forEach((nestedBlock) => {
-    normalizeCtaBlock(nestedBlock);
-    nestedBlock.classList.add('topic-list-item');
-    decorateBlock(nestedBlock);
+    const link = document.createElement('a');
+    link.className = 'topic-list-link';
+    link.href = href;
+
+    const label = document.createElement('span');
+    label.className = 'topic-list-text';
+    label.textContent = text;
+
+    const arrow = document.createElement('span');
+    arrow.className = 'topic-list-arrow';
+    arrow.textContent = '→';
+
+    link.append(label, arrow);
+    wrapper.append(link);
+
+    block.append(wrapper);
   });
-
-  await Promise.all(
-    [...nestedBlocks].map((nestedBlock) => loadBlock(nestedBlock)),
-  );
 }
