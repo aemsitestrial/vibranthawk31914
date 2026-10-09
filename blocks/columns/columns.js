@@ -88,7 +88,7 @@ export default async function decorate(block) {
     }
   });
 
-  const nestedBlocks = block.querySelectorAll('.cta');
+  const nestedBlocks = block.querySelectorAll('.cta, .topic-list');
 
   nestedBlocks.forEach((nestedBlock) => {
     decorateBlock(nestedBlock);
