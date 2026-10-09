@@ -1,8 +1,6 @@
 import { decorateBlock, loadBlock } from '../../scripts/aem.js';
 
 function normalizeTopicListCta(block) {
-  if (!block.classList.contains('topic-list-cta')) return;
-
   const classes = [...block.classList].filter((className) => (
     className !== 'topic-list-cta' && className !== 'cta'
   ));
@@ -13,7 +11,7 @@ function normalizeTopicListCta(block) {
 }
 
 export default async function decorate(block) {
-  block.classList.add('topic-list-container');
+  block.classList.add('topic-list');
 
   const nestedBlocks = block.querySelectorAll(':scope .cta, :scope .topic-list-cta');
 
