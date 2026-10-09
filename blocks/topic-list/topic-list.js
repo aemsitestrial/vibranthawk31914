@@ -11,7 +11,7 @@ function normalizeTopicListCta(block) {
 }
 
 export default async function decorate(block) {
-  block.classList.add('topic-list');
+  block.classList.add('topic-list-container');
 
   const nestedBlocks = block.querySelectorAll(':scope .cta, :scope .topic-list-cta');
 
