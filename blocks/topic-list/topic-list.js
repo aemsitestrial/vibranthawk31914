@@ -1,24 +1,33 @@
 export default function decorate(block) {
   block.classList.add('topic-list');
+  if (block.dataset.topicListRendered === 'true') {
+    return;
+  }
 
   const items = [...block.children];
 
-  if (!items.length) return;
+  if (!items.length) {
+    return;
+  }
 
   const fragment = document.createDocumentFragment();
 
   items.forEach((item) => {
     const cells = [...item.children];
 
-    if (cells.length < 2) return;
+    if (cells.length < 2) {
+      return;
+    }
 
     const text = cells[0]?.textContent?.trim();
 
-    const linkEl = cells[1]?.querySelector('a');
+    const href = cells[1]
+      ?.querySelector('a')
+      ?.getAttribute('href');
 
-    const href = linkEl?.getAttribute('href');
-
-    if (!text || !href) return;
+    if (!text || !href) {
+      return;
+    }
 
     const wrapper = document.createElement('div');
     wrapper.className = 'topic-list-item-wrapper';
@@ -38,11 +47,11 @@ export default function decorate(block) {
 
     link.append(label, arrow);
     wrapper.append(link);
-
     fragment.append(wrapper);
   });
 
   if (fragment.childNodes.length) {
     block.replaceChildren(fragment);
+    block.dataset.topicListRendered = 'true';
   }
 }
