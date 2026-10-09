@@ -19,7 +19,7 @@ export default function decorate(block) {
     const href = link.getAttribute('href');
 
     row.innerHTML = `
-      ${href}
+      <a href="${href}">
         <span class="topic-list-text">${text}</span>
         <span class="topic-list-arrow">→</span>
       </a>
