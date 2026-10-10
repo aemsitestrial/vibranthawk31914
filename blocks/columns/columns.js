@@ -88,15 +88,15 @@ export default async function decorate(block) {
     }
   });
 
-const nestedBlocks = block.querySelectorAll(
-  '[data-block-name="topic-list"]',
-);
+  const nestedBlocks = block.querySelectorAll(
+    '[data-block-name="topic-list"]',
+  );
 
-nestedBlocks.forEach((nestedBlock) => {
-  decorateBlock(nestedBlock);
-});
+  nestedBlocks.forEach((nestedBlock) => {
+    decorateBlock(nestedBlock);
+  });
 
-await Promise.all(
-  [...nestedBlocks].map((nestedBlock) => loadBlock(nestedBlock)),
-);
+  await Promise.all(
+    [...nestedBlocks].map((nestedBlock) => loadBlock(nestedBlock)),
+  );
 }
