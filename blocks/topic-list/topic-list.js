@@ -1,6 +1,4 @@
 export default function decorate(block) {
-    console.log("js loaded for topic-list block");
-    console.log(block);
   block.classList.add('topic-list');
 
   [...block.children].forEach((row) => {
@@ -28,6 +26,5 @@ export default function decorate(block) {
     `;
 
     row.classList.add('topic-list-item');
-    block.appendChild(row);
   });
 }
