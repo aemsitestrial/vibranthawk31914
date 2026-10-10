@@ -1234,6 +1234,21 @@
           }
         },
         {
+          "title": "CTA",
+          "id": "topic-list-cta",
+          "plugins": {
+            "xwalk": {
+              "page": {
+                "resourceType": "core/franklin/components/block/v1/block/item",
+                "template": {
+                  "name": "topic-list-cta",
+                  "model": "topic-list-cta"
+                }
+              }
+            }
+          }
+        },
+        {
           "title": "Video",
           "id": "video",
           "plugins": {
