@@ -12,7 +12,7 @@
   justify-content: space-between;
   width: 100%;
   padding: 24px 0;
-  color: #b61212 !important;
+  color: black !important;
   text-decoration: none !important;
   font-family: Arial, Helvetica, sans-serif;
   font-size: 20px;
@@ -22,7 +22,7 @@
 
 .topic-list-text {
   flex: 1;
-  color: #e80909 !important;
+  color: black !important;
 }
 
 .topic-list-arrow {

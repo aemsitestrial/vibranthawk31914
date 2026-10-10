@@ -148,7 +148,7 @@
   {
     "id": "topic-list",
     "components": [
-      "topic-list-cta"
+      "cta"
     ]
   },
   {
