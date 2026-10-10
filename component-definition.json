@@ -1235,7 +1235,7 @@
         },
         {
           "title": "CTA",
-          "id": "cta",
+          "id": "topic-list-cta",
           "plugins": {
             "xwalk": {
               "page": {

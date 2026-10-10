@@ -18,7 +18,7 @@
     },
     {
       "title": "CTA",
-      "id": "cta",
+      "id": "topic-list-cta",
       "plugins": {
         "xwalk": {
           "page": {
@@ -42,7 +42,7 @@
     {
       "id": "topic-list",
       "components": [
-        "cta"
+        "topic-list-cta"
       ]
     }
   ]
