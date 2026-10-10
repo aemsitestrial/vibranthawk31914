@@ -1,12 +1,14 @@
 export default function decorate(block) {
+    console.log("js loaded for topic-list block");
+    console.log(block);
   block.classList.add('topic-list');
 
   [...block.children].forEach((row) => {
     const cells = [...row.children];
 
-    if (cells.length < 2) {
-      return;
-    }
+    // if (cells.length < 2) {
+    //   return;
+    // }
 
     const text = cells[0]?.textContent.trim();
 
@@ -26,5 +28,6 @@ export default function decorate(block) {
     `;
 
     row.classList.add('topic-list-item');
+    block.appendChild(row);
   });
 }
