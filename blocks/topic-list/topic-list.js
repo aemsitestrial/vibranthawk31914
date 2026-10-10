@@ -4,9 +4,9 @@ export default function decorate(block) {
   [...block.children].forEach((row) => {
     const cells = [...row.children];
 
-    // if (cells.length < 2) {
-    //   return;
-    // }
+    if (cells.length < 2) {
+      return;
+    }
 
     const text = cells[0]?.textContent.trim();
 

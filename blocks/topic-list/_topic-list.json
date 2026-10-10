@@ -24,8 +24,8 @@
           "page": {
             "resourceType": "core/franklin/components/block/v1/block/item",
             "template": {
-              "name": "topic-list-cta",
-              "model": "topic-list-cta"
+              "name": "cta",
+              "model": "cta"
             }
           }
         }
@@ -34,25 +34,8 @@
   ],
   "models": [
     {
-      "id": "topic-list-cta",
-      "fields": [
-        {
-          "component": "text",
-          "valueType": "string",
-          "name": "text_cta",
-          "label": "CTA Text",
-          "value": "",
-          "required": true
-        },
-        {
-          "component": "aem-content", 
-          "valueType": "string",
-          "name": "ctaLink",
-          "label": "CTA Link",
-          "value": "",
-          "required": true
-        }
-      ]
+      "id": "topic-list",
+      "fields": []
     }
   ],
   "filters": [

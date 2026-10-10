@@ -1241,8 +1241,8 @@
               "page": {
                 "resourceType": "core/franklin/components/block/v1/block/item",
                 "template": {
-                  "name": "topic-list-cta",
-                  "model": "topic-list-cta"
+                  "name": "cta",
+                  "model": "cta"
                 }
               }
             }
