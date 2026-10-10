@@ -26,5 +26,7 @@ export default function decorate(block) {
     `;
 
     row.classList.add('topic-list-item');
+    block.innerHTML = '';
+    block.append(row);
   });
 }
