@@ -57,6 +57,23 @@
           "label": "Attribution",
           "value": "",
           "filter": "richtext"
+        },
+        {
+          "component": "select",
+          "name": "background",
+          "label": "Background Color",
+          "valueType": "string",
+          "value": "white",
+          "options": [
+            {
+              "name": "White",
+              "value": "white"
+            },
+            {
+              "name": "Grey",
+              "value": "grey"
+            }
+          ]
         }
       ]
     }

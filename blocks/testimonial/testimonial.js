@@ -9,22 +9,25 @@ export default function decorate(block) {
 
   const attribution = block.children[4]?.firstElementChild;
 
+  const background = block.children[5]?.textContent?.trim().toLowerCase();
+
   const wrapper = document.createElement('div');
   wrapper.className = 'testimonial-wrapper';
 
-  // Top Text
+  if (background === 'grey') {
+    wrapper.classList.add('grey');
+  }
+
   if (showEyebrow && eyebrow?.textContent.trim()) {
     eyebrow.classList.add('testimonial-eyebrow');
     wrapper.append(eyebrow);
   }
 
-  // Quote (mandatory)
   if (quotation) {
     quotation.classList.add('testimonial-quote');
     wrapper.append(quotation);
   }
 
-  // Attribution
   if (showAttribution && attribution?.textContent.trim()) {
     attribution.classList.add('testimonial-attribution');
     wrapper.append(attribution);
