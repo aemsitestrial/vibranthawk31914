@@ -1234,36 +1234,6 @@
           }
         },
         {
-          "title": "CTA",
-          "id": "text-section-cta",
-          "plugins": {
-            "xwalk": {
-              "page": {
-                "resourceType": "core/franklin/components/block/v1/block/item",
-                "template": {
-                  "name": "cta",
-                  "model": "cta"
-                }
-              }
-            }
-          }
-        },
-        {
-          "title": "Topic List",
-          "id": "text-section-topic-list",
-          "plugins": {
-            "xwalk": {
-              "page": {
-                "resourceType": "core/franklin/components/block/v1/block/item",
-                "template": {
-                  "name": "topic-list",
-                  "model": "topic-list"
-                }
-              }
-            }
-          }
-        },
-        {
           "title": "Title with Column",
           "id": "title-with-column",
           "plugins": {
