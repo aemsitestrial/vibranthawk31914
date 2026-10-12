@@ -1,30 +1,50 @@
 export default function decorate(block) {
   block.classList.add('topic-list');
 
-  [...block.children].forEach((row) => {
-    const cells = [...row.children];
+  const rows = [...block.children];
 
-    if (cells.length < 2) {
-      return;
+  if (!rows.length) {
+    return;
+  }
+
+  const title = rows[0].textContent.trim();
+
+  let rightContent = '';
+
+  rows.slice(1).forEach((row) => {
+    const link = row.querySelector('a');
+
+    if (link) {
+      rightContent += `
+        <div class="topic-list-item">
+          ${link.href}
+            <span class="topic-list-item-title">
+              ${link.textContent.trim()}
+            </span>
+            <span class="topic-list-arrow">→</span>
+          </a>
+        </div>
+      `;
+    } else {
+      const text = row.textContent.trim();
+
+      if (text) {
+        rightContent += `
+          <div class="topic-list-text">
+            ${text}
+          </div>
+        `;
+      }
     }
-
-    const text = cells[0]?.textContent.trim();
-
-    const link = cells[1]?.querySelector('a');
-
-    if (!text || !link) {
-      return;
-    }
-
-    const href = link.getAttribute('href');
-
-    row.innerHTML = `
-      <a href="${href}">
-        <span class="topic-list-text">${text}</span>
-        <span class="topic-list-arrow">→</span>
-      </a>
-    `;
-
-    row.classList.add('topic-list-item');
   });
+
+  block.innerHTML = `
+    <div class="topic-list-left">
+      <h2>${title}</h2>
+    </div>
+
+    <div class="topic-list-right">
+      ${rightContent}
+    </div>
+  `;
 }

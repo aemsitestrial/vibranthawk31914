@@ -42,6 +42,8 @@
     {
       "id": "topic-list",
       "components": [
+        "title",
+        "text",
         "topic-list-cta"
       ]
     }
