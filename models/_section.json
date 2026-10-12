@@ -67,7 +67,8 @@
 	"teaser",
         "video",
         "title-with-column",
-        "topic-list"
+        "topic-list",
+        "text-section"
       ]
     }
   ]

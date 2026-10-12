@@ -6485,6 +6485,14 @@
     ]
   },
   {
+    "id": "text-section",
+    "fields": []
+  },
+  {
+    "id": "partition",
+    "fields": []
+  },
+  {
     "id": "title-with-column",
     "fields": [
       {

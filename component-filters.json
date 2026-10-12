@@ -32,7 +32,8 @@
       "teaser",
       "video",
       "title-with-column",
-      "topic-list"
+      "topic-list",
+      "text-section"
     ]
   },
   {
@@ -128,6 +129,20 @@
     "id": "tabs",
     "components": [
       "tabs-item"
+    ]
+  },
+  {
+    "id": "text-section",
+    "components": [
+      "text-section-partition"
+    ]
+  },
+  {
+    "id": "text-section-partition",
+    "components": [
+      "title",
+      "text",
+      "cta"
     ]
   },
   {
