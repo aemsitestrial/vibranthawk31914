@@ -132,6 +132,17 @@
     ]
   },
   {
+    "id": "richtext",
+    "components": [
+      "richtext"
+    ],
+    "rte": {
+      "toolbar": {
+        "format": []
+      }
+    }
+  },
+  {
     "id": "text-section",
     "components": [
       "partition"

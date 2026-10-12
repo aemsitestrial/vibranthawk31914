@@ -40,6 +40,7 @@
     },
     {
       "id": "partition",
+      "title": "Partition",
       "fields": []
     }
   ],

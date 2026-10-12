@@ -6485,11 +6485,55 @@
     ]
   },
   {
+    "id": "testimonial",
+    "fields": [
+      {
+        "component": "boolean",
+        "valueType": "boolean",
+        "name": "showEyebrow",
+        "label": "Show Top Text",
+        "value": true
+      },
+      {
+        "component": "richtext",
+        "valueType": "string",
+        "name": "eyebrow",
+        "label": "Top Text",
+        "value": "",
+        "filter": "richtext"
+      },
+      {
+        "component": "richtext",
+        "valueType": "string",
+        "name": "quotation",
+        "label": "Quote",
+        "value": "",
+        "filter": "richtext"
+      },
+      {
+        "component": "boolean",
+        "valueType": "boolean",
+        "name": "showAttribution",
+        "label": "Show Attribution",
+        "value": true
+      },
+      {
+        "component": "richtext",
+        "valueType": "string",
+        "name": "attribution",
+        "label": "Attribution",
+        "value": "",
+        "filter": "richtext"
+      }
+    ]
+  },
+  {
     "id": "text-section",
     "fields": []
   },
   {
     "id": "partition",
+    "title": "Partition",
     "fields": []
   },
   {
