@@ -1,33 +1,33 @@
-.quote .quote-wrapper {
+.testimonial .testimonial-wrapper {
   max-width: 1000px;
   margin: 0 auto;
   padding: 40px 24px;
   text-align: center;
 }
 
-.quote .quote-eyebrow {
+.testimonial .testimonial-eyebrow {
   margin-bottom: 24px;
   font-size: 20px;
   line-height: 1.4;
   color: #444;
 }
 
-.quote .quote-text {
+.testimonial .testimonial-quote {
   color: #4f7cff;
   font-size: 56px;
   line-height: 1.3;
   font-weight: 400;
 }
 
-.quote .quote-text p:first-child::before {
+.testimonial .testimonial-quote p:first-child::before {
   content: "“";
 }
 
-.quote .quote-text p:last-child::after {
+.testimonial .testimonial-quote p:last-child::after {
   content: "”";
 }
 
-.quote .quote-attribution {
+.testimonial .testimonial-attribution {
   margin-top: 32px;
   font-size: 22px;
   line-height: 1.5;
@@ -35,21 +35,21 @@
 }
 
 @media (width <= 900px) {
-  .quote .quote-text {
+  .testimonial .testimonial-quote {
     font-size: 40px;
   }
 
-  .quote .quote-attribution {
+  .testimonial .testimonial-attribution {
     font-size: 18px;
   }
 }
 
 @media (width <= 600px) {
-  .quote .quote-text {
+  .testimonial .testimonial-quote {
     font-size: 32px;
   }
 
-  .quote .quote-eyebrow {
+  .testimonial .testimonial-eyebrow {
     font-size: 16px;
   }
 }
