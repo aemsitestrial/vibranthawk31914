@@ -35,7 +35,8 @@
       "topic-list",
       "text-section",
       "testimonial",
-      "two-column-layout"
+      "two-column-layout",
+      "test-block"
     ]
   },
   {
@@ -131,6 +132,12 @@
     "id": "tabs",
     "components": [
       "tabs-item"
+    ]
+  },
+  {
+    "id": "test-block",
+    "components": [
+      "text"
     ]
   },
   {
