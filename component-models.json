@@ -6580,6 +6580,19 @@
     "fields": []
   },
   {
+    "id": "two-column-layout-text",
+    "fields": [
+      {
+        "component": "richtext",
+        "valueType": "string",
+        "name": "text",
+        "label": "Rich Text",
+        "value": "",
+        "filter": "richtext"
+      }
+    ]
+  },
+  {
     "id": "video",
     "fields": [
       {

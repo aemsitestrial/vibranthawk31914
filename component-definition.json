@@ -1334,9 +1334,10 @@
           "plugins": {
             "xwalk": {
               "page": {
-                "resourceType": "core/franklin/components/text/v1/text",
+                "resourceType": "core/franklin/components/block/v1/block/item",
                 "template": {
-                  "filter": "richtext"
+                  "name": "Rich Text",
+                  "model": "two-column-layout-text"
                 }
               }
             }
