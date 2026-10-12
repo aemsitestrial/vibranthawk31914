@@ -169,7 +169,9 @@
   {
     "id": "topic-list",
     "components": [
-      "topic-list-cta"
+      "title",
+      "text",
+      "topic-list-cta-item"
     ]
   },
   {

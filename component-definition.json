@@ -1287,7 +1287,7 @@
               "page": {
                 "resourceType": "core/franklin/components/block/v1/block/item",
                 "template": {
-                  "name": "CTA",
+                  "name": "cta",
                   "model": "cta"
                 }
               }

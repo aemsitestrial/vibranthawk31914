@@ -24,7 +24,7 @@
           "page": {
             "resourceType": "core/franklin/components/block/v1/block/item",
             "template": {
-              "name": "CTA",
+              "name": "cta",
               "model": "cta"
             }
           }
@@ -42,7 +42,9 @@
     {
       "id": "topic-list",
       "components": [
-        "topic-list-cta"
+        "title",
+        "text",
+        "topic-list-cta-item"
       ]
     }
   ]
