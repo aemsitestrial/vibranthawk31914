@@ -148,8 +148,7 @@
     "components": [
       "title",
       "text",
-      "cta",
-      "topic-list"
+      "text-section-cta"
     ]
   },
   {
