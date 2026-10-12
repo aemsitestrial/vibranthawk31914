@@ -17,6 +17,18 @@
       }
     },
     {
+      "title": "Content",
+      "id": "two-column-layout-text",
+      "plugins": {
+        "xwalk": {
+          "page": {
+            "resourceType": "core/franklin/components/text/v1/text",
+            "template": {}
+          }
+        }
+      }
+    },
+    {
       "title": "CTA",
       "id": "two-column-layout-cta",
       "plugins": {
@@ -26,21 +38,6 @@
             "template": {
               "name": "cta",
               "model": "cta"
-            }
-          }
-        }
-      }
-    },
-    {
-      "title": "Right Side Text",
-      "id": "two-column-layout-text",
-      "plugins": {
-        "xwalk": {
-          "page": {
-            "resourceType": "core/franklin/components/block/v1/block/item",
-            "template": {
-              "name": "text",
-              "model": "text"
             }
           }
         }

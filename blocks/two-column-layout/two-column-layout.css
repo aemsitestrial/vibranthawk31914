@@ -3,7 +3,10 @@
   grid-template-columns: minmax(280px, 360px) 1fr;
   gap: 6rem;
   align-items: start;
+  width: 100%;
 }
+
+/* Left Column */
 
 .two-column-layout-left h1,
 .two-column-layout-left h2,
@@ -12,23 +15,35 @@
 .two-column-layout-left h5,
 .two-column-layout-left h6 {
   margin: 0;
+  color: #222;
   font-size: clamp(2.5rem, 3vw, 4rem);
   line-height: 1.1;
   font-weight: 400;
-  color: #222;
+}
+
+/* Right Column */
+
+.two-column-layout-right {
+  display: flex;
+  flex-direction: column;
 }
 
 .two-column-layout-right p {
   margin: 0 0 24px;
+  color: #222;
+  font-size: 18px;
   line-height: 1.7;
 }
 
+/* CTA Styling */
+
 .two-column-layout-right .cta {
   width: 100%;
+  margin: 0;
   border-top: 1px solid #d8d8d8;
 }
 
-.two-column-layout-right .cta:last-child {
+.two-column-layout-right .cta:last-of-type {
   border-bottom: 1px solid #d8d8d8;
 }
 
@@ -36,6 +51,16 @@
 .two-column-layout-right .cta .cta-link {
   width: 100%;
 }
+
+/* CTA spacing */
+
+.two-column-layout-right .cta:first-of-type {
+  margin-top: 2rem;
+  margin-bottom: 2rem;
+}
+
+
+/* Mobile */
 
 @media (width <= 768px) {
   .two-column-layout {
