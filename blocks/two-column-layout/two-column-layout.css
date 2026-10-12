@@ -5,12 +5,6 @@
   align-items: start;
 }
 
-/* Left Column */
-
-.two-column-layout-left {
-  grid-column: 1;
-}
-
 .two-column-layout-left h1,
 .two-column-layout-left h2,
 .two-column-layout-left h3,
@@ -18,30 +12,19 @@
 .two-column-layout-left h5,
 .two-column-layout-left h6 {
   margin: 0;
-  color: #222;
   font-size: clamp(2.5rem, 3vw, 4rem);
   line-height: 1.1;
   font-weight: 400;
-}
-
-/* Right Column */
-
-.two-column-layout-right {
-  grid-column: 2;
+  color: #222;
 }
 
 .two-column-layout-right p {
   margin: 0 0 24px;
-  color: #222;
-  font-size: 18px;
   line-height: 1.7;
 }
 
-/* CTA Rows */
-
 .two-column-layout-right .cta {
   width: 100%;
-  margin: 0;
   border-top: 1px solid #d8d8d8;
 }
 
@@ -49,23 +32,14 @@
   border-bottom: 1px solid #d8d8d8;
 }
 
-/* Keep existing CTA styling */
-
 .two-column-layout-right .cta a,
 .two-column-layout-right .cta .cta-link {
   width: 100%;
 }
 
-/* Mobile */
-
 @media (width <= 768px) {
   .two-column-layout {
     grid-template-columns: 1fr;
     gap: 2rem;
-  }
-
-  .two-column-layout-left,
-  .two-column-layout-right {
-    grid-column: auto;
   }
 }

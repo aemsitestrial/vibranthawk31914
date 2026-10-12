@@ -1,13 +1,21 @@
 export default function decorate(block) {
   block.classList.add('two-column-layout');
 
-  const items = [...block.children];
+  const left = document.createElement('div');
+  left.className = 'two-column-layout-left';
 
-  if (!items.length) return;
+  const right = document.createElement('div');
+  right.className = 'two-column-layout-right';
 
-  items[0].classList.add('two-column-layout-left');
+  const children = [...block.children];
 
-  items.slice(1).forEach((item) => {
-    item.classList.add('two-column-layout-right');
+  children.forEach((child, index) => {
+    if (index === 0) {
+      left.appendChild(child);
+    } else {
+      right.appendChild(child);
+    }
   });
+
+  block.replaceChildren(left, right);
 }

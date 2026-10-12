@@ -30,6 +30,21 @@
           }
         }
       }
+    },
+    {
+      "title": "Right Side Text",
+      "id": "two-column-layout-text",
+      "plugins": {
+        "xwalk": {
+          "page": {
+            "resourceType": "core/franklin/components/block/v1/block/item",
+            "template": {
+              "name": "text",
+              "model": "text"
+            }
+          }
+        }
+      }
     }
   ],
   "models": [
@@ -43,7 +58,7 @@
       "id": "two-column-layout",
       "components": [
         "title",
-        "text",
+        "two-column-layout-text",
         "two-column-layout-cta"
       ]
     }
