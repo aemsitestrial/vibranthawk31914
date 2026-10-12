@@ -1,0 +1,88 @@
+{
+  "definitions": [
+    {
+      "title": "Two Column Layout",
+      "id": "two-column-layout",
+      "plugins": {
+        "xwalk": {
+          "page": {
+            "resourceType": "core/franklin/components/block/v1/block",
+            "template": {
+              "name": "two-column-layout",
+              "model": "two-column-layout",
+              "filter": "two-column-layout"
+            }
+          }
+        }
+      }
+    },
+    {
+      "title": "Left Section",
+      "id": "left-section",
+      "plugins": {
+        "xwalk": {
+          "page": {
+            "resourceType": "core/franklin/components/block/v1/block",
+            "template": {
+              "name": "left-section",
+              "model": "left-section",
+              "filter": "left-section"
+            }
+          }
+        }
+      }
+    },
+    {
+      "title": "Right Section",
+      "id": "right-section",
+      "plugins": {
+        "xwalk": {
+          "page": {
+            "resourceType": "core/franklin/components/block/v1/block",
+            "template": {
+              "name": "right-section",
+              "model": "right-section",
+              "filter": "right-section"
+            }
+          }
+        }
+      }
+    }
+  ],
+  "models": [
+    {
+      "id": "two-column-layout",
+      "fields": []
+    },
+    {
+      "id": "left-section",
+      "fields": []
+    },
+    {
+      "id": "right-section",
+      "fields": []
+    }
+  ],
+  "filters": [
+    {
+      "id": "two-column-layout",
+      "components": [
+        "left-section",
+        "right-section"
+      ]
+    },
+    {
+      "id": "left-section",
+      "components": [
+        "title"
+      ]
+    },
+    {
+      "id": "right-section",
+      "components": [
+        "text",
+        "cta"
+      ]
+    }
+  ]
+}

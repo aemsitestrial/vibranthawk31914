@@ -6572,6 +6572,18 @@
     "fields": []
   },
   {
+    "id": "two-column-layout",
+    "fields": []
+  },
+  {
+    "id": "left-section",
+    "fields": []
+  },
+  {
+    "id": "right-section",
+    "fields": []
+  },
+  {
     "id": "video",
     "fields": [
       {

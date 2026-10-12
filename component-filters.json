@@ -34,7 +34,8 @@
       "title-with-column",
       "topic-list",
       "text-section",
-      "testimonial"
+      "testimonial",
+      "two-column-layout"
     ]
   },
   {
@@ -172,6 +173,26 @@
       "title",
       "text",
       "topic-list-cta-item"
+    ]
+  },
+  {
+    "id": "two-column-layout",
+    "components": [
+      "left-section",
+      "right-section"
+    ]
+  },
+  {
+    "id": "left-section",
+    "components": [
+      "title"
+    ]
+  },
+  {
+    "id": "right-section",
+    "components": [
+      "text",
+      "cta"
     ]
   },
   {
