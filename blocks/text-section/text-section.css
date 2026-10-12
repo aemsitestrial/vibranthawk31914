@@ -5,60 +5,51 @@
   align-items: start;
 }
 
-/* Left side title */
+/* Left side */
 
-.text-section > div:first-child {
-  max-width: 360px;
-}
-
-.text-section > div:first-child h1,
-.text-section > div:first-child h2,
-.text-section > div:first-child h3,
-.text-section > div:first-child h4,
-.text-section > div:first-child h5,
-.text-section > div:first-child h6 {
+.text-section-left h1,
+.text-section-left h2,
+.text-section-left h3,
+.text-section-left h4,
+.text-section-left h5,
+.text-section-left h6 {
   margin: 0;
-  color: #1a1a1a;
   font-size: clamp(2.5rem, 3vw, 4rem);
   line-height: 1.1;
   font-weight: 400;
+  color: #222;
 }
 
 /* Right side content */
 
-.text-section > div:last-child {
-  display: flex;
-  flex-direction: column;
+.text-section-right-item {
+  grid-column: 2;
 }
 
-.text-section > div:last-child p {
-  margin: 0 0 24px;
-  color: #222;
+/* Text */
+
+.text-section-right-item p {
+  margin: 0 0 1.5rem;
   font-size: 1.125rem;
   line-height: 1.7;
+  color: #222;
 }
 
 /* CTA rows */
 
-.text-section .cta {
+.text-section-right-item.cta {
   width: 100%;
-  margin: 0;
   border-top: 1px solid #d9d9d6;
 }
 
-.text-section .cta:last-of-type {
+.text-section-right-item.cta:last-of-type {
   border-bottom: 1px solid #d9d9d6;
-  margin-bottom: 32px;
-  margin-top: 32px;
 }
 
-/* Let existing CTA occupy full width */
-
-.text-section .cta a,
-.text-section .cta .cta-link {
+.text-section-right-item.cta a,
+.text-section-right-item.cta .cta-link {
   width: 100%;
 }
-
 
 /* Mobile */
 
@@ -68,7 +59,7 @@
     gap: 2rem;
   }
 
-  .text-section > div:first-child {
-    max-width: none;
+  .text-section-right-item {
+    grid-column: auto;
   }
 }
