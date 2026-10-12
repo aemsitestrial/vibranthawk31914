@@ -178,21 +178,9 @@
   {
     "id": "two-column-layout",
     "components": [
-      "left-section",
-      "right-section"
-    ]
-  },
-  {
-    "id": "left-section",
-    "components": [
-      "title"
-    ]
-  },
-  {
-    "id": "right-section",
-    "components": [
+      "title",
       "text",
-      "cta"
+      "two-column-layout-cta"
     ]
   },
   {
