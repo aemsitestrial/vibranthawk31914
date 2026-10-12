@@ -6489,11 +6489,7 @@
     "fields": []
   },
   {
-    "id": "left-partition",
-    "fields": []
-  },
-  {
-    "id": "right-partition",
+    "id": "partition",
     "fields": []
   },
   {

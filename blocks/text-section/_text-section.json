@@ -17,30 +17,16 @@
       }
     },
     {
-      "title": "Left Partition",
-      "id": "left-partition",
+      "title": "Partition",
+      "id": "text-section-partition",
       "plugins": {
         "xwalk": {
           "page": {
-            "resourceType": "core/franklin/components/block/v1/block/item",
+            "resourceType": "core/franklin/components/block/v1/block",
             "template": {
-              "name": "left-partition",
-              "model": "left-partition"
-            }
-          }
-        }
-      }
-    },
-    {
-      "title": "Right Partition",
-      "id": "right-partition",
-      "plugins": {
-        "xwalk": {
-          "page": {
-            "resourceType": "core/franklin/components/block/v1/block/item",
-            "template": {
-              "name": "right-partition",
-              "model": "right-partition"
+              "name": "partition",
+              "model": "partition",
+              "filter": "partition"
             }
           }
         }
@@ -53,11 +39,7 @@
       "fields": []
     },
     {
-      "id": "left-partition",
-      "fields": []
-    },
-    {
-      "id": "right-partition",
+      "id": "partition",
       "fields": []
     }
   ],
@@ -65,19 +47,13 @@
     {
       "id": "text-section",
       "components": [
-        "left-partition",
-        "right-partition"
+        "text-section-partition"
       ]
     },
     {
-      "id": "left-partition",
+      "id": "partition",
       "components": [
-        "title"
-      ]
-    },
-    {
-      "id": "right-partition",
-      "components": [
+        "title",
         "text",
         "cta"
       ]

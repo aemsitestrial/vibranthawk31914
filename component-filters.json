@@ -134,19 +134,13 @@
   {
     "id": "text-section",
     "components": [
-      "left-partition",
-      "right-partition"
+      "text-section-partition"
     ]
   },
   {
-    "id": "left-partition",
+    "id": "partition",
     "components": [
-      "title"
-    ]
-  },
-  {
-    "id": "right-partition",
-    "components": [
+      "title",
       "text",
       "cta"
     ]
