@@ -15,7 +15,9 @@
             "xwalk": {
               "page": {
                 "resourceType": "core/franklin/components/text/v1/text",
-                "template": {}
+                "template": {
+                  "filter": "richtext"
+                }
               }
             }
           }
