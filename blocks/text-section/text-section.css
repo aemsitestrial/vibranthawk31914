@@ -3,33 +3,36 @@
   grid-template-columns: minmax(280px, 360px) 1fr;
   gap: 6rem;
   align-items: start;
-  width: 100%;
 }
 
-.text-section-partition {
+/* Left side title */
+
+.text-section > div:first-child {
+  max-width: 360px;
+}
+
+.text-section > div:first-child h1,
+.text-section > div:first-child h2,
+.text-section > div:first-child h3,
+.text-section > div:first-child h4,
+.text-section > div:first-child h5,
+.text-section > div:first-child h6 {
+  margin: 0;
+  color: #1a1a1a;
+  font-size: clamp(2.5rem, 3vw, 4rem);
+  line-height: 1.1;
+  font-weight: 400;
+}
+
+/* Right side content */
+
+.text-section > div:last-child {
   display: flex;
   flex-direction: column;
 }
 
-/* Left Partition */
-
-.text-section-partition:first-child h1,
-.text-section-partition:first-child h2,
-.text-section-partition:first-child h3,
-.text-section-partition:first-child h4,
-.text-section-partition:first-child h5,
-.text-section-partition:first-child h6 {
-  margin: 0;
-  font-size: clamp(2.5rem, 3vw, 4rem);
-  line-height: 1.1;
-  font-weight: 400;
-  color: #222;
-}
-
-/* Right Partition */
-
-.text-section-partition:last-child p {
-  margin: 0 0 1.5rem;
+.text-section > div:last-child p {
+  margin: 0 0 24px;
   color: #222;
   font-size: 1.125rem;
   line-height: 1.7;
@@ -37,28 +40,23 @@
 
 /* CTA rows */
 
-.text-section-partition:last-child .cta {
+.text-section .cta {
   width: 100%;
   margin: 0;
-  border-top: 1px solid #d8d8d8;
+  border-top: 1px solid #d9d9d6;
 }
 
-.text-section-partition:last-child .cta:last-child {
-  border-bottom: 1px solid #d8d8d8;
+.text-section .cta:last-of-type {
+  border-bottom: 1px solid #d9d9d6;
+  margin-bottom: 32px;
+  margin-top: 32px;
 }
 
-/* Keep existing CTA styles */
+/* Let existing CTA occupy full width */
 
-.text-section-partition:last-child .cta a,
-.text-section-partition:last-child .cta .cta-link {
+.text-section .cta a,
+.text-section .cta .cta-link {
   width: 100%;
-}
-
-/* CTA spacing */
-
-.text-section-partition:last-child .cta:first-of-type {
-  margin-top: 2rem;
-  margin-bottom: 2rem;
 }
 
 
@@ -68,5 +66,9 @@
   .text-section {
     grid-template-columns: 1fr;
     gap: 2rem;
+  }
+
+  .text-section > div:first-child {
+    max-width: none;
   }
 }

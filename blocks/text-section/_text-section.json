@@ -17,16 +17,15 @@
       }
     },
     {
-      "title": "Partition",
-      "id": "partition",
+      "title": "CTA",
+      "id": "text-section-cta",
       "plugins": {
         "xwalk": {
           "page": {
-            "resourceType": "core/franklin/components/block/v1/block",
+            "resourceType": "core/franklin/components/block/v1/block/item",
             "template": {
-              "name": "partition",
-              "model": "partition",
-              "filter": "partition"
+              "name": "cta",
+              "model": "cta"
             }
           }
         }
@@ -37,26 +36,16 @@
     {
       "id": "text-section",
       "fields": []
-    },
-    {
-      "id": "partition",
-      "title": "Partition",
-      "fields": []
     }
   ],
   "filters": [
     {
       "id": "text-section",
       "components": [
-        "partition"
-      ]
-    },
-    {
-      "id": "partition",
-      "components": [
         "title",
         "text",
-        "cta"
+        "text-section-cta",
+        "topic-list"
       ]
     }
   ]

@@ -146,15 +146,10 @@
   {
     "id": "text-section",
     "components": [
-      "partition"
-    ]
-  },
-  {
-    "id": "partition",
-    "components": [
       "title",
       "text",
-      "cta"
+      "text-section-cta",
+      "topic-list"
     ]
   },
   {

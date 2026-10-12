@@ -6549,11 +6549,6 @@
     "fields": []
   },
   {
-    "id": "partition",
-    "title": "Partition",
-    "fields": []
-  },
-  {
     "id": "title-with-column",
     "fields": [
       {
