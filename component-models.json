@@ -6491,14 +6491,14 @@
         "component": "boolean",
         "valueType": "boolean",
         "name": "showEyebrow",
-        "label": "Show Top Text",
+        "label": "Show Eyebrow Text",
         "value": true
       },
       {
         "component": "richtext",
         "valueType": "string",
         "name": "eyebrow",
-        "label": "Top Text",
+        "label": "Eyebrow Text",
         "value": "",
         "filter": "richtext"
       },
@@ -6524,23 +6524,6 @@
         "label": "Attribution",
         "value": "",
         "filter": "richtext"
-      },
-      {
-        "component": "select",
-        "name": "background",
-        "label": "Background Color",
-        "valueType": "string",
-        "value": "white",
-        "options": [
-          {
-            "name": "White",
-            "value": "white"
-          },
-          {
-            "name": "Grey",
-            "value": "grey"
-          }
-        ]
       }
     ]
   },
