@@ -1220,7 +1220,7 @@
         },
         {
           "title": "Partition",
-          "id": "text-section-partition",
+          "id": "partition",
           "plugins": {
             "xwalk": {
               "page": {

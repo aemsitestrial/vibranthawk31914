@@ -134,7 +134,7 @@
   {
     "id": "text-section",
     "components": [
-      "text-section-partition"
+      "partition"
     ]
   },
   {

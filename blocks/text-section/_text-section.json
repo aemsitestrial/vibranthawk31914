@@ -18,7 +18,7 @@
     },
     {
       "title": "Partition",
-      "id": "text-section-partition",
+      "id": "partition",
       "plugins": {
         "xwalk": {
           "page": {
@@ -47,7 +47,7 @@
     {
       "id": "text-section",
       "components": [
-        "text-section-partition"
+        "partition"
       ]
     },
     {

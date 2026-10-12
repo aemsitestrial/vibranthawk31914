@@ -1,22 +1,41 @@
 .text-section {
   display: grid;
-  grid-template-columns: minmax(280px, 350px) 1fr;
+  grid-template-columns: minmax(280px, 360px) 1fr;
   gap: 6rem;
+  align-items: start;
+  width: 100%;
 }
+
+.text-section-partition {
+  display: flex;
+  flex-direction: column;
+}
+
+/* Left Partition */
 
 .text-section-partition:first-child h1,
 .text-section-partition:first-child h2,
-.text-section-partition:first-child h3 {
+.text-section-partition:first-child h3,
+.text-section-partition:first-child h4,
+.text-section-partition:first-child h5,
+.text-section-partition:first-child h6 {
   margin: 0;
   font-size: clamp(2.5rem, 3vw, 4rem);
   line-height: 1.1;
   font-weight: 400;
+  color: #222;
 }
 
-.text-section-partition:last-child {
-  display: flex;
-  flex-direction: column;
+/* Right Partition */
+
+.text-section-partition:last-child p {
+  margin: 0 0 1.5rem;
+  color: #222;
+  font-size: 1.125rem;
+  line-height: 1.7;
 }
+
+/* CTA rows */
 
 .text-section-partition:last-child .cta {
   width: 100%;
@@ -28,10 +47,22 @@
   border-bottom: 1px solid #d8d8d8;
 }
 
+/* Keep existing CTA styles */
+
 .text-section-partition:last-child .cta a,
 .text-section-partition:last-child .cta .cta-link {
   width: 100%;
 }
+
+/* CTA spacing */
+
+.text-section-partition:last-child .cta:first-of-type {
+  margin-top: 2rem;
+  margin-bottom: 2rem;
+}
+
+
+/* Mobile */
 
 @media (width <= 768px) {
   .text-section {
