@@ -36,7 +36,8 @@
       "text-section",
       "testimonial",
       "two-column-layout",
-      "test-block"
+      "test-block",
+      "statistics-list"
     ]
   },
   {
@@ -102,6 +103,12 @@
       "text-input",
       "tnc",
       "wizard"
+    ]
+  },
+  {
+    "id": "statistics-list",
+    "components": [
+      "statistics-list-item"
     ]
   },
   {
@@ -186,7 +193,8 @@
       "two-column-layout-title",
       "two-column-layout-image",
       "two-column-layout-text",
-      "two-column-layout-cta"
+      "two-column-layout-cta",
+      "statistics-list"
     ]
   },
   {

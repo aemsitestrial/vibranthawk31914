@@ -6453,6 +6453,38 @@
     ]
   },
   {
+    "id": "statistics-list",
+    "fields": [
+      {
+        "component": "richtext",
+        "name": "text",
+        "label": "Text",
+        "value": "",
+        "valueType": "string",
+        "filter": "richtext"
+      }
+    ]
+  },
+  {
+    "id": "statistics-list-item",
+    "fields": [
+      {
+        "component": "text",
+        "name": "title",
+        "label": "Title",
+        "value": "",
+        "valueType": "string"
+      },
+      {
+        "component": "text",
+        "name": "value",
+        "label": "Statistic",
+        "value": "",
+        "valueType": "string"
+      }
+    ]
+  },
+  {
     "id": "table",
     "fields": [
       {
