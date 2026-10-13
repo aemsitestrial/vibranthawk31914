@@ -84,18 +84,23 @@
   position: relative;
 }
 
+.two-column-layout-centered .cta:last-child::after {
+  display: none !important;
+}
+
 .two-column-layout-default .cta:last-child {
   border-bottom: 1px solid var(--border-color);
 }
 
-.two-column-layout-centered .cta:not(:last-child)::after {
+.two-column-layout-centered .cta + .cta::before {
   content: '';
   position: absolute;
-  inset-inline-start: 0;
-  bottom: 0;
+  top: 0;
+  left: 0;
   width: 100%;
-  border-bottom: 1px solid var(--border-color);
+  border-top: 1px solid var(--border-color);
 }
+
 
 /* ========================================
    Mobile
