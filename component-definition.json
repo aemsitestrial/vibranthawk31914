@@ -1344,6 +1344,21 @@
           }
         },
         {
+          "title": "CTA",
+          "id": "two-column-layout-cta",
+          "plugins": {
+            "xwalk": {
+              "page": {
+                "resourceType": "core/franklin/components/block/v1/block/item",
+                "template": {
+                  "name": "cta",
+                  "model": "cta"
+                }
+              }
+            }
+          }
+        },
+        {
           "title": "Video",
           "id": "video",
           "plugins": {

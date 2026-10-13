@@ -10,21 +10,21 @@
   justify-content: center;
   width: auto;
   max-width: 100%;
-  gap: 0.5rem;
-  padding: 0.75rem 1.25rem;
+  min-width: 44px;
+  min-height: 44px;
+  gap: 8px;
+  padding: 12px 16px 12px 24px;
+  border: 1px solid transparent;
   color: #000;
   background-color: transparent;
-  border: 1px solid transparent;
-  border-radius: 0;
-  font: inherit;
-  font-weight: inherit;
-  line-height: 1.2;
   text-decoration: none;
   cursor: pointer;
   transition:
-    transform 160ms ease,
-    box-shadow 160ms ease,
-    filter 160ms ease;
+    background-color 200ms ease,
+    color 200ms ease,
+    border-color 200ms ease,
+    filter 200ms ease,
+    transform 200ms ease;
 }
 
 .cta-link.cta-link-rectangle {
@@ -32,20 +32,13 @@
 }
 
 .cta-link.cta-link-rounded {
-  border-radius: 0.375rem;
+  border-radius: 6px;
 }
 
 .cta-link.cta-link-pill {
   border-radius: 9999px;
 }
 
-.cta-link.cta-view-default.cta-link-pill,
-.cta-link.cta-view-default.cta-link-rounded,
-.cta-link.cta-view-default.cta-link-rectangle {
-  border-radius: 0;
-}
-
-/* Default View */
 .cta-link.cta-view-default {
   padding: 0;
   border: 0;
@@ -53,57 +46,189 @@
   box-shadow: none;
 }
 
-/* Primary View */
-.cta-link.cta-view-primary {
-  padding: 12px 16px 12px 24px;
+.cta-link.cta-view-primary,
+.cta-link.cta-view-secondary,
+.cta-link.cta-view-tertiary,
+.cta-link.cta-view-white-filled {
   gap: 8px;
+}
+
+/* PRIMARY */
+
+.cta-link.cta-view-primary {
+  min-height: 50px;
+  color: #d9d9d9;
+  background: #0c0c0d;
+  border: 1px solid #303030;
+  backdrop-filter: blur(8px);
+
+  --cta-hover-bg-default: #303030;
+}
+
+/* SECONDARY */
+
+.cta-link.cta-view-secondary {
+  min-height: 50px;
+  color: #303030;
+  background: transparent;
+  border: 1px solid #303030;
+  backdrop-filter: blur(8px);
+
+  --cta-hover-bg-default: #f3f3f3;
+}
+
+/* TERTIARY FIGMA STYLE */
+
+.cta-link.cta-view-tertiary {
+  min-height: 50px;
+  padding: 0;
+  background: transparent;
+  border: 0;
+  color: #fff;
+
+  --cta-hover-bg-default: transparent;
+}
+
+/* WHITE FILLED VARIANT */
+
+.cta-link.cta-view-white-filled {
+  min-height: 50px;
+  color: #000;
+  background: #fff;
+  border: 2px solid #494c4e;
+  backdrop-filter: blur(8px);
+
+  --cta-hover-bg-default: #f3f3f3;
+}
+
+.cta-link.cta-size-default {
   min-height: 50px;
 }
 
-/* Secondary View */
-.cta-link.cta-view-secondary {
-  background: transparent;
-  border-width: 1px;
-  border-style: solid;
+.cta-link.cta-size-small {
+  min-height: 46px;
 }
 
+.cta-align-left {
+  display: flex;
+  justify-content: flex-start;
+}
+
+.cta-align-center {
+  display: flex;
+  justify-content: center;
+}
+
+.cta-align-right {
+  display: flex;
+  justify-content: flex-end;
+}
+
+.cta-link.cta-width-half-link {
+  width: 50%;
+}
+
+.cta-link.cta-width-full-link {
+  width: 100%;
+}
+
+.cta-layout-normal {
+  display: inline-flex;
+}
+
+.cta-layout-space-between {
+  display: flex;
+  width: 100%;
+  justify-content: space-between;
+}
+
+/* FIGMA TYPOGRAPHY */
+
 .cta-text {
-  font-family: Inter, sans-serif;
   display: inline-block;
   min-width: 0;
   overflow-wrap: anywhere;
-  font-weight: 500;
+  font-family: Inter, sans-serif;
   font-size: 16px;
   line-height: 100%;
   letter-spacing: 0.01em;
+  font-weight: var(--cta-font-weight, 500);
 }
 
-.cta-arrow {
-  display: inline-flex;
-  align-items: center;
-  justify-content: center;
-  flex: 0 0 auto;
-  line-height: 1;
-  transition:
-    transform 180ms ease,
-    opacity 180ms ease;
+.cta-layout-space-between .cta-text {
+  flex: 1;
 }
 
-.cta-arrow-icon {
+.cta-typography-400 .cta-text {
+  font-weight: 400;
+}
+
+.cta-typography-500 .cta-text {
+  font-weight: 500;
+}
+
+.cta-icon {
   display: block;
-  width: 24px;
-  height: 24px;
+  flex-shrink: 0;
   object-fit: contain;
-  filter: brightness(0) invert(1);
 }
+
+/* HOVER */
 
 .cta-link:hover {
-  transform: none;
+  background-color: var(
+    --cta-hover-bg,
+    var(--cta-hover-bg-default, inherit)
+  );
+  color: var(
+    --cta-hover-text,
+    inherit
+  );
+  text-decoration: none;
 }
 
+/* ACTIVE */
+
 .cta-link:active {
-  transform: translateY(0);
+  transform: translateY(1px);
+  filter: brightness(95%);
 }
+
+/* DISABLED */
+
+.cta-link.cta-state-disabled,
+.cta-link.cta-state-disabled:hover {
+  opacity: 0.5;
+  cursor: not-allowed;
+  pointer-events: none;
+}
+
+/* LOADING */
+
+.cta-link.cta-state-loading,
+.cta-link.cta-state-loading:hover {
+  cursor: progress;
+  pointer-events: none;
+}
+
+.cta-link.cta-state-loading::after {
+  content: '';
+  width: 16px;
+  height: 16px;
+  box-sizing: border-box;
+  border: 2px solid currentcolor;
+  border-right-color: transparent;
+  border-radius: 50%;
+  animation: cta-spin 800ms linear infinite;
+}
+
+@keyframes cta-spin {
+  to {
+    transform: rotate(360deg);
+  }
+}
+
+/* ACCESSIBILITY */
 
 .cta-link:focus {
   outline: 3px solid currentcolor;
@@ -115,45 +240,64 @@
   outline-offset: 3px;
 }
 
-.cta-link:hover .cta-arrow-right {
-  transform: translateX(3px);
-}
-
-.cta-link:hover .cta-arrow-left {
-  transform: translateX(-3px);
-}
-
-.cta-link:any-link:hover {
-  color: #000;
-  text-decoration: none;
-}
-
 .cta-link:focus:not(:focus-visible) {
   outline: none;
 }
 
-@media (prefers-reduced-motion: reduce) {
-  .cta-link,
-  .cta-arrow {
-    transition: none;
-  }
+/* ARROW COLORS */
 
-  .cta-link:hover {
-    transform: none;
-  }
-
-  .cta-link:hover .cta-arrow-right,
-  .cta-link:hover .cta-arrow-left {
-    transform: none;
-  }
+.cta-icon-white {
+  filter: brightness(0) invert(1);
 }
 
-@media (width <=767px) {
+.cta-icon-black {
+  filter: brightness(0);
+}
+
+.cta-icon-dark-gray {
+  filter: brightness(0) invert(19%);
+}
+
+.cta-icon-light-gray {
+  filter: brightness(0) invert(85%);
+}
+
+.cta-icon-cool-gray {
+  filter: brightness(0) invert(89%);
+}
+
+.cta-icon-off-white {
+  filter: brightness(0) invert(95%);
+}
+
+/* MOBILE */
+
+@media (width <= 767px) {
   .cta-link {
     max-width: 100%;
   }
 
   .cta-text {
     overflow-wrap: anywhere;
+  }
+
+  .cta-link.cta-width-half-link {
+    width: 100%;
+  }
+
+  .cta-link.cta-width-full-link {
+    width: 100%;
+  }
+}
+
+/* REDUCED MOTION */
+
+@media (prefers-reduced-motion: reduce) {
+  .cta-link {
+    transition: none;
+  }
+
+  .cta-link.cta-state-loading::after {
+    animation: none;
   }
 }
