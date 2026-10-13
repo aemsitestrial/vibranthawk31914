@@ -6987,6 +6987,16 @@
     ]
   },
   {
+    "id": "two-column-layout-title",
+    "fields": [
+      {
+        "component": "text",
+        "name": "title",
+        "label": "Title"
+      }
+    ]
+  },
+  {
     "id": "two-column-layout-text",
     "fields": [
       {

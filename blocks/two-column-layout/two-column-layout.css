@@ -36,10 +36,10 @@
    ======================================== */
 
 .two-column-layout-right {
-  padding-left: var(--spacing-l);
-  padding-right: var(--spacing-l);
   display: flex;
   flex-direction: column;
+  padding-left: var(--spacing-l);
+  padding-right: var(--spacing-l);
 }
 
 .two-column-layout-right p {
@@ -50,14 +50,38 @@
     1.2vw,
     22px
   );
-  font-weight: var(--font-weight-regular);
   line-height: var(--body-line-height);
-  margin: var(--spacing-xl) 0;
+  font-weight: var(--font-weight-regular);
   color: var(--text-color);
+  margin: var(--spacing-xl) 0;
 }
 
 .two-column-layout-right > * + * {
   margin-top: 0;
+}
+
+/* ========================================
+   CTA - Centered Variant
+   ======================================== */
+
+.two-column-layout-centered .two-column-layout-right {
+  padding-left: 80px;
+  padding-right: 80px;
+}
+
+.two-column-layout-centered .cta {
+  width: 100%;
+  padding: var(--spacing-xs) 0;
+  position: relative;
+}
+
+.two-column-layout-centered .cta:not(:last-child)::after {
+  content: '';
+  position: absolute;
+  bottom: 0;
+  left: 0;
+  width: 100%;
+  border-bottom: 1px solid var(--border-color);
 }
 
 /* ========================================
@@ -70,37 +94,9 @@
   border-top: 1px solid var(--border-color);
 }
 
-
-/* ========================================
-   CTA - Centered Variant
-   ======================================== */
-
-.two-column-layout-centered .cta {
-  width: 100%;
-  max-width: 380px;
-  margin-left: auto;
-  margin-right: auto;
-  padding: var(--spacing-xs) 0;
-  position: relative;
-}
-
-.two-column-layout-centered .cta:last-child::after {
-  display: none !important;
-}
-
 .two-column-layout-default .cta:last-child {
   border-bottom: 1px solid var(--border-color);
 }
-
-.two-column-layout-centered .cta + .cta::before {
-  content: '';
-  position: absolute;
-  top: 0;
-  left: 0;
-  width: 100%;
-  border-top: 1px solid var(--border-color);
-}
-
 
 /* ========================================
    Mobile
@@ -127,12 +123,9 @@
     padding-left: 0;
   }
 
-  .two-column-layout-right {
+  .two-column-layout-right,
+  .two-column-layout-centered .two-column-layout-right {
     padding-left: 0;
     padding-right: 0;
-  }
-
-  .two-column-layout-centered .cta {
-    max-width: 100%;
   }
 }
