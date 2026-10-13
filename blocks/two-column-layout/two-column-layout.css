@@ -38,10 +38,10 @@
    ======================================== */
 
 .two-column-layout-right {
-  padding-left: var(--spacing-l);
-  padding-right: var(--spacing-l);
   display: flex;
   flex-direction: column;
+  padding-left: var(--spacing-l);
+  padding-right: var(--spacing-l);
 }
 
 .two-column-layout-right p {
@@ -66,6 +66,10 @@
 .two-column-layout-right {
   min-width: 0;
 }
+
+/* ========================================
+   Image
+   ======================================== */
 
 .two-column-layout-right .two-column-layout-image {
   width: 100%;
@@ -96,33 +100,40 @@
   width: 100%;
   padding: var(--spacing-xs) 0;
   border-top: 1px solid var(--border-color);
+  border-bottom: 1px solid var(--border-color);
 }
 
+.two-column-layout-centered .cta {
+  position: relative;
+  width: 100%;
+  max-width: 380px;
+  margin-inline: auto;
+  padding: var(--spacing-xs) 0;
+}
+
+.two-column-layout-default .cta + .cta {
+  border-top: 0;
+}
+
+.two-column-layout-default .cta:last-of-type {
+  border-bottom: 1px solid var(--border-color);
+}
 
 /* ========================================
    CTA - Centered Variant
    ======================================== */
 
-.two-column-layout-centered .cta {
-  width: 100%;
-  max-width: 380px;
-  margin-left: auto;
-  margin-right: auto;
-  padding: var(--spacing-xs) 0;
-  position: relative;
-}
 
-.two-column-layout-default .cta:last-child {
-  border-bottom: 1px solid var(--border-color);
-}
 
-.two-column-layout-centered .cta:not(:last-child)::after {
+/* Line only between CTAs */
+
+.two-column-layout-centered .cta + .cta::before {
   content: '';
   position: absolute;
   inset-inline-start: 0;
-  bottom: 0;
+  top: 0;
   width: 100%;
-  border-bottom: 1px solid var(--border-color);
+  border-top: 1px solid var(--border-color);
 }
 
 /* ========================================
