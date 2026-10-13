@@ -4,7 +4,8 @@ import decorateCta from '../cta/cta.js';
 export default function decorate(block) {
   block.classList.add('two-column-layout');
 
-  const children = [...block.children];
+  let children = [...block.children];
+
   const variantRow = children.find(
     (child) => ['default', 'centered'].includes(
       child.textContent.trim().toLowerCase(),
@@ -17,7 +18,11 @@ export default function decorate(block) {
     block.classList.add(`two-column-layout-${variant}`);
 
     variantRow.remove();
+
+    // refresh children after removing variant row
+    children = [...block.children];
   }
+
   if (!children.length) {
     return;
   }
