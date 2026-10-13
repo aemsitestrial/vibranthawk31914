@@ -19,9 +19,8 @@ export default function decorate(block) {
 
     variantRow.remove();
 
+    // refresh children after removing variant row
     children = [...block.children];
-  } else {
-    block.classList.add('two-column-layout-default');
   }
 
   if (!children.length) {
