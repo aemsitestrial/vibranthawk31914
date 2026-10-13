@@ -19,6 +19,7 @@ export default function decorate(block) {
 
     variantRow.remove();
 
+    // refresh children after removing variant row
     children = [...block.children];
   }
 
@@ -32,53 +33,16 @@ export default function decorate(block) {
   const right = document.createElement('div');
   right.className = 'two-column-layout-right';
 
-  children.forEach((child) => {
-    const heading = child.querySelector('h1, h2, h3, h4, h5, h6');
-    const titleType = child.children[1]?.textContent.trim().toLowerCase();
-    const resourceType = child.getAttribute('data-aue-resource') || '';
-    const model = child.getAttribute('data-aue-model') || '';
-    const isTitle = heading || /^h[1-6]$/.test(titleType)
-      || ['title', 'two-column-layout-title'].includes(model)
-      || /\/title(?:\/|$)/.test(resourceType);
-
-    if (isTitle) {
-      const title = heading || document.createElement(/^h[1-6]$/.test(titleType) ? titleType : 'h2');
-
-      if (!heading) {
-        title.textContent = child.firstElementChild?.textContent.trim() || '';
-      }
-
-      child.classList.add('two-column-layout-title');
-      child.replaceChildren(title);
+  children.forEach((child, index) => {
+    if (index === 0) {
       left.append(child);
-      return;
-    }
-
-    const image = child.firstElementChild?.querySelector('img');
-    const isImage = image && child.children.length <= 2
-      && !child.firstElementChild.textContent.trim();
-
-    if (isImage) {
-      const imageContent = image.closest('picture') || image;
-      const altText = child.children[1]?.textContent.trim();
-
-      if (altText && !image.getAttribute('alt')) {
-        image.alt = altText;
-      }
-
-      child.classList.add('two-column-layout-image');
-      child.replaceChildren(imageContent);
+    } else {
       right.append(child);
-      return;
     }
-
-    right.append(child);
   });
 
   const ctaItems = [...right.children].filter(
-    (item) => item.children.length > 1
-      && !item.classList.contains('two-column-layout-image')
-      && !item.querySelector('h1, h2, h3, h4, h5, h6'),
+    (item) => item.children.length > 1,
   );
 
   if (ctaItems.length) {
