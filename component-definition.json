@@ -30,7 +30,10 @@
               "page": {
                 "resourceType": "core/franklin/components/title/v1/title",
                 "template": {
-                  "model": "title"
+                  "model": "title",
+                  "titleType": "h2",
+                  "titleVariant": "default",
+                  "titleColor": "black"
                 }
               }
             }
