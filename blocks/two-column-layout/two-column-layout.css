@@ -48,11 +48,11 @@
   font-size: 22px;
   font-weight: 400;
   line-height: 1.5;
-  margin: 30px 0;
+  margin: 30px 0 30px 0;
 }
 
 .two-column-layout-right > * + * {
-  margin-top: 48px;
+  margin-top: 0;
 }
 
 /* ========================================
@@ -61,7 +61,7 @@
 
 .two-column-layout-default .cta {
   width: 100%;
-  padding: 24px 0;
+  padding: 10px 0;
   border-top: 1px solid #d8d8d8;
 }
 
@@ -76,7 +76,7 @@
 
 .two-column-layout-centered .cta {
   width: 100%;
-  padding: 24px 0;
+  padding: 0;
   position: relative;
 }
 
