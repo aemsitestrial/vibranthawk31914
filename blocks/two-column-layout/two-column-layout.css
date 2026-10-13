@@ -6,12 +6,26 @@
   width: 100%;
 }
 
-.two-column-layout-left h1,
-.two-column-layout-left h2,
-.two-column-layout-left h3,
-.two-column-layout-left h4,
-.two-column-layout-left h5,
-.two-column-layout-left h6 {
+/* First item (Title) */
+
+.two-column-layout > div:first-child {
+  grid-column: 1;
+}
+
+/* Everything else */
+
+.two-column-layout > div:not(:first-child) {
+  grid-column: 2;
+}
+
+/* Title */
+
+.two-column-layout > div:first-child h1,
+.two-column-layout > div:first-child h2,
+.two-column-layout > div:first-child h3,
+.two-column-layout > div:first-child h4,
+.two-column-layout > div:first-child h5,
+.two-column-layout > div:first-child h6 {
   margin: 0;
   color: #222;
   font-size: clamp(2.5rem, 3vw, 4rem);
@@ -19,34 +33,62 @@
   font-weight: 400;
 }
 
-.two-column-layout-right {
-  display: flex;
-  flex-direction: column;
-}
+/* Content text */
 
-.two-column-layout-right p {
-  margin: 0 0 1.5rem;
+.two-column-layout > div:not(:first-child) p {
+  color: #222;
   line-height: 1.7;
 }
 
-.two-column-layout-right .cta {
+/* Preserve CTA styling from CTA block */
+
+.two-column-layout .cta {
   width: 100%;
-  margin: 0;
-  border-top: 1px solid #d8d8d8;
 }
 
-.two-column-layout-right .cta:last-of-type {
+/* Default Variant - CTA takes full width */
+
+.two-column-layout-default .cta,
+.two-column-layout .cta {
+  width: 100%;
+}
+
+.two-column-layout-default .cta .button-container {
+  width: 100%;
+}
+
+/* Centered Variant - CTA section gets left/right padding */
+
+.two-column-layout-centered .cta {
+  padding-left: 60px;
+  padding-right: 60px;
+}
+
+/* Only show separators BETWEEN CTAs */
+
+.two-column-layout .cta:not(:last-of-type) {
   border-bottom: 1px solid #d8d8d8;
+  padding-bottom: 0.5rem;
+  margin-bottom: 0.5rem;
 }
 
-.two-column-layout-right .button-container,
-.two-column-layout-right .cta-link {
-  width: 100%;
+/* Do NOT add top/bottom borders */
+
+.two-column-layout .cta:first-of-type,
+.two-column-layout .cta:last-of-type {
+  border-top: 0;
 }
+
+
+/* Mobile */
 
 @media (width <= 768px) {
   .two-column-layout {
     grid-template-columns: 1fr;
     gap: 2rem;
+  }
+
+  .two-column-layout > div {
+    grid-column: auto;
   }
 }

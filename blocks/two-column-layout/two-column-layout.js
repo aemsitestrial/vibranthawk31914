@@ -5,7 +5,19 @@ export default function decorate(block) {
   block.classList.add('two-column-layout');
 
   const children = [...block.children];
+  const variantRow = children.find(
+    (child) => ['default', 'centered'].includes(
+      child.textContent.trim().toLowerCase(),
+    ),
+  );
 
+  if (variantRow) {
+    const variant = variantRow.textContent.trim().toLowerCase();
+
+    block.classList.add(`two-column-layout-${variant}`);
+
+    variantRow.remove();
+  }
   if (!children.length) {
     return;
   }
