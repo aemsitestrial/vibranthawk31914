@@ -34,7 +34,32 @@ export default function decorate(block) {
   right.className = 'two-column-layout-right';
 
   children.forEach((child, index) => {
+    const image = child.firstElementChild?.querySelector('img');
+    const isImage = image && child.children.length <= 2
+      && !child.firstElementChild.textContent.trim();
+
+    if (isImage) {
+      const imageContent = child.firstElementChild;
+      const altText = child.children[1]?.textContent.trim();
+
+      if (altText && !image.getAttribute('alt')) {
+        image.alt = altText;
+      }
+
+      child.classList.add('two-column-layout-image');
+      child.replaceChildren(imageContent);
+      right.append(child);
+      return;
+    }
+
     if (index === 0) {
+      const heading = child.querySelector('h1, h2, h3, h4, h5, h6');
+
+      if (heading) {
+        const titleContent = [...child.children].find((cell) => cell.contains(heading));
+        child.replaceChildren(titleContent || heading);
+      }
+
       left.append(child);
     } else {
       right.append(child);
@@ -42,7 +67,9 @@ export default function decorate(block) {
   });
 
   const ctaItems = [...right.children].filter(
-    (item) => item.children.length > 1,
+    (item) => item.children.length > 1
+      && !item.classList.contains('two-column-layout-image')
+      && !item.querySelector('h1, h2, h3, h4, h5, h6'),
   );
 
   if (ctaItems.length) {

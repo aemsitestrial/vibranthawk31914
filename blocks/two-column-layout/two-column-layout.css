@@ -21,7 +21,8 @@
 .two-column-layout-left h3,
 .two-column-layout-left h4,
 .two-column-layout-left h5,
-.two-column-layout-left h6 {
+.two-column-layout-left h6,
+.two-column-layout-left p {
   font-size: var(--display-3-size);
   font-weight: var(--font-weight-regular);
   line-height: 1.05;
@@ -58,6 +59,32 @@
 
 .two-column-layout-right > * + * {
   margin-top: 0;
+}
+
+.two-column-layout-left,
+.two-column-layout-right {
+  min-width: 0;
+}
+
+.two-column-layout-right .two-column-layout-image {
+  width: 100%;
+  margin: var(--spacing-s) 0;
+}
+
+.two-column-layout-image p {
+  max-width: none;
+  margin: 0;
+}
+
+.two-column-layout-image picture {
+  display: block;
+}
+
+.two-column-layout-image img {
+  display: block;
+  width: 100%;
+  max-width: 100%;
+  height: auto;
 }
 
 /* ========================================

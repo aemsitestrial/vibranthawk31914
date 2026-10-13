@@ -183,7 +183,8 @@
   {
     "id": "two-column-layout",
     "components": [
-      "two-column-layout-title",
+      "title",
+      "image",
       "two-column-layout-text",
       "two-column-layout-cta"
     ]

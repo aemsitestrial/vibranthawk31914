@@ -1332,21 +1332,6 @@
           }
         },
         {
-          "title": "Title",
-          "id": "two-column-layout-title",
-          "plugins": {
-            "xwalk": {
-              "page": {
-                "resourceType": "core/franklin/components/block/v1/block/item",
-                "template": {
-                  "name": "title",
-                  "model": "two-column-layout-title"
-                }
-              }
-            }
-          }
-        },
-        {
           "title": "Content",
           "id": "two-column-layout-text",
           "plugins": {

@@ -17,21 +17,6 @@
       }
     },
     {
-      "title": "Title",
-      "id": "two-column-layout-title",
-      "plugins": {
-        "xwalk": {
-          "page": {
-            "resourceType": "core/franklin/components/block/v1/block/item",
-            "template": {
-              "name": "title",
-              "model": "two-column-layout-title"
-            }
-          }
-        }
-      }
-    },
-    {
       "title": "Content",
       "id": "two-column-layout-text",
       "plugins": {
@@ -64,36 +49,26 @@
   ],
   "models": [
     {
-      "id": "two-column-layout",
-      "fields": [
-        {
-          "component": "select",
-          "name": "variant",
-          "label": "CTA Variant",
-          "value": "default",
-          "options": [
-            {
-              "name": "Default",
-              "value": "default"
-            },
-            {
-              "name": "Centered",
-              "value": "centered"
-            }
-          ]
-        }
-      ]
-    },
+  "id": "two-column-layout",
+  "fields": [
     {
-      "id": "two-column-layout-title",
-      "fields": [
+      "component": "select",
+      "name": "variant",
+      "label": "CTA Variant",
+      "value": "default",
+      "options": [
         {
-          "component": "text",
-          "name": "title",
-          "label": "Title"
+          "name": "Default",
+          "value": "default"
+        },
+        {
+          "name": "Centered",
+          "value": "centered"
         }
       ]
-    },
+    }
+  ]
+},
     {
       "id": "two-column-layout-text",
       "fields": [
@@ -112,7 +87,8 @@
     {
       "id": "two-column-layout",
       "components": [
-        "two-column-layout-title",
+        "title",
+        "image",
         "two-column-layout-text",
         "two-column-layout-cta"
       ]
