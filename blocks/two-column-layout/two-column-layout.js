@@ -38,19 +38,8 @@ export default function decorate(block) {
 
   children.forEach((child) => {
     const model = child.getAttribute('data-aue-model') || '';
-    console.log('MODEL:', model);
-    console.log('OUTER HTML:', child.outerHTML);
 
-    /* Content Left / Right Toggle */
-    const isContentBlock = !model
-  && child.children.length === 2
-  && ['true', 'false'].includes(
-    child.children[1]?.textContent
-      ?.trim()
-      ?.toLowerCase(),
-  );
-
-    if (isContentBlock) {
+    if (model === 'two-column-layout-text') {
       const moveToLeft = child.children[1]
         ?.textContent
         ?.trim()
@@ -66,6 +55,12 @@ export default function decorate(block) {
         right.append(child);
       }
 
+      return;
+    }
+    if (model === 'two-column-layout-eyebrow') {
+      child.classList.add('two-column-layout-eyebrow');
+
+      left.append(child);
       return;
     }
 
@@ -172,6 +167,7 @@ export default function decorate(block) {
       && !item.classList.contains('statistics-list')
       && item.children.length > 1
       && !item.classList.contains('two-column-layout-image')
+      && !item.classList.contains('two-column-layout-text')
       && !item.querySelector(
         'h1, h2, h3, h4, h5, h6',
       )
