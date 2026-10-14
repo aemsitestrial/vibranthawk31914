@@ -38,20 +38,34 @@ export default function decorate(block) {
 
   children.forEach((child) => {
     const model = child.getAttribute('data-aue-model') || '';
+    console.log('MODEL:', model);
+    console.log('OUTER HTML:', child.outerHTML);
 
     /* Content Left / Right Toggle */
-    if (model === 'two-column-layout-text') {
+    const isContentBlock = !model
+  && child.children.length === 2
+  && ['true', 'false'].includes(
+    child.children[1]?.textContent
+      ?.trim()
+      ?.toLowerCase(),
+  );
+
+    if (isContentBlock) {
       const moveToLeft = child.children[1]
         ?.textContent
         ?.trim()
         ?.toLowerCase() === 'true';
+
       child.children[1]?.remove();
+
+      child.classList.add('two-column-layout-content');
 
       if (moveToLeft) {
         left.append(child);
       } else {
         right.append(child);
       }
+
       return;
     }
 
@@ -106,6 +120,12 @@ export default function decorate(block) {
 
       child.classList.add('two-column-layout-title');
       child.replaceChildren(title);
+
+      left.append(child);
+      return;
+    }
+    if (model === 'two-column-layout-eyebrow') {
+      child.classList.add('two-column-layout-eyebrow');
 
       left.append(child);
       return;

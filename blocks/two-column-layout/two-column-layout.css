@@ -13,7 +13,6 @@
 
 .two-column-layout-left {
   align-self: flex-start;
-  padding-top: var(--spacing-xl);
 }
 
 .two-column-layout-left h1,
@@ -21,14 +20,14 @@
 .two-column-layout-left h3,
 .two-column-layout-left h4,
 .two-column-layout-left h5,
-.two-column-layout-left h6,
-.two-column-layout-left p {
+.two-column-layout-left h6 {
   font-size: var(--display-3-size);
   font-weight: var(--font-weight-regular);
   line-height: 1.05;
   letter-spacing: -0.03em;
   margin: 0;
   padding-left: var(--spacing-l);
+  padding-top: var(--spacing-xl);
   color: var(--heading-color);
   overflow-wrap: anywhere;
 }
@@ -44,7 +43,8 @@
   padding-right: var(--spacing-l);
 }
 
-.two-column-layout-right p {
+.two-column-layout-right p,
+.two-column-layout-left p {
   max-width: 65ch;
   font-family: var(--font-family-base);
   font-size: clamp(
@@ -141,6 +141,22 @@
   top: 0;
   width: 100%;
   border-top: 1px solid var(--border-color);
+}
+
+/* ========================================
+   Eyebrow
+   ======================================== */
+.two-column-layout-eyebrow {
+  margin-bottom: var(--spacing-xs);
+  padding-left: var(--spacing-l);
+}
+
+.two-column-layout-eyebrow p {
+  margin: 0;
+  color: var(--color-brand-500);
+  font-size: var(--body-font-size-s);
+  font-weight: var(--font-weight-medium);
+  line-height: var(--body-line-height);
 }
 
 /* ========================================

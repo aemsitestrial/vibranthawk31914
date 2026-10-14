@@ -1423,6 +1423,21 @@
           }
         },
         {
+          "title": "Eyebrow",
+          "id": "two-column-layout-eyebrow",
+          "plugins": {
+            "xwalk": {
+              "page": {
+                "resourceType": "core/franklin/components/block/v1/block/item",
+                "template": {
+                  "name": "eyebrow",
+                  "model": "two-column-layout-eyebrow"
+                }
+              }
+            }
+          }
+        },
+        {
           "title": "Video",
           "id": "video",
           "plugins": {

@@ -7063,6 +7063,16 @@
     ]
   },
   {
+    "id": "two-column-layout-eyebrow",
+    "fields": [
+      {
+        "component": "text",
+        "name": "text",
+        "label": "Eyebrow"
+      }
+    ]
+  },
+  {
     "id": "video",
     "fields": [
       {
