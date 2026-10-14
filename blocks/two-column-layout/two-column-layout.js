@@ -45,6 +45,7 @@ export default function decorate(block) {
         ?.textContent
         ?.trim()
         ?.toLowerCase() === 'true';
+      child.children[1]?.remove();
 
       if (moveToLeft) {
         left.append(child);
