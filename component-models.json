@@ -7090,12 +7090,17 @@
     ]
   },
   {
-    "id": "two-column-layout-statistics",
+    "id": "two-column-layout-statistic",
     "fields": [
       {
-        "component": "reference",
-        "name": "statisticsList",
-        "label": "Statistics List"
+        "component": "text",
+        "name": "title",
+        "label": "Title"
+      },
+      {
+        "component": "text",
+        "name": "value",
+        "label": "Value"
       }
     ]
   },

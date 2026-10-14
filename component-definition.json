@@ -1423,15 +1423,15 @@
           }
         },
         {
-          "title": "Statistics List",
-          "id": "two-column-layout-statistics",
+          "title": "Statistic",
+          "id": "two-column-layout-statistic",
           "plugins": {
             "xwalk": {
               "page": {
                 "resourceType": "core/franklin/components/block/v1/block/item",
                 "template": {
-                  "name": "statistics-list",
-                  "model": "two-column-layout-statistics"
+                  "name": "statistic",
+                  "model": "two-column-layout-statistic"
                 }
               }
             }

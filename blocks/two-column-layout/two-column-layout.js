@@ -1,7 +1,7 @@
-import { decorateBlock, loadBlock, loadCSS } from '../../scripts/aem.js';
+import { loadCSS } from '../../scripts/aem.js';
 import decorateCta from '../cta/cta.js';
 
-export default async function decorate(block) {
+export default function decorate(block) {
   block.classList.add('two-column-layout');
 
   let children = [...block.children];
@@ -32,31 +32,33 @@ export default async function decorate(block) {
   const right = document.createElement('div');
   right.className = 'two-column-layout-right';
 
-  const statisticsBlocks = [];
-  const statisticsRows = new Set();
-  const statisticsSelector = '.statistics-list, [data-aue-model="statistics-list"], [data-block-name="statistics-list"]';
+  const statisticItems = [];
 
   children.forEach((child) => {
-    const statisticsBlock = child.matches(statisticsSelector)
-      ? child : child.querySelector(statisticsSelector);
-
-    if (statisticsBlock) {
-      statisticsRows.add(child);
-      statisticsBlocks.push(statisticsBlock);
-      right.append(child);
-      return;
-    }
-
-    const heading = child.querySelector('h1, h2, h3, h4, h5, h6');
-    const titleType = child.children[1]?.textContent.trim().toLowerCase();
-    const resourceType = child.getAttribute('data-aue-resource') || '';
     const model = child.getAttribute('data-aue-model') || '';
-    const isTitle = heading || /^h[1-6]$/.test(titleType)
+
+    const heading = child.querySelector(
+      'h1, h2, h3, h4, h5, h6',
+    );
+
+    const titleType = child.children[1]?.textContent
+      ?.trim()
+      ?.toLowerCase();
+
+    const resourceType = child.getAttribute('data-aue-resource') || '';
+
+    const isTitle = heading
+      || /^h[1-6]$/.test(titleType)
       || ['title', 'two-column-layout-title'].includes(model)
       || /\/title(?:\/|$)/.test(resourceType);
 
     if (isTitle) {
-      const title = heading || document.createElement(/^h[1-6]$/.test(titleType) ? titleType : 'h2');
+      const title = heading
+        || document.createElement(
+          /^h[1-6]$/.test(titleType)
+            ? titleType
+            : 'h2',
+        );
 
       if (!heading) {
         title.textContent = child.firstElementChild?.textContent.trim() || '';
@@ -64,16 +66,25 @@ export default async function decorate(block) {
 
       child.classList.add('two-column-layout-title');
       child.replaceChildren(title);
+
       left.append(child);
       return;
     }
 
+    if (model === 'two-column-layout-statistic') {
+      statisticItems.push(child);
+      return;
+    }
+
     const image = child.firstElementChild?.querySelector('img');
-    const isImage = image && child.children.length <= 2
+
+    const isImage = image
+      && child.children.length <= 2
       && !child.firstElementChild.textContent.trim();
 
     if (isImage) {
       const imageContent = image.closest('picture') || image;
+
       const altText = child.children[1]?.textContent.trim();
 
       if (altText && !image.getAttribute('alt')) {
@@ -82,6 +93,7 @@ export default async function decorate(block) {
 
       child.classList.add('two-column-layout-image');
       child.replaceChildren(imageContent);
+
       right.append(child);
       return;
     }
@@ -89,41 +101,74 @@ export default async function decorate(block) {
     right.append(child);
   });
 
-  const nextWrapper = block.parentElement?.nextElementSibling;
-  const adjacentStatistics = nextWrapper?.querySelector(':scope > .statistics-list');
+  /* Statistics */
 
-  if (adjacentStatistics && block.closest('.section')
-    && adjacentStatistics.closest('.section') === block.closest('.section')) {
-    statisticsBlocks.push(adjacentStatistics);
-    right.append(nextWrapper);
+  if (statisticItems.length) {
+    const statisticsWrapper = document.createElement('div');
+
+    statisticsWrapper.className = 'statistics-list';
+
+    const statisticsGrid = document.createElement('div');
+
+    statisticsGrid.className = 'statistics-grid';
+
+    statisticItems.forEach((item) => {
+      const title = item.children[0]?.textContent?.trim() || '';
+
+      const value = item.children[1]?.textContent?.trim() || '';
+
+      const statistic = document.createElement('div');
+
+      statistic.className = 'statistics-item';
+
+      const titleElement = document.createElement('div');
+
+      titleElement.className = 'stat-title';
+      titleElement.textContent = title;
+
+      const valueElement = document.createElement('div');
+
+      valueElement.className = 'stat-value';
+      valueElement.textContent = value;
+
+      statistic.append(
+        titleElement,
+        valueElement,
+      );
+
+      statisticsGrid.append(statistic);
+    });
+
+    statisticsWrapper.append(statisticsGrid);
+
+    loadCSS(
+      `${window.hlx.codeBasePath}/blocks/statistics-list/statistics-list.css`,
+    );
+
+    right.append(statisticsWrapper);
   }
 
   const ctaItems = [...right.children].filter(
-    (item) => !statisticsRows.has(item)
-      && item !== nextWrapper
-      && item.children.length > 1
+    (item) => item.children.length > 1
       && !item.classList.contains('two-column-layout-image')
-      && !item.querySelector('h1, h2, h3, h4, h5, h6'),
+      && !item.classList.contains('statistics-list')
+      && !item.querySelector(
+        'h1, h2, h3, h4, h5, h6',
+      ),
   );
 
   if (ctaItems.length) {
-    loadCSS(`${window.hlx.codeBasePath}/blocks/cta/cta.css`);
+    loadCSS(
+      `${window.hlx.codeBasePath}/blocks/cta/cta.css`,
+    );
   }
 
   ctaItems.forEach((cta) => {
     cta.classList.add('cta', 'block');
     cta.dataset.blockName = 'cta';
+
     decorateCta(cta);
   });
+
   block.replaceChildren(left, right);
-
-  await Promise.all(statisticsBlocks.map((statisticsBlock) => {
-    if (!statisticsBlock.dataset.blockStatus) {
-      statisticsBlock.classList.remove('statistics-list');
-      statisticsBlock.className = `statistics-list ${statisticsBlock.className}`.trim();
-      decorateBlock(statisticsBlock);
-    }
-
-    return loadBlock(statisticsBlock);
-  }));
 }
