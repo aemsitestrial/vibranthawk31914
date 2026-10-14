@@ -104,6 +104,21 @@ export default function decorate(block) {
       return;
     }
 
+    /* Content Left / Right Toggle */
+    if (model === 'two-column-layout-text') {
+      const moveToLeft = child.children[1]
+        ?.textContent
+        ?.trim()
+        ?.toLowerCase() === 'true';
+
+      if (moveToLeft) {
+        left.append(child);
+      } else {
+        right.append(child);
+      }
+      return;
+    }
+
     const image = child.firstElementChild?.querySelector('img');
 
     const isImage = image

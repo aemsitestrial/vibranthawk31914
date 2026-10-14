@@ -153,6 +153,13 @@
           "label": "Content",
           "value": "",
           "filter": "richtext"
+        },
+        {
+          "component": "boolean",
+          "valueType": "boolean",
+          "name": "leftColumn",
+          "label": "Display in Left Column",
+          "value": false
         }
       ]
     }
