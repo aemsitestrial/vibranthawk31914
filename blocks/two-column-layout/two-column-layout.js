@@ -38,6 +38,22 @@ export default function decorate(block) {
 
   children.forEach((child) => {
     const model = child.getAttribute('data-aue-model') || '';
+
+    /* Content Left / Right Toggle */
+    if (model === 'two-column-layout-text') {
+      const moveToLeft = child.children[1]
+        ?.textContent
+        ?.trim()
+        ?.toLowerCase() === 'true';
+
+      if (moveToLeft) {
+        left.append(child);
+      } else {
+        right.append(child);
+      }
+      return;
+    }
+
     const value = child.children[1]?.textContent.trim() || '';
     const isStatistic = model === 'statistics-list-item'
       || (!model && child.children.length === 2
@@ -101,21 +117,6 @@ export default function decorate(block) {
     ) {
       statisticsBlocks.push(child);
       right.append(child);
-      return;
-    }
-
-    /* Content Left / Right Toggle */
-    if (model === 'two-column-layout-text') {
-      const moveToLeft = child.children[1]
-        ?.textContent
-        ?.trim()
-        ?.toLowerCase() === 'true';
-
-      if (moveToLeft) {
-        left.append(child);
-      } else {
-        right.append(child);
-      }
       return;
     }
 
