@@ -1,5 +1,52 @@
 # Statistics List in Two Column Layout
 
+## Current implementation: direct Statistic Items
+
+Add the existing Statistic component directly inside Two Column Layout:
+
+```text
+Two Column Layout (block)
+|- Title (item)
+|- Image (item)
+|- Content (item)
+|- CTA (item)
+|- Statistic (item)
+|- Statistic (item)
+`- Statistic (item)
+```
+
+The layout filter now allows `statistics-list-item`, reusing its existing
+definition and model from `blocks/statistics-list/_statistics-list.json`.
+The duplicated `statistics-list` definition has been removed from the layout.
+The standalone list's definition, model, filter, JS, and CSS are unchanged.
+
+Consecutive Statistic Items form a Statistics List group in the right column.
+Content or a CTA between items starts a new group. Authors add, edit, delete,
+and reorder Statistic Items directly in the layout; there is no authorable
+Statistics List container inside it.
+
+The layout imports the existing Statistics List decorator, moves the original
+rows into a runtime group, and invokes that decorator once per group. Its
+existing instrumentation logic preserves item and field editing attributes.
+Statistics List CSS is loaded only when a statistics group is present.
+
+Editor rows are identified by `data-aue-model="statistics-list-item"`. Published
+rows are identified by the existing model contract: exactly two plain-text cells
+(title and value), without links, images, or headings. Heading-level values and
+URL-like second cells are excluded to avoid treating titles or CTAs as statistics.
+Do not change this model to include additional cells without updating detection.
+Other two-cell plain-text item types would need an explicit published discriminator.
+
+Run `npm run build:json` to regenerate editor configuration. Refresh Universal
+Editor, select Two Column Layout, and choose Add > Statistic. Test authoring and
+preview/publishing on AEM; local checks cannot verify remote persistence.
+
+## Historical alternative (not the current implementation)
+
+The following section-composition design describes an earlier alternative.
+The current layout does not consume an adjacent sibling Statistics List and does
+not use the legacy `two-column-layout-statistics` reference item.
+
 ## Supported authoring architecture
 
 Adobe's EDS content model supports default content and blocks inside sections,

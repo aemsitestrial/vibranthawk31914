@@ -143,6 +143,7 @@
 .two-column-layout-right .statistics-list {
   width: 100%;
   min-width: 0;
+  min-height: 0;
   padding: 0;
 }
 

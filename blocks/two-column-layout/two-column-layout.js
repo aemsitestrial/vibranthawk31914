@@ -1,5 +1,6 @@
 import { loadCSS } from '../../scripts/aem.js';
 import decorateCta from '../cta/cta.js';
+import decorateStatistics from '../statistics-list/statistics-list.js';
 
 export default function decorate(block) {
   block.classList.add('two-column-layout');
@@ -33,8 +34,32 @@ export default function decorate(block) {
   right.className = 'two-column-layout-right';
 
   const statisticsBlocks = [];
+  let statisticsGroup;
 
   children.forEach((child) => {
+    const model = child.getAttribute('data-aue-model') || '';
+    const value = child.children[1]?.textContent.trim() || '';
+    const isStatistic = model === 'statistics-list-item'
+      || (!model && child.children.length === 2
+        && !child.querySelector('a, img, picture, h1, h2, h3, h4, h5, h6')
+        && !/^h[1-6]$/i.test(value)
+        && !/^(https?:|\/|#)/i.test(value));
+
+    if (isStatistic) {
+      if (!statisticsGroup) {
+        statisticsGroup = document.createElement('div');
+        statisticsGroup.className = 'statistics-list block';
+        statisticsGroup.dataset.blockName = 'statistics-list';
+        statisticsBlocks.push(statisticsGroup);
+        right.append(statisticsGroup);
+      }
+
+      statisticsGroup.append(child);
+      return;
+    }
+
+    statisticsGroup = null;
+
     const heading = child.querySelector(
       'h1, h2, h3, h4, h5, h6',
     );
@@ -44,8 +69,6 @@ export default function decorate(block) {
       .toLowerCase();
 
     const resourceType = child.getAttribute('data-aue-resource') || '';
-
-    const model = child.getAttribute('data-aue-model') || '';
 
     const isTitle = heading
       || /^h[1-6]$/.test(titleType)
@@ -135,6 +158,13 @@ export default function decorate(block) {
     loadCSS(
       `${window.hlx.codeBasePath}/blocks/statistics-list/statistics-list.css`,
     );
+
+    statisticsBlocks.forEach((statisticsBlock) => {
+      if (statisticsBlock.dataset.blockStatus !== 'loaded') {
+        decorateStatistics(statisticsBlock);
+        statisticsBlock.dataset.blockStatus = 'loaded';
+      }
+    });
   }
 
   block.replaceChildren(left, right);
