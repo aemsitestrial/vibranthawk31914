@@ -47,7 +47,10 @@ export default function decorate(block) {
 
       child.children[1]?.remove();
 
-      child.classList.add('two-column-layout-content');
+      child.classList.add(
+        'two-column-layout-text',
+        'two-column-layout-content',
+      );
 
       if (moveToLeft) {
         left.append(child);
@@ -67,6 +70,7 @@ export default function decorate(block) {
     const value = child.children[1]?.textContent.trim() || '';
     const isStatistic = model === 'statistics-list-item'
       || (!model && child.children.length === 2
+        && !['true', 'false'].includes(value.toLowerCase())
         && !child.querySelector('a, img, picture, h1, h2, h3, h4, h5, h6')
         && !/^h[1-6]$/i.test(value)
         && !/^(https?:|\/|#)/i.test(value));
@@ -165,9 +169,10 @@ export default function decorate(block) {
     (item) => (
       item.getAttribute('data-aue-model') !== 'statistics-list'
       && !item.classList.contains('statistics-list')
-      && item.children.length > 1
-      && !item.classList.contains('two-column-layout-image')
       && !item.classList.contains('two-column-layout-text')
+      && item.children.length > 1
+      && !(item.children.length === 2)
+      && !item.classList.contains('two-column-layout-image')
       && !item.querySelector(
         'h1, h2, h3, h4, h5, h6',
       )
