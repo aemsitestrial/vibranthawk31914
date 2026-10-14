@@ -7090,6 +7090,16 @@
     ]
   },
   {
+    "id": "two-column-layout-statistics",
+    "fields": [
+      {
+        "component": "reference",
+        "name": "statisticsList",
+        "label": "Statistics List"
+      }
+    ]
+  },
+  {
     "id": "video",
     "fields": [
       {
