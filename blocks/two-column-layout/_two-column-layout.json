@@ -77,20 +77,20 @@
       }
     },
     {
-  "title": "Statistics List",
-  "id": "two-column-layout-statistics",
-  "plugins": {
-    "xwalk": {
-      "page": {
-        "resourceType": "core/franklin/components/block/v1/block/item",
-        "template": {
-          "name": "statistics-list",
-          "model": "two-column-layout-statistics"
+      "title": "Statistics List",
+      "id": "two-column-layout-statistics",
+      "plugins": {
+        "xwalk": {
+          "page": {
+            "resourceType": "core/franklin/components/block/v1/block/item",
+            "template": {
+              "name": "statistics-list",
+              "model": "two-column-layout-statistics"
+            }
+          }
         }
       }
     }
-  }
-}
   ],
   "models": [
     {
@@ -168,15 +168,15 @@
       ]
     },
     {
-    "id": "two-column-layout-statistics",
-    "fields": [
-      {
-        "component": "reference",
-        "name": "statisticsList",
-        "label": "Statistics List"
-      }
-    ]
-  }
+      "id": "two-column-layout-statistics",
+      "fields": [
+        {
+          "component": "reference",
+          "name": "statisticsList",
+          "label": "Statistics List"
+        }
+      ]
+    }
   ],
   "filters": [
     {

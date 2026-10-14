@@ -1,7 +1,7 @@
-import { loadCSS } from '../../scripts/aem.js';
+import { decorateBlock, loadBlock, loadCSS } from '../../scripts/aem.js';
 import decorateCta from '../cta/cta.js';
 
-export default function decorate(block) {
+export default async function decorate(block) {
   block.classList.add('two-column-layout');
 
   let children = [...block.children];
@@ -32,7 +32,21 @@ export default function decorate(block) {
   const right = document.createElement('div');
   right.className = 'two-column-layout-right';
 
+  const statisticsBlocks = [];
+  const statisticsRows = new Set();
+  const statisticsSelector = '.statistics-list, [data-aue-model="statistics-list"], [data-block-name="statistics-list"]';
+
   children.forEach((child) => {
+    const statisticsBlock = child.matches(statisticsSelector)
+      ? child : child.querySelector(statisticsSelector);
+
+    if (statisticsBlock) {
+      statisticsRows.add(child);
+      statisticsBlocks.push(statisticsBlock);
+      right.append(child);
+      return;
+    }
+
     const heading = child.querySelector('h1, h2, h3, h4, h5, h6');
     const titleType = child.children[1]?.textContent.trim().toLowerCase();
     const resourceType = child.getAttribute('data-aue-resource') || '';
@@ -75,8 +89,19 @@ export default function decorate(block) {
     right.append(child);
   });
 
+  const nextWrapper = block.parentElement?.nextElementSibling;
+  const adjacentStatistics = nextWrapper?.querySelector(':scope > .statistics-list');
+
+  if (adjacentStatistics && block.closest('.section')
+    && adjacentStatistics.closest('.section') === block.closest('.section')) {
+    statisticsBlocks.push(adjacentStatistics);
+    right.append(nextWrapper);
+  }
+
   const ctaItems = [...right.children].filter(
-    (item) => item.children.length > 1
+    (item) => !statisticsRows.has(item)
+      && item !== nextWrapper
+      && item.children.length > 1
       && !item.classList.contains('two-column-layout-image')
       && !item.querySelector('h1, h2, h3, h4, h5, h6'),
   );
@@ -90,6 +115,15 @@ export default function decorate(block) {
     cta.dataset.blockName = 'cta';
     decorateCta(cta);
   });
-
   block.replaceChildren(left, right);
+
+  await Promise.all(statisticsBlocks.map((statisticsBlock) => {
+    if (!statisticsBlock.dataset.blockStatus) {
+      statisticsBlock.classList.remove('statistics-list');
+      statisticsBlock.className = `statistics-list ${statisticsBlock.className}`.trim();
+      decorateBlock(statisticsBlock);
+    }
+
+    return loadBlock(statisticsBlock);
+  }));
 }

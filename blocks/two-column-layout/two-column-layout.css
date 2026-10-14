@@ -92,6 +92,23 @@
   height: auto;
 }
 
+.two-column-layout-right .statistics-list {
+  width: 100%;
+  min-width: 0;
+  min-height: 0;
+  padding: 0;
+}
+
+.two-column-layout-right .statistics-list .stat-value {
+  white-space: normal;
+}
+
+.two-column-layout-right .statistics-list .statistics-heading p {
+  max-width: none;
+  font: inherit;
+  color: inherit;
+}
+
 /* ========================================
    CTA - Default Variant
    ======================================== */
