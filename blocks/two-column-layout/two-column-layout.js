@@ -32,20 +32,20 @@ export default function decorate(block) {
   const right = document.createElement('div');
   right.className = 'two-column-layout-right';
 
-  const statisticItems = [];
+  const statisticsBlocks = [];
 
   children.forEach((child) => {
-    const model = child.getAttribute('data-aue-model') || '';
-
     const heading = child.querySelector(
       'h1, h2, h3, h4, h5, h6',
     );
 
     const titleType = child.children[1]?.textContent
-      ?.trim()
-      ?.toLowerCase();
+      .trim()
+      .toLowerCase();
 
     const resourceType = child.getAttribute('data-aue-resource') || '';
+
+    const model = child.getAttribute('data-aue-model') || '';
 
     const isTitle = heading
       || /^h[1-6]$/.test(titleType)
@@ -71,8 +71,13 @@ export default function decorate(block) {
       return;
     }
 
-    if (model === 'two-column-layout-statistic') {
-      statisticItems.push(child);
+    /* Statistics List child block */
+    if (
+      model === 'statistics-list'
+      || child.classList.contains('statistics-list')
+    ) {
+      statisticsBlocks.push(child);
+      right.append(child);
       return;
     }
 
@@ -101,60 +106,16 @@ export default function decorate(block) {
     right.append(child);
   });
 
-  /* Statistics */
-
-  if (statisticItems.length) {
-    const statisticsWrapper = document.createElement('div');
-
-    statisticsWrapper.className = 'statistics-list';
-
-    const statisticsGrid = document.createElement('div');
-
-    statisticsGrid.className = 'statistics-grid';
-
-    statisticItems.forEach((item) => {
-      const title = item.children[0]?.textContent?.trim() || '';
-
-      const value = item.children[1]?.textContent?.trim() || '';
-
-      const statistic = document.createElement('div');
-
-      statistic.className = 'statistics-item';
-
-      const titleElement = document.createElement('div');
-
-      titleElement.className = 'stat-title';
-      titleElement.textContent = title;
-
-      const valueElement = document.createElement('div');
-
-      valueElement.className = 'stat-value';
-      valueElement.textContent = value;
-
-      statistic.append(
-        titleElement,
-        valueElement,
-      );
-
-      statisticsGrid.append(statistic);
-    });
-
-    statisticsWrapper.append(statisticsGrid);
-
-    loadCSS(
-      `${window.hlx.codeBasePath}/blocks/statistics-list/statistics-list.css`,
-    );
-
-    right.append(statisticsWrapper);
-  }
-
   const ctaItems = [...right.children].filter(
-    (item) => item.children.length > 1
-      && !item.classList.contains('two-column-layout-image')
+    (item) => (
+      item.getAttribute('data-aue-model') !== 'statistics-list'
       && !item.classList.contains('statistics-list')
+      && item.children.length > 1
+      && !item.classList.contains('two-column-layout-image')
       && !item.querySelector(
         'h1, h2, h3, h4, h5, h6',
-      ),
+      )
+    ),
   );
 
   if (ctaItems.length) {
@@ -169,6 +130,12 @@ export default function decorate(block) {
 
     decorateCta(cta);
   });
+
+  if (statisticsBlocks.length) {
+    loadCSS(
+      `${window.hlx.codeBasePath}/blocks/statistics-list/statistics-list.css`,
+    );
+  }
 
   block.replaceChildren(left, right);
 }

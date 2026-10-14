@@ -7090,21 +7090,6 @@
     ]
   },
   {
-    "id": "two-column-layout-statistic",
-    "fields": [
-      {
-        "component": "text",
-        "name": "title",
-        "label": "Title"
-      },
-      {
-        "component": "text",
-        "name": "value",
-        "label": "Value"
-      }
-    ]
-  },
-  {
     "id": "video",
     "fields": [
       {
