@@ -6873,10 +6873,6 @@
     ]
   },
   {
-    "id": "test-block",
-    "fields": []
-  },
-  {
     "id": "testimonial",
     "fields": [
       {
@@ -6933,29 +6929,6 @@
             "value": "grey"
           }
         ]
-      }
-    ]
-  },
-  {
-    "id": "text-section",
-    "fields": []
-  },
-  {
-    "id": "title-with-column",
-    "fields": [
-      {
-        "component": "text",
-        "valueType": "number",
-        "name": "columns",
-        "value": "2",
-        "label": "Columns"
-      },
-      {
-        "component": "text",
-        "valueType": "number",
-        "name": "rows",
-        "value": "1",
-        "label": "Rows"
       }
     ]
   },

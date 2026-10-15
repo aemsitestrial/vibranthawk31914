@@ -66,12 +66,9 @@
         "title",
 	"teaser",
         "video",
-        "title-with-column",
         "topic-list",
-        "text-section",
         "testimonial",
         "two-column-layout",
-        "test-block",
         "statistics-list"
       ]
     }

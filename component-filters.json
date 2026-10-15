@@ -31,12 +31,9 @@
       "title",
       "teaser",
       "video",
-      "title-with-column",
       "topic-list",
-      "text-section",
       "testimonial",
       "two-column-layout",
-      "test-block",
       "statistics-list"
     ]
   },
@@ -138,12 +135,6 @@
     ]
   },
   {
-    "id": "test-block",
-    "components": [
-      "text"
-    ]
-  },
-  {
     "id": "richtext",
     "components": [
       "richtext"
@@ -153,29 +144,6 @@
         "format": []
       }
     }
-  },
-  {
-    "id": "text-section",
-    "components": [
-      "title",
-      "text",
-      "text-section-cta"
-    ]
-  },
-  {
-    "id": "title-with-column",
-    "components": [
-      "column"
-    ]
-  },
-  {
-    "id": "column",
-    "components": [
-      "title",
-      "text",
-      "cta",
-      "topic-list"
-    ]
   },
   {
     "id": "topic-list",
