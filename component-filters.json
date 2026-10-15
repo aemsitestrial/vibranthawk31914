@@ -34,7 +34,8 @@
       "topic-list",
       "testimonial",
       "two-column-layout",
-      "statistics-list"
+      "statistics-list",
+      "cta-container"
     ]
   },
   {
@@ -63,6 +64,13 @@
   },
   {
     "id": "column",
+    "components": [
+      "title",
+      "cta"
+    ]
+  },
+  {
+    "id": "cta-container",
     "components": [
       "title",
       "cta"
