@@ -80,12 +80,8 @@
     {
       "id": "column",
       "components": [
-        "text",
-        "image",
-        "button",
         "title",
-        "quote",
-        "demo-card-column-item"
+        "cta"
       ]
     }
   ]
